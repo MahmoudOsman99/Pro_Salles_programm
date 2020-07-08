@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 15, 14.375" name="Pro_Salles">
+  <DataContextMoniker Name="/Pro_SallesDataContext" />
+  <nestedChildShapes>
+    <classShape Id="b27cd9e6-e2c9-4796-8d5e-6ad95fe73314" absoluteBounds="0.75, 0.75, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Account" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f1b670fe-4fcf-4952-95c8-81fb26bd93ec" absoluteBounds="0.765, 1.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b373e742-270b-4693-ba26-e2c4d62da8b2" absoluteBounds="0.75, 2.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/Pro_SallesDataContext/UserSettingsProfileProperty" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4a30c5f1-3883-40f5-a741-7aa828d2d217" absoluteBounds="0.765, 3.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="df69f6e9-f256-4131-a63d-bbe11e7406dc" absoluteBounds="3.75, 0.75, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Company_Info" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e1bc17ce-a3e6-47d7-bef8-f86d5c527a1a" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c46deea1-e068-4855-a6e4-7fc350a04f11" absoluteBounds="6.75, 0.75, 2, 1.3862939453125003">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Drower" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ef19eff9-e6b8-4f07-acd9-267b136ea759" absoluteBounds="6.765, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f9d236ba-2790-4dc8-af2e-71d4167cb1e8" absoluteBounds="0.75, 6.75, 2, 3.1170068359375014">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Invoice_Detail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ef6e4ab1-f6f0-4712-a4c9-8d89dea2cc84" absoluteBounds="0.765, 7.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f86d703f-e5db-453a-9706-a5e8fba13e11" absoluteBounds="6.75, 3.75, 2, 5.0400211588541666">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Invoice_Header" />
+      <nestedChildShapes>
+        <elementListCompartment Id="43faebf7-3349-4bd8-b088-b2b478f200a3" absoluteBounds="6.765, 4.21, 1.9700000000000002, 4.4800211588541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="54f02eba-0815-49a6-9382-3377f5f25ec7" absoluteBounds="9.75, 0.75, 2, 2.5401025390625005">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Journal" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9def0bd6-8635-48dc-a200-46fb925ea3b9" absoluteBounds="9.765, 1.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e5a0cd7d-cb6a-4f67-a4bd-9be5f14070cf" absoluteBounds="9.75, 4.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Product_Category" />
+      <nestedChildShapes>
+        <elementListCompartment Id="683e4eac-6eae-4a59-bf3f-84d4c891dd14" absoluteBounds="9.765, 5.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4635628c-ff4b-4146-8998-a9063612dc80" absoluteBounds="6.75, 9.75, 2, 2.3478011067708344">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Product_Unit" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0d902b28-1638-41ce-8e25-53627b223f8e" absoluteBounds="6.765, 10.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="564718d5-133d-4852-ae1c-2b6246d3c959" absoluteBounds="9.75, 7.75, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Store_Log" />
+      <nestedChildShapes>
+        <elementListCompartment Id="34ea8c07-dd8a-4efe-9c77-64b34dfe52a3" absoluteBounds="9.765, 8.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e5fc1a2d-d210-456d-b9ca-2e68d33a6ab6" absoluteBounds="9.75, 11.75, 2, 2.3478011067708344">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Store" />
+      <nestedChildShapes>
+        <elementListCompartment Id="baea3869-a52e-4656-9a57-16b7ef2b81e9" absoluteBounds="9.765, 12.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3b9ff87b-9f85-4878-93e9-59688ec25170" absoluteBounds="12.75, 0.75, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Units_name" />
+      <nestedChildShapes>
+        <elementListCompartment Id="653acca5-fee3-42f8-a2c0-9706f305b699" absoluteBounds="12.765, 1.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d4e5c9f9-4580-4c57-b33f-a4268b4dc2ec" absoluteBounds="12.75, 2.75, 2, 2.5401025390625005">
+      <DataClassMoniker Name="/Pro_SallesDataContext/User_Access_Profile_Detail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a7de0df9-0b0c-473a-a170-b6c3319ba7fd" absoluteBounds="12.765, 3.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4d77ee84-a7ec-4e58-a4a3-a9516f8ec3d2" absoluteBounds="12.75, 6.75, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/Pro_SallesDataContext/User_Access_Profile_Name" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b1e7ef21-2f94-4e8d-bae3-227b08881f3e" absoluteBounds="12.765, 7.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="cc9b2ce1-ca89-46d4-90a3-3482fb54e553" absoluteBounds="12.75, 8.75, 2, 2.3478011067708344">
+      <DataClassMoniker Name="/Pro_SallesDataContext/User" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a19d0cb5-e1b6-46a0-92df-f9e92df4feeb" absoluteBounds="12.765, 9.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="66292331-0cb3-4e8c-aaaa-610d1c60dd7b" absoluteBounds="12.75, 12.75, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/Pro_SallesDataContext/UserSettingsProfile" />
+      <nestedChildShapes>
+        <elementListCompartment Id="355218ab-424e-4d89-88b0-1d0abf831c3b" absoluteBounds="12.765, 13.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="be55bbff-a971-4215-8af0-09ee0bf216f6" absoluteBounds="3.25, 9.25, 2, 2.5401025390625">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Product" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6b7d634b-58f6-4818-b504-c72f098295ee" absoluteBounds="3.265, 9.71, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9ca5246e-a8ff-4ed9-bac1-37b47d5cfa50" absoluteBounds="3.375, 3.125, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/Pro_SallesDataContext/CustomersAndVendor" />
+      <nestedChildShapes>
+        <elementListCompartment Id="44c7acd6-f548-444d-97c7-66f2a3123739" absoluteBounds="3.39, 3.585, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
