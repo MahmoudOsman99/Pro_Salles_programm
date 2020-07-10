@@ -1,6 +1,8 @@
 ﻿using DevExpress.Charts.Native;
+using DevExpress.Utils;
 using DevExpress.Utils.Behaviors.Common;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
@@ -196,6 +198,7 @@ namespace Pro_Salles.Class
             repo.DisplayMember = displaymember;
             repo.ValueMember = valuemember;
             repo.NullText = "اختر البيانات";
+            repo.BestFitMode = BestFitMode.BestFitResizePopup;
             cl.ColumnEdit = repo;
             if (grid != null)
                 grid.RepositoryItems.Add(repo);
@@ -228,7 +231,7 @@ namespace Pro_Salles.Class
                 FieldName = displaymember,
 
             });
-            look.Properties.ShowHeader = false;
+
             //look.Properties.PopulateColumns();
             //look.Properties.Columns[valuemember].Visible = false;
             //look.Properties.Columns[displaymember].Caption = "الأسم";
@@ -246,6 +249,18 @@ namespace Pro_Salles.Class
             look.Properties.DataSource = datasource;
             look.Properties.DisplayMember = displaymember;
             look.Properties.ValueMember = valuemember;
+            
+            look.Properties.ValidateOnEnterKey = true;
+            look.Properties.AllowNullInput = DefaultBoolean.False;//to don't let the user put null values
+            look.Properties.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;//To make the size fit to the fields
+            look.Properties.ImmediatePopup = true;
+
+            var part_idView = look.Properties.View;
+            part_idView.FocusRectStyle = DrawFocusRectStyle.RowFullFocus;
+            part_idView.OptionsSelection.UseIndicatorForSelection = true;
+            part_idView.OptionsView.ShowAutoFilterRow = true;
+            part_idView.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.ShowAlways;
+            part_idView.PopulateColumns(look.Properties.DataSource);
         }
 
 
@@ -257,11 +272,12 @@ namespace Pro_Salles.Class
         /// </summary>
         /// <param name="look"></param>
         /// <returns></returns>
-        public static bool IsEditValueValid(this LookUpEditBase look)
+        public static bool IsEditValueValid(this LookUpEditBase look, bool setError = true)
         {
             if (look.Is_Edit_Value_Int() == false)
             {
-                look.ErrorText = FRM_Master.Error_Text;
+                if (setError)
+                    look.ErrorText = FRM_Master.Error_Text;
                 return false;
             }
             return true;
@@ -271,11 +287,12 @@ namespace Pro_Salles.Class
         /// </summary>
         /// <param name="look"></param>
         /// <returns></returns>
-        public static bool IsEditValueValidAndNotZero(this LookUpEditBase look)
+        public static bool IsEditValueValidAndNotZero(this LookUpEditBase look, bool setError = true)
         {
             if (look.Is_Edit_Value_Int() == false || Convert.ToInt32(look.EditValue) == 0)
             {
-                look.ErrorText = FRM_Master.Error_Text;
+                if (setError)
+                    look.ErrorText = FRM_Master.Error_Text;
                 return false;
             }
             return true;

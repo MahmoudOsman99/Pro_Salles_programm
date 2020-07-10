@@ -40,7 +40,6 @@ namespace Pro_Salles.PL
                 if (info.InRow || info.InRowCell)
                 {
                     Open_Form(Convert.ToInt32(gridView1.GetFocusedRowCellValue("ID")));
-
                 }
             }
         }

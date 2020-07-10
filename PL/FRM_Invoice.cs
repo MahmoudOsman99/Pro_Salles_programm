@@ -257,9 +257,7 @@ namespace Pro_Salles.PL
             look_grid_part_id.Properties.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;//To make the size fit to the fields
             look_grid_part_id.Properties.ImmediatePopup = true;
             look_grid_part_id.Properties.Buttons.Add(new EditorButton(ButtonPredefines.Plus));
-            look_grid_part_id.Properties.ButtonClick += Repo_items_ButtonClick;
-
-
+            
             var part_idView = look_grid_part_id.Properties.View;
             part_idView.FocusRectStyle = DrawFocusRectStyle.RowFullFocus;
             part_idView.OptionsSelection.UseIndicatorForSelection = true;

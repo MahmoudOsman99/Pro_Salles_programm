@@ -209,9 +209,11 @@ namespace Pro_Salles.Class
             Screen_Caption = "عرض المستخدمين"
         };
 
+        //public static Screens_Access_Profile View_Sales_Invoices = new Screens_Access_Profile("FRM_Sales_Invoices_List", Salles)
+        //{
+        //    Screen_Caption = "عرض فواتير المبيعات"
+        //};
 
-        
-        
 
 
 
