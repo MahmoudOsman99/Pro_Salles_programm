@@ -24,6 +24,7 @@ namespace Pro_Salles.PL
         private void FRM_Master_List_Load(object sender, EventArgs e)
         {
             btn_save.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
+            btn_print.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
             gridView1.OptionsBehavior.Editable = false;
             gridView1.Appearance.Row.TextOptions.HAlignment = HorzAlignment.Center;
             gridView1.Appearance.Row.TextOptions.VAlignment = VertAlignment.Center;

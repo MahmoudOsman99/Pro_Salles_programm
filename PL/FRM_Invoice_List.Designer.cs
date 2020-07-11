@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions3 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
-            DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions4 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
+            DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions1 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
+            DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions2 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
             this.flyoutPanel1 = new DevExpress.Utils.FlyoutPanel();
             this.flyoutPanelControl1 = new DevExpress.Utils.FlyoutPanelControl();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
@@ -93,11 +93,11 @@
             this.flyoutPanel1.Options.CloseOnOuterClick = true;
             this.flyoutPanel1.OptionsButtonPanel.ButtonPanelContentAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.flyoutPanel1.OptionsButtonPanel.ButtonPanelLocation = DevExpress.Utils.FlyoutPanelButtonPanelLocation.Bottom;
-            buttonImageOptions3.Image = global::Pro_Salles.Properties.Resources.apply_32x32;
-            buttonImageOptions4.Image = global::Pro_Salles.Properties.Resources.delete_16x16;
+            buttonImageOptions1.Image = global::Pro_Salles.Properties.Resources.apply_32x32;
+            buttonImageOptions2.Image = global::Pro_Salles.Properties.Resources.delete_16x16;
             this.flyoutPanel1.OptionsButtonPanel.Buttons.AddRange(new DevExpress.XtraEditors.ButtonPanel.IBaseButton[] {
-            new DevExpress.Utils.PeekFormButton("تطبيق", true, buttonImageOptions3, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, "Apply", -1, false),
-            new DevExpress.Utils.PeekFormButton("مسح الفلاتر", true, buttonImageOptions4, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, "Clear", -1, false)});
+            new DevExpress.Utils.PeekFormButton("تطبيق", true, buttonImageOptions1, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, "Apply", -1, false),
+            new DevExpress.Utils.PeekFormButton("مسح الفلاتر", true, buttonImageOptions2, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, "Clear", -1, false)});
             this.flyoutPanel1.OwnerControl = this.gridControl1;
             this.flyoutPanel1.Size = new System.Drawing.Size(325, 243);
             this.flyoutPanel1.TabIndex = 5;
@@ -379,9 +379,9 @@
             this.Appearance.Options.UseFont = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1046, 628);
+            this.ClientSize = new System.Drawing.Size(1031, 587);
             this.Controls.Add(this.flyoutPanel1);
-            this.IconOptions.SvgImage = global::Pro_Salles.Properties.Resources.listviewappointmentpattern;
+            this.IconOptions.SvgImage = global::Pro_Salles.Properties.Resources.tasks;
             this.Name = "FRM_Invoice_List";
             this.Load += new System.EventHandler(this.FRM_Invoice_List_Load);
             this.Controls.SetChildIndex(this.flyoutPanel1, 0);

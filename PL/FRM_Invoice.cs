@@ -257,7 +257,7 @@ namespace Pro_Salles.PL
             look_grid_part_id.Properties.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;//To make the size fit to the fields
             look_grid_part_id.Properties.ImmediatePopup = true;
             look_grid_part_id.Properties.Buttons.Add(new EditorButton(ButtonPredefines.Plus));
-            
+
             var part_idView = look_grid_part_id.Properties.View;
             part_idView.FocusRectStyle = DrawFocusRectStyle.RowFullFocus;
             part_idView.OptionsSelection.UseIndicatorForSelection = true;
@@ -1395,6 +1395,37 @@ namespace Pro_Salles.PL
         }
         public override void Print()
         {
+            Print(Invoice.ID, this.Type);
+            base.Print();
+        }
+        public static void Print(int id, Master.Invoice_Type Type)
+        {
+            Print(new List<int> { id }, Type);
+        }
+        public static void Print(Invoice_Header invoice, Master.Invoice_Type Type)
+        {
+            Print(invoice.ID, Type);
+        }
+        public static void Print(List<int> ids, Master.Invoice_Type Type)
+        {
+            var name = "";
+            switch (Type)
+            {
+                case Master.Invoice_Type.Purchase:
+                    name = Screens.Add_Purchase_Invoice.Screen_Name;
+                    break;
+                case Master.Invoice_Type.Salles:
+                    name = Screens.Add_Salles_Invoice.Screen_Name;
+                    break;
+                case Master.Invoice_Type.Purchase_Return:
+                case Master.Invoice_Type.Salles_Return:
+                default:
+                    throw new NotImplementedException();
+            }
+
+            if (CheckActionAuthorization(name, Master.Actions.Print) == false)
+                return;
+
             /////////49////////
             using (var db = new Pro_SallesDataContext())
             {
@@ -1402,7 +1433,7 @@ namespace Pro_Salles.PL
                                      join str in db.Stores on inv.branch equals str.ID
                                      from part in db.CustomersAndVendors.Where(x => x.ID == inv.part_id).DefaultIfEmpty()
                                      from dr in db.Drowers.Where(x => x.ID == inv.drower).DefaultIfEmpty()
-                                     where inv.ID == Invoice.ID
+                                     where ids.Contains(inv.ID)
                                      select new
                                      {
                                          inv.ID,
@@ -1445,7 +1476,6 @@ namespace Pro_Salles.PL
                                      }).ToList();
                 RPT_Invoice.Print(Order_Invoice);
             }
-            base.Print();
         }
         public override void Delete()
         {

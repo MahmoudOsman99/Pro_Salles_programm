@@ -152,7 +152,7 @@ namespace Pro_Salles.PL
 
         private void btn_print_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (CheckActionAuthorization(this.Name, Master.Actions.Print) == true)
+            if (CheckActionAuthorization(this.Name, Master.Actions.Print))
                 Print();
         }
 

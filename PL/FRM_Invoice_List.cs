@@ -14,6 +14,9 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.Utils;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using DevExpress.XtraGrid.Views.Base;
 
 namespace Pro_Salles.PL
 {
@@ -40,6 +43,57 @@ namespace Pro_Salles.PL
             gridControl1.ViewRegistered += GridControl1_ViewRegistered;
             //to disappeare the tabheader for the subItem header
             gridView1.OptionsDetail.ShowDetailTabs = false;
+            gridView1.PopupMenuShowing += GridView1_PopupMenuShowing;
+            gridView1.OptionsSelection.MultiSelect = true;
+            gridView1.OptionsSelection.MultiSelectMode = GridMultiSelectMode.CheckBoxRowSelect;
+            gridView1.RowCellStyle += GridView1_RowCellStyle;
+        }
+
+        private void GridView1_RowCellStyle(object sender, RowCellStyleEventArgs e)
+        {
+            if (e.RowHandle < 0)
+                return;
+            var remaing = Convert.ToDouble(gridView1.GetRowCellValue(e.RowHandle, "remaing"));
+            var paid = Convert.ToDouble(gridView1.GetRowCellValue(e.RowHandle, "paid"));
+            var net = Convert.ToDouble(gridView1.GetRowCellValue(e.RowHandle, "net"));
+            if (e.Column.FieldName == "PayStatus")
+            {
+                if (remaing == 0)
+                    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Success;
+                else if (remaing < net)
+                    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Warning;
+                else
+                    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Danger;
+            }
+        }
+
+        private void GridView1_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+        {
+            //81
+            if (e.HitInfo.InRowCell || e.HitInfo.InRow)
+            {
+                var DXButtonPrint = new DevExpress.Utils.Menu.DXMenuItem() { Caption = "طباعه" };
+                DXButtonPrint.ImageOptions.SvgImage = Properties.Resources.print;
+                DXButtonPrint.Click += DXButtonPrint_Click;
+                e.Menu.Items.Add(DXButtonPrint);
+            }
+        }
+
+        private void DXButtonPrint_Click(object sender, EventArgs e)
+        {
+            var Handles = gridView1.GetSelectedRows();
+            List<int> ids = new List<int>();
+            foreach (var Handle in Handles)
+            {
+                ids.Add(Convert.ToInt32(gridView1.GetRowCellValue(Handle, "ID")));
+            }
+            if (ids.Count == 0)
+            {
+                XtraMessageBox.Show("برجاء اختيار فاتوره واحده علي الأقل",
+                    caption: "Note", buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Information);
+                return;
+            }
+            FRM_Invoice.Print(ids, this.Type);
         }
 
         private void GridControl1_ViewRegistered(object sender, DevExpress.XtraGrid.ViewOperationEventArgs e)
@@ -150,7 +204,7 @@ namespace Pro_Salles.PL
                                 inv.paid,
                                 inv.drower,
                                 inv.remaing,
-                                PayStatus = "",
+                                PayStatus = (inv.remaing == 0) ? "مسدده" : (inv.remaing == inv.net) ? "غير مسدده" : "مسدده جزئيا",
                                 Products = (from itm in db.Invoice_Details.Where(x => x.invoice_id == inv.ID)
                                             from pr in db.Products.Where(x => x.ID == itm.item_id).DefaultIfEmpty()
                                             from unt in db.Units_names.Where(x => x.ID == itm.item_unit_id).DefaultIfEmpty()
@@ -242,6 +296,11 @@ namespace Pro_Salles.PL
        look_part_type.EditValue =
     look_grid_part_id.EditValue = null;
             //btn_apply.PerformClick();
+        }
+        public override void Print()
+        {
+            gridView1.ShowRibbonPrintPreview();
+            base.Print();
         }
     }
 }

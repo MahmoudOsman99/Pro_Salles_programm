@@ -269,6 +269,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reporting\RPT_Grid_Print.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reporting\RPT_Grid_Print.Designer.cs">
+      <DependentUpon>RPT_Grid_Print.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\RPT_Invoice.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -307,6 +313,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PL\FRM_User_Settings_Profile_List.resx">
       <DependentUpon>FRM_User_Settings_Profile_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\RPT_Grid_Print.resx">
+      <DependentUpon>RPT_Grid_Print.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reporting\RPT_Invoice.resx">
       <DependentUpon>RPT_Invoice.cs</DependentUpon>
@@ -478,6 +487,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\listviewappointmentpattern.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\print.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tasks.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Liphsoft.Crypto.Argon2.1.0.5\build\Liphsoft.Crypto.Argon2.targets" Condition="Exists('packages\Liphsoft.Crypto.Argon2.1.0.5\build\Liphsoft.Crypto.Argon2.targets')" />
