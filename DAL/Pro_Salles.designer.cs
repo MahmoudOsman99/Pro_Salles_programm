@@ -36,9 +36,6 @@ namespace Pro_Salles.DAL
     partial void InsertUserSettingsProfileProperty(UserSettingsProfileProperty instance);
     partial void UpdateUserSettingsProfileProperty(UserSettingsProfileProperty instance);
     partial void DeleteUserSettingsProfileProperty(UserSettingsProfileProperty instance);
-    partial void InsertCompany_Info(Company_Info instance);
-    partial void UpdateCompany_Info(Company_Info instance);
-    partial void DeleteCompany_Info(Company_Info instance);
     partial void InsertDrower(Drower instance);
     partial void UpdateDrower(Drower instance);
     partial void DeleteDrower(Drower instance);
@@ -84,6 +81,9 @@ namespace Pro_Salles.DAL
     partial void InsertCustomersAndVendor(CustomersAndVendor instance);
     partial void UpdateCustomersAndVendor(CustomersAndVendor instance);
     partial void DeleteCustomersAndVendor(CustomersAndVendor instance);
+    partial void InsertCompany_Info(Company_Info instance);
+    partial void UpdateCompany_Info(Company_Info instance);
+    partial void DeleteCompany_Info(Company_Info instance);
     #endregion
 		
 		public Pro_SallesDataContext() : 
@@ -129,14 +129,6 @@ namespace Pro_Salles.DAL
 			get
 			{
 				return this.GetTable<UserSettingsProfileProperty>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Company_Info> Company_Infos
-		{
-			get
-			{
-				return this.GetTable<Company_Info>();
 			}
 		}
 		
@@ -257,6 +249,14 @@ namespace Pro_Salles.DAL
 			get
 			{
 				return this.GetTable<CustomersAndVendor>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Company_Info> Company_Infos
+		{
+			get
+			{
+				return this.GetTable<Company_Info>();
 			}
 		}
 	}
@@ -456,164 +456,6 @@ namespace Pro_Salles.DAL
 					this._Property_Value = value;
 					this.SendPropertyChanged("Property_Value");
 					this.OnProperty_ValueChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Company_Info")]
-	public partial class Company_Info : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private string _name;
-		
-		private string _mobile;
-		
-		private string _phone;
-		
-		private string _address;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnnameChanging(string value);
-    partial void OnnameChanged();
-    partial void OnmobileChanging(string value);
-    partial void OnmobileChanged();
-    partial void OnphoneChanging(string value);
-    partial void OnphoneChanged();
-    partial void OnaddressChanging(string value);
-    partial void OnaddressChanged();
-    #endregion
-		
-		public Company_Info()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string name
-		{
-			get
-			{
-				return this._name;
-			}
-			set
-			{
-				if ((this._name != value))
-				{
-					this.OnnameChanging(value);
-					this.SendPropertyChanging();
-					this._name = value;
-					this.SendPropertyChanged("name");
-					this.OnnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mobile", DbType="NVarChar(MAX)")]
-		public string mobile
-		{
-			get
-			{
-				return this._mobile;
-			}
-			set
-			{
-				if ((this._mobile != value))
-				{
-					this.OnmobileChanging(value);
-					this.SendPropertyChanging();
-					this._mobile = value;
-					this.SendPropertyChanged("mobile");
-					this.OnmobileChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_phone", DbType="NVarChar(MAX)")]
-		public string phone
-		{
-			get
-			{
-				return this._phone;
-			}
-			set
-			{
-				if ((this._phone != value))
-				{
-					this.OnphoneChanging(value);
-					this.SendPropertyChanging();
-					this._phone = value;
-					this.SendPropertyChanged("phone");
-					this.OnphoneChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_address", DbType="NVarChar(MAX)")]
-		public string address
-		{
-			get
-			{
-				return this._address;
-			}
-			set
-			{
-				if ((this._address != value))
-				{
-					this.OnaddressChanging(value);
-					this.SendPropertyChanging();
-					this._address = value;
-					this.SendPropertyChanged("address");
-					this.OnaddressChanged();
 				}
 			}
 		}
@@ -3968,6 +3810,188 @@ namespace Pro_Salles.DAL
 					this._max_Credit = value;
 					this.SendPropertyChanged("max_Credit");
 					this.Onmax_CreditChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Company_Info")]
+	public partial class Company_Info : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _name;
+		
+		private string _mobile;
+		
+		private string _phone;
+		
+		private string _address;
+		
+		private System.Data.Linq.Binary _Logo;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OnmobileChanging(string value);
+    partial void OnmobileChanged();
+    partial void OnphoneChanging(string value);
+    partial void OnphoneChanged();
+    partial void OnaddressChanging(string value);
+    partial void OnaddressChanged();
+    partial void OnLogoChanging(System.Data.Linq.Binary value);
+    partial void OnLogoChanged();
+    #endregion
+		
+		public Company_Info()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mobile", DbType="NVarChar(MAX)")]
+		public string mobile
+		{
+			get
+			{
+				return this._mobile;
+			}
+			set
+			{
+				if ((this._mobile != value))
+				{
+					this.OnmobileChanging(value);
+					this.SendPropertyChanging();
+					this._mobile = value;
+					this.SendPropertyChanged("mobile");
+					this.OnmobileChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_phone", DbType="NVarChar(MAX)")]
+		public string phone
+		{
+			get
+			{
+				return this._phone;
+			}
+			set
+			{
+				if ((this._phone != value))
+				{
+					this.OnphoneChanging(value);
+					this.SendPropertyChanging();
+					this._phone = value;
+					this.SendPropertyChanged("phone");
+					this.OnphoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_address", DbType="NVarChar(MAX)")]
+		public string address
+		{
+			get
+			{
+				return this._address;
+			}
+			set
+			{
+				if ((this._address != value))
+				{
+					this.OnaddressChanging(value);
+					this.SendPropertyChanging();
+					this._address = value;
+					this.SendPropertyChanged("address");
+					this.OnaddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Logo", DbType="Image", UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary Logo
+		{
+			get
+			{
+				return this._Logo;
+			}
+			set
+			{
+				if ((this._Logo != value))
+				{
+					this.OnLogoChanging(value);
+					this.SendPropertyChanging();
+					this._Logo = value;
+					this.SendPropertyChanged("Logo");
+					this.OnLogoChanged();
 				}
 			}
 		}

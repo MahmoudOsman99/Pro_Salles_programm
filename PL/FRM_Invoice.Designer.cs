@@ -59,9 +59,9 @@
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lyc_post_date = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lyc_branch = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlGroup7 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -126,9 +126,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_post_date)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_branch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
@@ -279,7 +279,7 @@
             // 
             // gridControl1
             // 
-            this.gridControl1.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(11570, 7461, 11570, 7461);
+            this.gridControl1.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(14876, 9451, 14876, 9451);
             this.gridControl1.Location = new System.Drawing.Point(3, 24);
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.Margin = new System.Windows.Forms.Padding(0);
@@ -495,11 +495,12 @@
             this.checkbox_posted_to_store.Size = new System.Drawing.Size(255, 22);
             this.checkbox_posted_to_store.StyleController = this.layoutControl1;
             this.checkbox_posted_to_store.TabIndex = 4;
+            this.checkbox_posted_to_store.CheckedChanged += new System.EventHandler(this.checkbox_posted_to_store_CheckedChanged);
             // 
             // date_post_date
             // 
             this.date_post_date.EditValue = null;
-            this.date_post_date.Location = new System.Drawing.Point(844, 339);
+            this.date_post_date.Location = new System.Drawing.Point(844, 315);
             this.date_post_date.Margin = new System.Windows.Forms.Padding(2);
             this.date_post_date.Name = "date_post_date";
             this.date_post_date.Properties.Appearance.Options.UseTextOptions = true;
@@ -526,7 +527,7 @@
             // 
             // look_branch
             // 
-            this.look_branch.Location = new System.Drawing.Point(844, 315);
+            this.look_branch.Location = new System.Drawing.Point(844, 339);
             this.look_branch.Margin = new System.Windows.Forms.Padding(2);
             this.look_branch.Name = "look_branch";
             this.look_branch.Properties.Appearance.Options.UseTextOptions = true;
@@ -692,9 +693,9 @@
             // 
             this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem9,
-            this.layoutControlItem8,
+            this.lyc_post_date,
             this.layoutControlItem7,
-            this.layoutControlItem6});
+            this.lyc_branch});
             this.layoutControlGroup2.Location = new System.Drawing.Point(841, 265);
             this.layoutControlGroup2.Name = "layoutControlGroup2";
             this.layoutControlGroup2.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
@@ -711,14 +712,14 @@
             this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem9.TextVisible = false;
             // 
-            // layoutControlItem8
+            // lyc_post_date
             // 
-            this.layoutControlItem8.Control = this.date_post_date;
-            this.layoutControlItem8.Location = new System.Drawing.Point(0, 50);
-            this.layoutControlItem8.Name = "layoutControlItem8";
-            this.layoutControlItem8.Size = new System.Drawing.Size(259, 24);
-            this.layoutControlItem8.Text = "تاريخ الترحيل";
-            this.layoutControlItem8.TextSize = new System.Drawing.Size(65, 13);
+            this.lyc_post_date.Control = this.date_post_date;
+            this.lyc_post_date.Location = new System.Drawing.Point(0, 26);
+            this.lyc_post_date.Name = "lyc_post_date";
+            this.lyc_post_date.Size = new System.Drawing.Size(259, 24);
+            this.lyc_post_date.Text = "تاريخ الترحيل";
+            this.lyc_post_date.TextSize = new System.Drawing.Size(65, 13);
             // 
             // layoutControlItem7
             // 
@@ -730,14 +731,14 @@
             this.layoutControlItem7.TextLocation = DevExpress.Utils.Locations.Top;
             this.layoutControlItem7.TextSize = new System.Drawing.Size(65, 13);
             // 
-            // layoutControlItem6
+            // lyc_branch
             // 
-            this.layoutControlItem6.Control = this.look_branch;
-            this.layoutControlItem6.Location = new System.Drawing.Point(0, 26);
-            this.layoutControlItem6.Name = "layoutControlItem6";
-            this.layoutControlItem6.Size = new System.Drawing.Size(259, 24);
-            this.layoutControlItem6.Text = "أسم الفرع";
-            this.layoutControlItem6.TextSize = new System.Drawing.Size(65, 13);
+            this.lyc_branch.Control = this.look_branch;
+            this.lyc_branch.Location = new System.Drawing.Point(0, 50);
+            this.lyc_branch.Name = "lyc_branch";
+            this.lyc_branch.Size = new System.Drawing.Size(259, 24);
+            this.lyc_branch.Text = "أسم الفرع";
+            this.lyc_branch.TextSize = new System.Drawing.Size(65, 13);
             // 
             // layoutControlGroup7
             // 
@@ -1113,9 +1114,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_post_date)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_branch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
@@ -1173,9 +1174,9 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
+        private DevExpress.XtraLayout.LayoutControlItem lyc_branch;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
+        private DevExpress.XtraLayout.LayoutControlItem lyc_post_date;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem12;

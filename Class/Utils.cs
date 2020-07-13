@@ -9,6 +9,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -57,10 +58,43 @@ namespace Pro_Salles.Class
             //79
             ///if i want to declare particular( void | event )inside another void, to make the code short, you can user this structure to make the event
             ///and don't forget to give it its arguments just in case it has parameters and lamba expression =>
-            edit.ButtonPressed += (sender, e) => {
-                if (e.Button.Kind == ButtonPredefines.Clear)                
-                    ((PopupBaseEdit)sender).EditValue = null;                
+            edit.ButtonPressed += (sender, e) =>
+            {
+                if (e.Button.Kind == ButtonPredefines.Clear)
+                    ((PopupBaseEdit)sender).EditValue = null;
             };
+        }
+
+
+        public static Image Get_Image_FromByte_Array(byte[] b)
+        {
+            try
+            {
+                Image img;
+                MemoryStream ms = new MemoryStream(b, false);
+                return img = Image.FromStream(ms);
+            }
+            catch
+            {
+                return null;
+            }
+        }        
+        public static byte[] Get_Byte_From_Image(Image img)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                try
+                {
+                    if (img == null)
+                        return ms.ToArray();
+                    img.Save(ms, ImageFormat.Jpeg);
+                    return ms.ToArray();
+                }
+                catch
+                {
+                    return ms.ToArray();
+                }
+            }
         }
 
         class CustomHeaderButtonClass

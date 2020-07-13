@@ -14,15 +14,6 @@
       <Column Name="Property_Value" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
     </Type>
   </Table>
-  <Table Name="dbo.Company_Info" Member="Company_Infos">
-    <Type Name="Company_Info">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="mobile" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Drowers" Member="Drowers">
     <Type Name="Drower">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -197,6 +188,16 @@
       <Column Name="Is_Customer" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="account_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="max_Credit" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Company_Info" Member="Company_Infos">
+    <Type Name="Company_Info">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="mobile" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Logo" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
     </Type>
   </Table>
 </Database>

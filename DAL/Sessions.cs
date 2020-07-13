@@ -68,20 +68,25 @@ namespace Pro_Salles.DAL
                 Price
             }
         }
-        private static Company_Info company_info;
+        private static Company_Info _company_info;
         public static Company_Info Company_Info
         {
             get
             {
-                if (company_info == null)
+                if (_company_info == null)
                 {
                     using (var db = new Pro_SallesDataContext())
                     {
-                        company_info = db.Company_Infos.FirstOrDefault();
+                        _company_info = db.Company_Infos.FirstOrDefault();
                     }
                 }
-                return company_info;
+                return _company_info;
             }
+
+        }
+        public static void Reset_Company_Info()
+        {
+            _company_info = null;
         }
 
         private static BindingList<Store> _store;

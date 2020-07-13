@@ -1,23 +1,18 @@
-﻿using DevExpress.XtraEditors;
+﻿using System;
+using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraPrinting.Native;
-using Pro_Salles.Class;
-using Pro_Salles.DAL;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Configuration;
 using System.Data;
-using System.Data.Linq;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Pro_Salles.DAL;
+using Pro_Salles.Class;
+using static Pro_Salles.Class.Utils;
 using static Pro_Salles.Class.Master;
 
 namespace Pro_Salles.PL
@@ -101,7 +96,7 @@ namespace Pro_Salles.PL
 
             if (prod.image != null)
             {
-                prod_pic.Image = Get_Image(prod.image.ToArray());
+                prod_pic.Image = Get_Image_FromByte_Array(prod.image.ToArray());
             }
             else prod_pic.Image = null;
 
@@ -134,36 +129,8 @@ namespace Pro_Salles.PL
             look_CostCalculatingMethod.LookUp_DataSource(Master_Inventory.CostCalculatingMethod_List);
             base.Refresh_Data();
         }
-        byte[] Get_Byte_From_Image(Image img)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                try
-                {
-                    if (img == null)
-                        return ms.ToArray();
-                    img.Save(ms, ImageFormat.Jpeg);
-                    return ms.ToArray();
-                }
-                catch
-                {
-                    return ms.ToArray();
-                }
-            }
-        }                                                                              
-        Image Get_Image(byte[] b)                                                       /////////
-        {                                                                               /////////
-            try                                                                         /////////
-            {                                                                           /////////
-                Image img;                                                              /////////
-                MemoryStream ms = new MemoryStream(b, false);                           /////////
-                return img = Image.FromStream(ms);                                      /////////
-            }                                                                           /////////
-            catch                                                                       /////////
-            {                                                                           /////////
-                return null;                                                            /////////
-            }                                                                           /////////
-        }                                                                               /////////
+                                                                              
+                              
         bool Validate_Data()
         {
             if (txt_code.Text.Trim() == string.Empty)

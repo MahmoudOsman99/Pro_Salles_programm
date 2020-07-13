@@ -30,6 +30,8 @@ namespace Pro_Salles.PL
             gridView1.Appearance.Row.TextOptions.VAlignment = VertAlignment.Center;
             gridView1.DoubleClick += GridView1_DoubleClick;
             Refresh_Data();
+
+            gridView1.ColumnPanelRowHeight = 40;
         }
 
         private void GridView1_DoubleClick(object sender, EventArgs e)

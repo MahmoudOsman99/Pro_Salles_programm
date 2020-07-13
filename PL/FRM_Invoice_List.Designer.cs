@@ -48,12 +48,12 @@
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.simpleSeparator1 = new DevExpress.XtraLayout.SimpleSeparator();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.item = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lyc_from_date = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lyc_to_date = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lyc_part_type = new DevExpress.XtraLayout.LayoutControlItem();
             this.lyc_part = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lyc_branch = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lyc_drawer = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.flyoutPanel1)).BeginInit();
             this.flyoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flyoutPanelControl1)).BeginInit();
@@ -75,12 +75,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.simpleSeparator1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.item)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_from_date)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_to_date)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_part_type)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lyc_part)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_branch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_drawer)).BeginInit();
             this.SuspendLayout();
             // 
             // flyoutPanel1
@@ -308,44 +308,44 @@
             this.layoutControlGroup1.AppearanceGroup.BorderColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Success;
             this.layoutControlGroup1.AppearanceGroup.Options.UseBorderColor = true;
             this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
-            this.layoutControlItem2,
-            this.item,
+            this.lyc_from_date,
+            this.lyc_to_date,
+            this.lyc_part_type,
             this.lyc_part,
-            this.layoutControlItem5,
-            this.layoutControlItem6});
+            this.lyc_branch,
+            this.lyc_drawer});
             this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "layoutControlGroup1";
             this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(3, 3, 3, 3);
             this.layoutControlGroup1.Size = new System.Drawing.Size(311, 177);
             this.layoutControlGroup1.Text = "الفلاتر";
             // 
-            // layoutControlItem1
+            // lyc_from_date
             // 
-            this.layoutControlItem1.Control = this.date_from;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(299, 24);
-            this.layoutControlItem1.Text = "من تاريخ";
-            this.layoutControlItem1.TextSize = new System.Drawing.Size(66, 13);
+            this.lyc_from_date.Control = this.date_from;
+            this.lyc_from_date.Location = new System.Drawing.Point(0, 0);
+            this.lyc_from_date.Name = "lyc_from_date";
+            this.lyc_from_date.Size = new System.Drawing.Size(299, 24);
+            this.lyc_from_date.Text = "من تاريخ";
+            this.lyc_from_date.TextSize = new System.Drawing.Size(66, 13);
             // 
-            // layoutControlItem2
+            // lyc_to_date
             // 
-            this.layoutControlItem2.Control = this.date_to;
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 24);
-            this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(299, 24);
-            this.layoutControlItem2.Text = "حتي تاريخ";
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(66, 13);
+            this.lyc_to_date.Control = this.date_to;
+            this.lyc_to_date.Location = new System.Drawing.Point(0, 24);
+            this.lyc_to_date.Name = "lyc_to_date";
+            this.lyc_to_date.Size = new System.Drawing.Size(299, 24);
+            this.lyc_to_date.Text = "حتي تاريخ";
+            this.lyc_to_date.TextSize = new System.Drawing.Size(66, 13);
             // 
-            // item
+            // lyc_part_type
             // 
-            this.item.Control = this.look_part_type;
-            this.item.Location = new System.Drawing.Point(0, 48);
-            this.item.Name = "item";
-            this.item.Size = new System.Drawing.Size(299, 24);
-            this.item.Text = "طرف التعامل";
-            this.item.TextSize = new System.Drawing.Size(66, 13);
+            this.lyc_part_type.Control = this.look_part_type;
+            this.lyc_part_type.Location = new System.Drawing.Point(0, 48);
+            this.lyc_part_type.Name = "lyc_part_type";
+            this.lyc_part_type.Size = new System.Drawing.Size(299, 24);
+            this.lyc_part_type.Text = "طرف التعامل";
+            this.lyc_part_type.TextSize = new System.Drawing.Size(66, 13);
             // 
             // lyc_part
             // 
@@ -356,23 +356,24 @@
             this.lyc_part.Text = "---";
             this.lyc_part.TextSize = new System.Drawing.Size(66, 13);
             // 
-            // layoutControlItem5
+            // lyc_branch
             // 
-            this.layoutControlItem5.Control = this.look_branch;
-            this.layoutControlItem5.Location = new System.Drawing.Point(0, 96);
-            this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(299, 24);
-            this.layoutControlItem5.Text = "الفرغ | المخزن";
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(66, 13);
+            this.lyc_branch.Control = this.look_branch;
+            this.lyc_branch.CustomizationFormText = "الفرع | المخزن";
+            this.lyc_branch.Location = new System.Drawing.Point(0, 96);
+            this.lyc_branch.Name = "lyc_branch";
+            this.lyc_branch.Size = new System.Drawing.Size(299, 24);
+            this.lyc_branch.Text = "الفرغ | المخزن";
+            this.lyc_branch.TextSize = new System.Drawing.Size(66, 13);
             // 
-            // layoutControlItem6
+            // lyc_drawer
             // 
-            this.layoutControlItem6.Control = this.look_drawer;
-            this.layoutControlItem6.Location = new System.Drawing.Point(0, 120);
-            this.layoutControlItem6.Name = "layoutControlItem6";
-            this.layoutControlItem6.Size = new System.Drawing.Size(299, 24);
-            this.layoutControlItem6.Text = "خزنه الدفع";
-            this.layoutControlItem6.TextSize = new System.Drawing.Size(66, 13);
+            this.lyc_drawer.Control = this.look_drawer;
+            this.lyc_drawer.Location = new System.Drawing.Point(0, 120);
+            this.lyc_drawer.Name = "lyc_drawer";
+            this.lyc_drawer.Size = new System.Drawing.Size(299, 24);
+            this.lyc_drawer.Text = "خزنه الدفع";
+            this.lyc_drawer.TextSize = new System.Drawing.Size(66, 13);
             // 
             // FRM_Invoice_List
             // 
@@ -406,12 +407,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.simpleSeparator1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.item)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_from_date)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_to_date)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_part_type)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lyc_part)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_branch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lyc_drawer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -425,8 +426,8 @@
         private DevExpress.XtraEditors.DateEdit date_from;
         private DevExpress.XtraEditors.DateEdit date_to;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraLayout.LayoutControlItem lyc_from_date;
+        private DevExpress.XtraLayout.LayoutControlItem lyc_to_date;
         private DevExpress.XtraEditors.SimpleButton btn_apply;
         private DevExpress.XtraEditors.SimpleButton btn_clear_filters;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
@@ -434,14 +435,14 @@
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraLayout.SimpleSeparator simpleSeparator1;
         private DevExpress.XtraEditors.LookUpEdit look_part_type;
-        private DevExpress.XtraLayout.LayoutControlItem item;
+        private DevExpress.XtraLayout.LayoutControlItem lyc_part_type;
         private DevExpress.XtraEditors.GridLookUpEdit look_grid_part_id;
         private DevExpress.XtraGrid.Views.Grid.GridView gridLookUpEdit1View;
         private DevExpress.XtraLayout.LayoutControlItem lyc_part;
         private DevExpress.XtraEditors.LookUpEdit look_branch;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
+        private DevExpress.XtraLayout.LayoutControlItem lyc_branch;
         private DevExpress.XtraEditors.LookUpEdit look_drawer;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
+        private DevExpress.XtraLayout.LayoutControlItem lyc_drawer;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
     }
 }

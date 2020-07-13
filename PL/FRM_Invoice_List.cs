@@ -17,6 +17,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraGrid.Views.Base;
+using Pro_Salles.Reporting;
 
 namespace Pro_Salles.PL
 {
@@ -279,6 +280,9 @@ namespace Pro_Salles.PL
             gridView1.Columns["drower"].Caption = "الخزنه";
             gridView1.Columns["remaing"].Caption = "المتبقي";
             gridView1.Columns["PayStatus"].Caption = "حاله السداد";
+
+            gridView1.Columns["date"].DisplayFormat.FormatString = "dd-MM-yyyy hh:mm tt";
+            gridView1.Columns["date"].DisplayFormat.FormatType = FormatType.Custom;
         }
 
         private void btn_apply_Click(object sender, EventArgs e)
@@ -287,6 +291,31 @@ namespace Pro_Salles.PL
             //flyoutPanel1.HidePopup();
         }
 
+        public string GetFilters()
+        {
+            var str = "";
+
+            if (date_from.EditValue != null)
+                str += lyc_from_date.Text + " : " + date_from.Text;
+
+            if (date_to.EditValue != null)
+                str += " | " + lyc_to_date.Text + " : " + date_to.Text;
+
+            if (look_branch.EditValue != null)
+                str += " | " + lyc_branch.Text + " : " + look_branch.Text;
+
+            if (look_drawer.EditValue != null)
+                str += " | " + lyc_drawer.Text + " : " + look_drawer.Text;
+
+            if (look_part_type.EditValue != null)
+                str += " | " + lyc_part_type.Text + " : " + look_part_type.Text;
+
+            if (look_grid_part_id.EditValue != null)
+                str += " | " + lyc_part.Text + " : " + look_grid_part_id.Text;
+
+
+            return str;
+        }
         private void btn_clear_filters_Click(object sender, EventArgs e)
         {
             date_from.EditValue =
@@ -299,7 +328,7 @@ namespace Pro_Salles.PL
         }
         public override void Print()
         {
-            gridView1.ShowRibbonPrintPreview();
+            RPT_Grid_Print.Print(gridControl1, "كشف فواتير المبيعات", GetFilters());
             base.Print();
         }
     }

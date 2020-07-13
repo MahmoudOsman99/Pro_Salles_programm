@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using Pro_Salles.DAL;
+using Pro_Salles.Class;
 
 namespace Pro_Salles.PL
 {
@@ -49,6 +50,8 @@ namespace Pro_Salles.PL
             txt_com_phone.Text = info.phone;
             txt_com_mobile.Text = info.mobile;
             txt_com_address.Text = info.address;
+            if (info.Logo != null)
+                company_pic.Image = Utils.Get_Image_FromByte_Array(Sessions.Company_Info.Logo.ToArray());
         }
         void Save()
         {
@@ -63,8 +66,10 @@ namespace Pro_Salles.PL
             info.phone = txt_com_phone.Text;
             info.mobile = txt_com_mobile.Text;
             info.address = txt_com_address.Text;
-            //db.Company_Infos.InsertOnSubmit(info);
+            info.Logo = Utils.Get_Byte_From_Image(company_pic.Image);
+
             db.SubmitChanges();
+            Sessions.Reset_Company_Info();
             XtraMessageBox.Show("تم الحفظ بنجاح", "تم");
         }
     }

@@ -85,7 +85,8 @@ namespace Pro_Salles.PL
             string max_code;
             using (var db = new Pro_SallesDataContext())
             {
-                max_code = db.Invoice_Headers.Where(x => x.invoice_type == (int)Type).Select(x => x.code).Max();
+                max_code = db.Invoice_Headers.Where(x => x.invoice_type == (int)Type).
+                    OrderByDescending(x => x.date).Select(x => x.code ?? "1").FirstOrDefault();
             }
             return Master.Get_Next_Code(max_code);
         }
@@ -1525,6 +1526,12 @@ namespace Pro_Salles.PL
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        private void checkbox_posted_to_store_CheckedChanged(object sender, EventArgs e)
+        {
+            lyc_post_date.Visibility = checkbox_posted_to_store.Checked ?
+                DevExpress.XtraLayout.Utils.LayoutVisibility.Never : DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
         }
     }
 }

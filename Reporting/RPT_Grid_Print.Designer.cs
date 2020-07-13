@@ -40,14 +40,13 @@
             this.xrTableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTable2 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow2 = new DevExpress.XtraReports.UI.XRTableRow();
-            this.xrTableCell3 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.cell_report_name = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableRow3 = new DevExpress.XtraReports.UI.XRTableRow();
-            this.xrTableCell6 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrTableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.pic = new DevExpress.XtraReports.UI.XRPictureBox();
-            this.xrLabel1 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel2 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel3 = new DevExpress.XtraReports.UI.XRLabel();
+            this.cell_report_filter = new DevExpress.XtraReports.UI.XRTableCell();
+            this.company_pic = new DevExpress.XtraReports.UI.XRPictureBox();
+            this.lbl_company_name = new DevExpress.XtraReports.UI.XRLabel();
+            this.lbl_company_address = new DevExpress.XtraReports.UI.XRLabel();
+            this.lbl_company_mobile = new DevExpress.XtraReports.UI.XRLabel();
             this.printableComponentContainer1 = new DevExpress.XtraReports.UI.PrintableComponentContainer();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
@@ -56,10 +55,10 @@
             // TopMargin
             // 
             this.TopMargin.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
-            this.xrLabel3,
-            this.xrLabel2,
-            this.xrLabel1,
-            this.pic});
+            this.lbl_company_mobile,
+            this.lbl_company_address,
+            this.lbl_company_name,
+            this.company_pic});
             this.TopMargin.HeightF = 146.2699F;
             this.TopMargin.Name = "TopMargin";
             // 
@@ -83,7 +82,7 @@
             // 
             this.ReportHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrTable2});
-            this.ReportHeader.HeightF = 94.32542F;
+            this.ReportHeader.HeightF = 98.93478F;
             this.ReportHeader.Name = "ReportHeader";
             // 
             // xrPageInfo1
@@ -156,119 +155,111 @@
             this.xrTable2.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow2,
             this.xrTableRow3});
-            this.xrTable2.SizeF = new System.Drawing.SizeF(776.6118F, 94.32542F);
+            this.xrTable2.SizeF = new System.Drawing.SizeF(776.6118F, 98.93478F);
             this.xrTable2.StylePriority.UseBorders = false;
             // 
             // xrTableRow2
             // 
             this.xrTableRow2.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
-            this.xrTableCell3});
+            this.cell_report_name});
             this.xrTableRow2.Name = "xrTableRow2";
             this.xrTableRow2.Weight = 1D;
             // 
-            // xrTableCell3
+            // cell_report_name
             // 
-            this.xrTableCell3.CanGrow = false;
-            this.xrTableCell3.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold);
-            this.xrTableCell3.Multiline = true;
-            this.xrTableCell3.Name = "xrTableCell3";
-            this.xrTableCell3.Padding = new DevExpress.XtraPrinting.PaddingInfo(15, 15, 15, 15, 100F);
-            this.xrTableCell3.StylePriority.UseFont = false;
-            this.xrTableCell3.StylePriority.UsePadding = false;
-            this.xrTableCell3.StylePriority.UseTextAlignment = false;
-            this.xrTableCell3.Text = "أسم التقرير";
-            this.xrTableCell3.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell3.Weight = 3D;
+            this.cell_report_name.CanGrow = false;
+            this.cell_report_name.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold);
+            this.cell_report_name.Multiline = true;
+            this.cell_report_name.Name = "cell_report_name";
+            this.cell_report_name.Padding = new DevExpress.XtraPrinting.PaddingInfo(15, 15, 15, 15, 100F);
+            this.cell_report_name.StylePriority.UseFont = false;
+            this.cell_report_name.StylePriority.UsePadding = false;
+            this.cell_report_name.StylePriority.UseTextAlignment = false;
+            this.cell_report_name.Text = "أسم التقرير";
+            this.cell_report_name.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            this.cell_report_name.Weight = 3D;
             // 
             // xrTableRow3
             // 
             this.xrTableRow3.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
-            this.xrTableCell6,
-            this.xrTableCell8});
+            this.cell_report_filter});
             this.xrTableRow3.Name = "xrTableRow3";
             this.xrTableRow3.Weight = 1D;
             // 
-            // xrTableCell6
+            // cell_report_filter
             // 
-            this.xrTableCell6.CanGrow = false;
-            this.xrTableCell6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
-            this.xrTableCell6.ForeColor = System.Drawing.Color.Gray;
-            this.xrTableCell6.Multiline = true;
-            this.xrTableCell6.Name = "xrTableCell6";
-            this.xrTableCell6.StylePriority.UseFont = false;
-            this.xrTableCell6.StylePriority.UseForeColor = false;
-            this.xrTableCell6.StylePriority.UseTextAlignment = false;
-            this.xrTableCell6.Text = "الفلاتر";
-            this.xrTableCell6.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell6.Weight = 0.94033967277317054D;
+            this.cell_report_filter.CanGrow = false;
+            this.cell_report_filter.Font = new System.Drawing.Font("Arial", 11F);
+            this.cell_report_filter.ForeColor = System.Drawing.Color.Gray;
+            this.cell_report_filter.Multiline = true;
+            this.cell_report_filter.Name = "cell_report_filter";
+            this.cell_report_filter.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 10, 5, 5, 100F);
+            this.cell_report_filter.StylePriority.UseFont = false;
+            this.cell_report_filter.StylePriority.UseForeColor = false;
+            this.cell_report_filter.StylePriority.UsePadding = false;
+            this.cell_report_filter.StylePriority.UseTextAlignment = false;
+            this.cell_report_filter.Text = "الفلاتر";
+            this.cell_report_filter.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+            this.cell_report_filter.Weight = 3.0000000000000004D;
             // 
-            // xrTableCell8
+            // company_pic
             // 
-            this.xrTableCell8.CanGrow = false;
-            this.xrTableCell8.Multiline = true;
-            this.xrTableCell8.Name = "xrTableCell8";
-            this.xrTableCell8.StylePriority.UseTextAlignment = false;
-            this.xrTableCell8.Text = "xrTableCell8";
-            this.xrTableCell8.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell8.Weight = 2.0596603272268297D;
+            this.company_pic.AnchorHorizontal = ((DevExpress.XtraReports.UI.HorizontalAnchorStyles)((DevExpress.XtraReports.UI.HorizontalAnchorStyles.Left | DevExpress.XtraReports.UI.HorizontalAnchorStyles.Right)));
+            this.company_pic.ImageAlignment = DevExpress.XtraPrinting.ImageAlignment.MiddleCenter;
+            this.company_pic.LocationFloat = new DevExpress.Utils.PointFloat(323.5F, 18.96828F);
+            this.company_pic.Name = "company_pic";
+            this.company_pic.SizeF = new System.Drawing.SizeF(130F, 107.5F);
+            this.company_pic.Sizing = DevExpress.XtraPrinting.ImageSizeMode.ZoomImage;
             // 
-            // pic
+            // lbl_company_name
             // 
-            this.pic.AnchorHorizontal = ((DevExpress.XtraReports.UI.HorizontalAnchorStyles)((DevExpress.XtraReports.UI.HorizontalAnchorStyles.Left | DevExpress.XtraReports.UI.HorizontalAnchorStyles.Right)));
-            this.pic.LocationFloat = new DevExpress.Utils.PointFloat(323.5F, 18.96828F);
-            this.pic.Name = "pic";
-            this.pic.SizeF = new System.Drawing.SizeF(130F, 107.5F);
-            this.pic.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
+            this.lbl_company_name.AnchorHorizontal = DevExpress.XtraReports.UI.HorizontalAnchorStyles.Right;
+            this.lbl_company_name.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Bold);
+            this.lbl_company_name.LocationFloat = new DevExpress.Utils.PointFloat(10.23413F, 18.96828F);
+            this.lbl_company_name.Multiline = true;
+            this.lbl_company_name.Name = "lbl_company_name";
+            this.lbl_company_name.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.lbl_company_name.SizeF = new System.Drawing.SizeF(234.3774F, 23F);
+            this.lbl_company_name.StylePriority.UseFont = false;
+            this.lbl_company_name.StylePriority.UseTextAlignment = false;
+            this.lbl_company_name.Text = "أسم الشركه:";
+            this.lbl_company_name.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
-            // xrLabel1
+            // lbl_company_address
             // 
-            this.xrLabel1.AnchorHorizontal = DevExpress.XtraReports.UI.HorizontalAnchorStyles.Right;
-            this.xrLabel1.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Bold);
-            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(10.23413F, 18.96828F);
-            this.xrLabel1.Multiline = true;
-            this.xrLabel1.Name = "xrLabel1";
-            this.xrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel1.SizeF = new System.Drawing.SizeF(234.3774F, 23F);
-            this.xrLabel1.StylePriority.UseFont = false;
-            this.xrLabel1.StylePriority.UseTextAlignment = false;
-            this.xrLabel1.Text = "أسم الشركه:";
-            this.xrLabel1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+            this.lbl_company_address.AnchorHorizontal = DevExpress.XtraReports.UI.HorizontalAnchorStyles.Right;
+            this.lbl_company_address.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Bold);
+            this.lbl_company_address.LocationFloat = new DevExpress.Utils.PointFloat(11.19806F, 60.18212F);
+            this.lbl_company_address.Multiline = true;
+            this.lbl_company_address.Name = "lbl_company_address";
+            this.lbl_company_address.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.lbl_company_address.SizeF = new System.Drawing.SizeF(233.4135F, 23F);
+            this.lbl_company_address.StylePriority.UseFont = false;
+            this.lbl_company_address.StylePriority.UseTextAlignment = false;
+            this.lbl_company_address.Text = "عنوان الشركه:";
+            this.lbl_company_address.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
-            // xrLabel2
+            // lbl_company_mobile
             // 
-            this.xrLabel2.AnchorHorizontal = DevExpress.XtraReports.UI.HorizontalAnchorStyles.Right;
-            this.xrLabel2.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Bold);
-            this.xrLabel2.LocationFloat = new DevExpress.Utils.PointFloat(11.19806F, 60.18212F);
-            this.xrLabel2.Multiline = true;
-            this.xrLabel2.Name = "xrLabel2";
-            this.xrLabel2.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel2.SizeF = new System.Drawing.SizeF(233.4135F, 23F);
-            this.xrLabel2.StylePriority.UseFont = false;
-            this.xrLabel2.StylePriority.UseTextAlignment = false;
-            this.xrLabel2.Text = "عنوان الشركه:";
-            this.xrLabel2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            // 
-            // xrLabel3
-            // 
-            this.xrLabel3.AnchorHorizontal = DevExpress.XtraReports.UI.HorizontalAnchorStyles.Right;
-            this.xrLabel3.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Bold);
-            this.xrLabel3.LocationFloat = new DevExpress.Utils.PointFloat(10.98389F, 103.4683F);
-            this.xrLabel3.Multiline = true;
-            this.xrLabel3.Name = "xrLabel3";
-            this.xrLabel3.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel3.SizeF = new System.Drawing.SizeF(233.8419F, 23F);
-            this.xrLabel3.StylePriority.UseFont = false;
-            this.xrLabel3.StylePriority.UseTextAlignment = false;
-            this.xrLabel3.Text = "الهاتف:";
-            this.xrLabel3.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+            this.lbl_company_mobile.AnchorHorizontal = DevExpress.XtraReports.UI.HorizontalAnchorStyles.Right;
+            this.lbl_company_mobile.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Bold);
+            this.lbl_company_mobile.LocationFloat = new DevExpress.Utils.PointFloat(10.98389F, 103.4683F);
+            this.lbl_company_mobile.Multiline = true;
+            this.lbl_company_mobile.Name = "lbl_company_mobile";
+            this.lbl_company_mobile.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.lbl_company_mobile.SizeF = new System.Drawing.SizeF(233.8419F, 23F);
+            this.lbl_company_mobile.StylePriority.UseFont = false;
+            this.lbl_company_mobile.StylePriority.UseTextAlignment = false;
+            this.lbl_company_mobile.Text = "الهاتف:";
+            this.lbl_company_mobile.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // printableComponentContainer1
             // 
             this.printableComponentContainer1.AnchorHorizontal = ((DevExpress.XtraReports.UI.HorizontalAnchorStyles)((DevExpress.XtraReports.UI.HorizontalAnchorStyles.Left | DevExpress.XtraReports.UI.HorizontalAnchorStyles.Right)));
             this.printableComponentContainer1.AnchorVertical = ((DevExpress.XtraReports.UI.VerticalAnchorStyles)((DevExpress.XtraReports.UI.VerticalAnchorStyles.Top | DevExpress.XtraReports.UI.VerticalAnchorStyles.Bottom)));
-            this.printableComponentContainer1.LocationFloat = new DevExpress.Utils.PointFloat(0.252377F, 0F);
+            this.printableComponentContainer1.LocationFloat = new DevExpress.Utils.PointFloat(0.252377F, 9.999998F);
             this.printableComponentContainer1.Name = "printableComponentContainer1";
-            this.printableComponentContainer1.SizeF = new System.Drawing.SizeF(776.6118F, 100F);
+            this.printableComponentContainer1.SizeF = new System.Drawing.SizeF(776.6118F, 90.00002F);
             // 
             // RPT_Grid_Print
             // 
@@ -308,14 +299,13 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell2;
         private DevExpress.XtraReports.UI.XRTable xrTable2;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow2;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell3;
+        private DevExpress.XtraReports.UI.XRTableCell cell_report_name;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow3;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell6;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell8;
-        private DevExpress.XtraReports.UI.XRPictureBox pic;
-        private DevExpress.XtraReports.UI.XRLabel xrLabel3;
-        private DevExpress.XtraReports.UI.XRLabel xrLabel2;
-        private DevExpress.XtraReports.UI.XRLabel xrLabel1;
+        private DevExpress.XtraReports.UI.XRTableCell cell_report_filter;
+        private DevExpress.XtraReports.UI.XRPictureBox company_pic;
+        private DevExpress.XtraReports.UI.XRLabel lbl_company_mobile;
+        private DevExpress.XtraReports.UI.XRLabel lbl_company_address;
+        private DevExpress.XtraReports.UI.XRLabel lbl_company_name;
         private DevExpress.XtraReports.UI.PrintableComponentContainer printableComponentContainer1;
     }
 }
