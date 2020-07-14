@@ -3,17 +3,13 @@ using DevExpress.Utils;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraEditors.Repository;
-using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraLayout;
+using DevExpress.XtraRichEdit.Import.OpenXml;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Pro_Salles.Class
@@ -44,6 +40,23 @@ namespace Pro_Salles.Class
         //        view.DeleteSelectedRows();
         //    }
         //}
+
+        public static string ApplicationLayoutPath
+        {
+            get
+            {
+                //89
+                var MyDocuments = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                var AppName = "Pro Sales";
+                var path = Path.Combine(MyDocuments, AppName, "LayOuts");
+
+                Directory.CreateDirectory(path);
+
+                return path;
+            }
+
+        }
+
 
         public static void AddButtonToGroupHeader(this GridView view, SvgImage img, EventHandler eventHandler)
         {
@@ -78,7 +91,7 @@ namespace Pro_Salles.Class
             {
                 return null;
             }
-        }        
+        }
         public static byte[] Get_Byte_From_Image(Image img)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -96,6 +109,50 @@ namespace Pro_Salles.Class
                 }
             }
         }
+
+        //89
+        public static void SaveLayOut(this GridView view, string parentName)
+        {
+            var filePath = $"{ApplicationLayoutPath}\\{parentName}_{view.Name}";
+            view.SaveLayoutToXml(filePath);
+        }
+
+        public static void RestoreLayOut(this GridView view, string parentName)
+        {
+            try
+            {
+                var filePath = $"{ApplicationLayoutPath}\\{parentName}_{view.Name}";
+                if (File.Exists(filePath))
+                    view.RestoreLayoutFromXml(filePath);
+            }
+            catch (Exception)
+            {
+                //XtraMessageBox.Show(e.Message);
+            }
+        }
+
+        public static void SaveLayOut(this LayoutControl control, string parentName)
+        {
+            var filePath = $"{ApplicationLayoutPath}\\{parentName}_{control.Name}";
+            control.SaveLayoutToXml(filePath);
+        }
+
+        public static void RestoreLayOut(this LayoutControl control, string parentName)
+        {
+            try
+            {
+                var filePath = $"{ApplicationLayoutPath}\\{parentName}_{control.Name}";
+                if (File.Exists(filePath))
+                    control.RestoreLayoutFromXml(filePath);
+            }
+            catch
+            {
+
+            }
+        }
+
+
+
 
         class CustomHeaderButtonClass
         {

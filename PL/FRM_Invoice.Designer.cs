@@ -279,7 +279,7 @@
             // 
             // gridControl1
             // 
-            this.gridControl1.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(14876, 9451, 14876, 9451);
+            this.gridControl1.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(19126, 11971, 19126, 11971);
             this.gridControl1.Location = new System.Drawing.Point(3, 24);
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.Margin = new System.Windows.Forms.Padding(0);
@@ -511,6 +511,8 @@
             this.date_post_date.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.date_post_date.Properties.CalendarView = DevExpress.XtraEditors.Repository.CalendarView.Fluent;
+            this.date_post_date.Properties.Mask.EditMask = "dd/MM/yyyy hh:mm tt";
+            this.date_post_date.Properties.Mask.UseMaskAsDisplayFormat = true;
             this.date_post_date.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.False;
             this.date_post_date.Size = new System.Drawing.Size(187, 20);
             this.date_post_date.StyleController = this.layoutControl1;
@@ -573,6 +575,8 @@
             this.date_date.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.date_date.Properties.CalendarView = DevExpress.XtraEditors.Repository.CalendarView.Fluent;
+            this.date_date.Properties.Mask.EditMask = "dd/MM/yyyy hh:mm tt";
+            this.date_date.Properties.Mask.UseMaskAsDisplayFormat = true;
             this.date_date.Properties.VistaDisplayMode = DevExpress.Utils.DefaultBoolean.False;
             this.date_date.Size = new System.Drawing.Size(187, 20);
             this.date_date.StyleController = this.layoutControl1;
@@ -599,8 +603,7 @@
             this.look_grid_part_id.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.look_grid_part_id.Properties.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             this.look_grid_part_id.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.look_grid_part_id.Properties.NullText = "";
             this.look_grid_part_id.Properties.PopupView = this.gridLookUpEdit1View;
             this.look_grid_part_id.Size = new System.Drawing.Size(187, 20);

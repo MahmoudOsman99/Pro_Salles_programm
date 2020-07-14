@@ -1,20 +1,27 @@
 ﻿using DevExpress.XtraEditors;
 using Pro_Salles.DAL;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Pro_Salles.PL
 {
     public partial class FRM_Customer_Vendor : FRM_Master
     {
-        DAL.CustomersAndVendor Cust_Vend;
+        bool CloseAfterSave;
+
+        public static int AddNew(bool is_customer)
+        {
+            FRM_Customer_Vendor frm = new FRM_Customer_Vendor(is_customer);
+            frm.CloseAfterSave = true;
+            FRM_MAIN.Open_Form(frm, true);
+            return frm.Cust_Vend.ID;
+        }
+
+
+        CustomersAndVendor Cust_Vend;
         bool Is_Customer;
         public FRM_Customer_Vendor(bool is_customer)
         {
@@ -108,7 +115,11 @@ namespace Pro_Salles.PL
             db.SubmitChanges();//هنا عملت حفظ عشان الاسم بتسجل و الرقم بتاع الحساب يزيد و بالتالى رقم الحساب بتاع العميل هيكون من الحساب اللي رقمه زاد لوحده بعد الحفظ
             Cust_Vend.account_id = acc.ID;//هنا بعد ما الرقم زاد و عايز العميل ياخد رقم الحساب بتاعه يبقي ياخده عادي لانه زاد و اتحفظ
             db.SubmitChanges();//هنا انت حفظت البيانات تاني بعد ما العميل اخد رقم حسابه
+
             base.Save();
+
+            if (CloseAfterSave == true)
+                this.Close();
         }
         bool Data_Valid()
         {

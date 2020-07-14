@@ -28,7 +28,7 @@ namespace Pro_Salles.Class
 
             public string Name { get; set; }
         }
-        public static List<Value_And_ID> Product_Types_List = new List<Value_And_ID> { 
+        public static List<Value_And_ID> Product_Types_List = new List<Value_And_ID> {
             new Value_And_ID { ID = (int)Product_Type.Inventory, Name = "مخزني" },
             new Value_And_ID { ID = (int)Product_Type.Service, Name = "خدمي"}
         };
@@ -249,7 +249,7 @@ namespace Pro_Salles.Class
             look.Properties.DataSource = datasource;
             look.Properties.DisplayMember = displaymember;
             look.Properties.ValueMember = valuemember;
-            
+
             look.Properties.ValidateOnEnterKey = true;
             look.Properties.AllowNullInput = DefaultBoolean.False;//to don't let the user put null values
             look.Properties.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;//To make the size fit to the fields
@@ -282,6 +282,24 @@ namespace Pro_Salles.Class
             }
             return true;
         }
+
+
+        public static bool IsValueNotLessThanZero(this SpinEdit edit, bool setError = true)
+        {
+            if (setError && edit.Value < 0)
+                edit.ErrorText = "لا يمكن للقيمه ان تكون اصغر من الصفر";
+            return edit.Value >= 0;
+        }
+
+        public static bool IsValueBiggerThanZero(this SpinEdit edit, bool setError = true)
+        {
+            if (setError && edit.Value <= 0)
+                edit.ErrorText = "يجب ان تكون القيمه اكبر من الصفر";
+            return edit.Value > 0;
+        }
+
+
+
         /// <summary>
         /// This method makes check if the lookupedit doesn't equal null || or || if the lookupedit value equals zero
         /// </summary>

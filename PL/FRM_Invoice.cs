@@ -1,5 +1,5 @@
 ﻿using DevExpress.Utils;
-using DevExpress.Utils.Extensions;
+using DevExpress.XtraBars.Docking2010.DragEngine;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
@@ -7,10 +7,7 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraLayout.Helpers;
-using DevExpress.XtraPrinting.Preview.Native;
-using DevExpress.XtraReports.UI;
-using Microsoft.Win32;
+using DevExpress.XtraLayout;
 using Pro_Salles.Class;
 using Pro_Salles.DAL;
 using Pro_Salles.Reporting;
@@ -19,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -145,6 +141,12 @@ namespace Pro_Salles.PL
             Number_Of_Erorrs += look_drower.IsEditValueValid() ? 0 : 1;
             Number_Of_Erorrs += look_grid_part_id.IsEditValueValidAndNotZero() ? 0 : 1;
 
+            Number_Of_Erorrs += spin_discount_value.IsValueNotLessThanZero() ? 0 : 1;
+            Number_Of_Erorrs += spin_expences.IsValueNotLessThanZero() ? 0 : 1;
+            Number_Of_Erorrs += spin_paid.IsValueNotLessThanZero() ? 0 : 1;
+            Number_Of_Erorrs += spin_tax_value.IsValueNotLessThanZero() ? 0 : 1;
+            //Number_Of_Erorrs += spin_discount_value.IsValueBiggerThanZero() ? 0 : 1;
+
             Number_Of_Erorrs += date_date.IsDateTimeValid() ? 0 : 1;
 
             if (checkbox_posted_to_store.Checked)
@@ -225,6 +227,7 @@ namespace Pro_Salles.PL
                     this.Name = Screens.Add_Purchase_Invoice.Screen_Name;
                     checkbox_posted_to_store.Enabled = false;
                     checkbox_posted_to_store.Checked = true;
+                    gridView1.Columns[nameof(v.store_id)].OptionsColumn.AllowFocus = false;
                     break;
                 case Master.Invoice_Type.Salles:
                     this.Text = "   فاتوره مبيعات ";
@@ -239,6 +242,8 @@ namespace Pro_Salles.PL
                 default:
                     throw new NotImplementedException();
             }
+
+
 
             //look_branch.Properties.Columns[nameof(store.Cost_Of_Sold_Goods_Account_ID)].Visible = false;
             //look_branch.Properties.Columns[nameof(store.Discount_Allowed_Account_ID)].Visible = false;
@@ -354,6 +359,8 @@ namespace Pro_Salles.PL
                 MaxWidth = 90,
             });
 
+
+
             gridView1.Columns[nameof(v.item_id)].Caption = "المنتج";
             gridView1.Columns[nameof(v.item_qty)].Caption = "الكميه";
             gridView1.Columns[nameof(v.item_unit_id)].Caption = "وحده القياس";
@@ -459,8 +466,28 @@ namespace Pro_Salles.PL
             this.KeyDown += FRM_Invoice_KeyDown;
             #endregion
 
-
             ReadUserSettings();
+            gridView1.RestoreLayOut(this.Name);
+            layoutControl1.RestoreLayOut(this.Name);
+
+            //90
+            btn_customize_Layout.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
+            btn_customize_Layout.ItemClick += (ss, ee) => { layoutControl1.ShowCustomizationForm(); };
+            layoutControl1.CustomizationMode = DevExpress.XtraLayout.CustomizationModes.Quick;
+            layoutControl1.OptionsCustomizationForm.DefaultPage = DevExpress.XtraLayout.CustomizationPage.LayoutTreeView;
+            layoutControl1.OptionsCustomizationForm.ShowSaveButton =
+            layoutControl1.OptionsCustomizationForm.ShowLoadButton = false;
+            //layoutControl1.OptionsCustomizationForm.ShowPropertyGrid = true;
+            foreach (BaseLayoutItem item in layoutControl1.Items)            
+                item.AllowHide = false;           
+
+            this.FormClosing += FRM_Invoice_FormClosing;
+        }
+
+        private void FRM_Invoice_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            gridView1.SaveLayOut(this.Name);
+            layoutControl1.SaveLayOut(this.Name);
         }
 
         AccountBalance accountBalance;
@@ -470,22 +497,22 @@ namespace Pro_Salles.PL
             if (id != 0)
             {
                 CustomersAndVendor account;
-                if (look_part_type.EditValue.Equals((byte)Master.Part_Type.Vendor))
+                if (look_part_type.EditValue.Equals((int)Master.Part_Type.Vendor))
                 {
-                    account = Sessions.Vendors.SingleOrDefault(x => x.ID == id);
+                    account = Sessions.Vendors.Single(x => x.ID == id);
                 }
                 else
                 {
-                    account = Sessions.Customers.SingleOrDefault(x => x.ID == id);
+                    account = Sessions.Customers.Single(x => x.ID == id);
                 }
-                if (account != null)
-                {
-                    txt_part_address.Text = account.address;
-                    spin_part_maxCredit.EditValue = Convert.ToDouble(account.max_Credit);
-                    txt_part_phone.Text = account.phone;
-                    accountBalance = GetAccountBalance(account.account_id);
-                    txt_part_balance.Text = accountBalance.Balance;
-                }
+                //if (account != null)
+                //{
+                txt_part_address.Text = account.address;
+                spin_part_maxCredit.EditValue = Convert.ToDouble(account.max_Credit);
+                txt_part_phone.Text = account.phone;
+                accountBalance = GetAccountBalance(account.account_id);
+                txt_part_balance.Text = accountBalance.Balance;
+                //}
             }
             else
             {
@@ -975,12 +1002,11 @@ namespace Pro_Salles.PL
         {
             if (e.Button.Kind == DevExpress.XtraEditors.Controls.ButtonPredefines.Plus)
             {
-                //////////////////////Don't forget to think of this step
-                using (var frm = new FRM_Customer_Vendor(Convert.ToInt32(look_part_type.EditValue) == (int)Master.Part_Type.Customer))
-                {
-                    FRM_MAIN.Open_Form(frm, true);
-                    Refresh_Data();
-                }
+                //88
+                var isCustomer = Convert.ToInt32(look_part_type.EditValue) == (int)Master.Part_Type.Customer;
+                var newId = FRM_Customer_Vendor.AddNew(isCustomer);
+                if (newId != 0)
+                    look_grid_part_id.EditValue = newId;
             }
         }
         #endregion
@@ -1306,6 +1332,43 @@ namespace Pro_Salles.PL
 
             if (InsertCostOsSoldGoodsJournal)
             {
+
+                //86
+                if (items.Where(x => x.store_id != Invoice.branch).Count() > 0)
+                {
+                    //The word distinct chooses the diffrent stores oly, and remove the repititev
+                    var otherStores = items.Where(x => x.store_id != Invoice.branch).Select(s => s.store_id).Distinct();
+
+                    foreach (var otherStore in otherStores)
+                    {
+
+                        var Cost = items.Where(x => x.store_id == otherStore).Sum(x => x.total_cost_value);
+
+                        db.Journals.InsertOnSubmit(new Journal() // CostOfSolds
+                        {
+                            Account_ID = store_journal.Inventory_Account_ID,
+                            Code = 54545,
+                            Credit = (IsPartCredit) ? Cost : 0,
+                            Debit = (!IsPartCredit) ? Cost : 0,
+                            Insert_Date = Invoice.date,
+                            Notes = msg = " - نقل البضاعه للبيع",
+                            Source_ID = Invoice.ID,
+                            Source_Type = (byte)Type
+                        });
+                        db.Journals.InsertOnSubmit(new Journal() // CostOfSolds
+                        {
+                            Account_ID = db.Stores.Single(x => x.ID == otherStore).Inventory_Account_ID,
+                            Code = 54545,
+                            Credit = (!IsPartCredit) ? Cost : 0,
+                            Debit = (IsPartCredit) ? Cost : 0,
+                            Insert_Date = Invoice.date,
+                            Notes = msg = " - نقل البضاعه للبيع",
+                            Source_ID = Invoice.ID,
+                            Source_Type = (byte)Type
+                        });
+                    }
+                }
+
                 var TotalCost = items.Sum(x => x.total_cost_value);
 
                 db.Journals.InsertOnSubmit(new Journal() // CostOfSolds

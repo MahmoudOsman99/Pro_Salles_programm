@@ -35,6 +35,7 @@
             this.btn_new = new DevExpress.XtraBars.BarButtonItem();
             this.btn_delete = new DevExpress.XtraBars.BarButtonItem();
             this.btn_print = new DevExpress.XtraBars.BarButtonItem();
+            this.btn_customize_Layout = new DevExpress.XtraBars.BarButtonItem();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -55,8 +56,9 @@
             this.btn_save,
             this.btn_new,
             this.btn_delete,
-            this.btn_print});
-            this.barManager1.MaxItemId = 8;
+            this.btn_print,
+            this.btn_customize_Layout});
+            this.barManager1.MaxItemId = 9;
             // 
             // bar1
             // 
@@ -68,7 +70,8 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btn_save, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btn_new, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btn_delete, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btn_print, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btn_print, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btn_customize_Layout, true)});
             this.bar1.Text = "Tools";
             // 
             // btn_save
@@ -105,6 +108,15 @@
             this.btn_print.Name = "btn_print";
             this.btn_print.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
             this.btn_print.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_print_ItemClick);
+            // 
+            // btn_customize_Layout
+            // 
+            this.btn_customize_Layout.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.btn_customize_Layout.Caption = "تعديل الشاشه";
+            this.btn_customize_Layout.Id = 8;
+            this.btn_customize_Layout.ImageOptions.SvgImage = global::Pro_Salles.Properties.Resources.manual;
+            this.btn_customize_Layout.Name = "btn_customize_Layout";
+            this.btn_customize_Layout.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
             // 
             // barDockControlTop
             // 
@@ -177,5 +189,6 @@
         public DevExpress.XtraBars.BarButtonItem btn_delete;
         public DevExpress.XtraBars.BarButtonItem btn_print;
         private DevExpress.XtraBars.BarManager barManager1;
+        public DevExpress.XtraBars.BarButtonItem btn_customize_Layout;
     }
 }

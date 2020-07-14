@@ -263,6 +263,16 @@ namespace Pro_Salles.Properties {
         /// <summary>
         ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
         /// </summary>
+        internal static DevExpress.Utils.Svg.SvgImage manual {
+            get {
+                object obj = ResourceManager.GetObject("manual", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
         internal static DevExpress.Utils.Svg.SvgImage menu {
             get {
                 object obj = ResourceManager.GetObject("menu", resourceCulture);
