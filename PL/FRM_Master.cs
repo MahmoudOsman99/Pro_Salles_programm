@@ -83,6 +83,7 @@ namespace Pro_Salles.PL
 
         public static bool CheckActionAuthorization(string formName, Master.Actions actions, User user = null)
         {
+            //return true;
             if (user == null) user = Sessions.CurrentUser;
             if (user.User_Type == (byte)Master.User_Type.Admin)
                 return true;
@@ -160,6 +161,11 @@ namespace Pro_Salles.PL
         {
             return (XtraMessageBox.Show("هل تريد الحذف ؟", caption: "تأكيد الحذف"
                 , buttons: MessageBoxButtons.YesNo, icon: MessageBoxIcon.Question) == DialogResult.Yes);
+        }
+
+        private void btn_refresh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Refresh_Data();
         }
     }
 }

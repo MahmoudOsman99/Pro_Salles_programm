@@ -152,27 +152,27 @@ namespace Pro_Salles.Class
             Actions = new List<Master.Actions>() { Master.Actions.Show },
             Screen_Caption = "المشتريات"
         };
-        public static Screens_Access_Profile Add_Purchase_Invoice = new Screens_Access_Profile("FRM_Pruchase_Invoice", Purchase)
+        public static Screens_Access_Profile Add_Purchase_Invoice = new Screens_Access_Profile("FRM_Purchase_Invoice", Purchase)
         {
             Screen_Caption = "اضافه فاتوره مشتريات"
         };
-        public static Screens_Access_Profile View_Purchase_Invoices = new Screens_Access_Profile("FRM_Purchase_Invoices_List", Purchase)
+        public static Screens_Access_Profile View_Purchase_Invoices = new Screens_Access_Profile("FRM_Purchase_Invoice_List", Purchase)
         {
             Screen_Caption = "عرض فواتير المشتريات"
         };
 
 
 
-        public static Screens_Access_Profile Salles = new Screens_Access_Profile("elm_Salles")
+        public static Screens_Access_Profile Salles = new Screens_Access_Profile("elm_Sales")
         {
             Actions = new List<Master.Actions>() { Master.Actions.Show },
             Screen_Caption = "المبيعات"
         };
-        public static Screens_Access_Profile Add_Salles_Invoice = new Screens_Access_Profile("FRM_Salle_Invoice", Salles)
+        public static Screens_Access_Profile Add_Salles_Invoice = new Screens_Access_Profile("FRM_Sales_Invoice", Salles)
         {         
             Screen_Caption = "اضافه فاتوره مبيعات"
         };
-        public static Screens_Access_Profile View_Sales_Invoices = new Screens_Access_Profile("FRM_Sales_Invoices_List", Salles)
+        public static Screens_Access_Profile View_Sales_Invoices = new Screens_Access_Profile("FRM_Sales_Invoice_List", Salles)
         {
             Screen_Caption = "عرض فواتير المبيعات"
         };
@@ -185,6 +185,7 @@ namespace Pro_Salles.Class
         };
         public static Screens_Access_Profile Add_User_Settings_Profile = new Screens_Access_Profile(nameof(FRM_User_Settings_Profile), Settings)
         {
+            Actions = new List<Master.Actions>() { Master.Actions.Show, Master.Actions.Add, Master.Actions.Delete, Master.Actions.Edit, Master.Actions.Open },
             Screen_Caption = "اضافه نموذج اعدادات"
         };
         public static Screens_Access_Profile View_User_Settings_Profiles = new Screens_Access_Profile(nameof(FRM_User_Settings_Profile_List), Settings)

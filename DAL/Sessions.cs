@@ -20,7 +20,7 @@ namespace Pro_Salles.DAL
         {
             public static int Drower { get => 5; }
             public static int Customer { get => 1; }
-            public static int Vendor { get => 1; }
+            public static int Vendor { get => 2; }
             public static int Store { get => 8; }
             public static int Raw_Store { get => 8; }
             public static int Discount_Allowed_Account { get => 1021; }

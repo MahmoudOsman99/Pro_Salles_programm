@@ -1,5 +1,4 @@
 ﻿using DevExpress.Utils;
-using DevExpress.XtraBars.Docking2010.DragEngine;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
@@ -26,6 +25,7 @@ namespace Pro_Salles.PL
     public partial class FRM_Invoice : FRM_Master
     {
         Pro_SallesDataContext generaldb;
+        CustomersAndVendor cust;
         Invoice_Detail v;
         Invoice_Header Invoice;
         Store store;
@@ -74,7 +74,6 @@ namespace Pro_Salles.PL
 
             look_grid_part_id.EditValueChanged += Look_grid_part_id_EditValueChanged;
         }
-
 
         string Get_Next_Invoice_Code()
         {
@@ -125,6 +124,16 @@ namespace Pro_Salles.PL
             gridView1.AddNewRow();
             gridView1.UpdateCurrentRow();
         }
+        bool IsCodeExists()
+        {
+            using (var db = new Pro_SallesDataContext())
+            {
+                var data = db.Invoice_Headers.Where(x => x.ID != Invoice.ID && x.invoice_type == (byte)Type && x.code == txt_code.Text).Count();
+                if (data > 0)
+                    txt_code.ErrorText = "هذا الكود متكرر";
+                return (data > 0);
+            }
+        }
         public override bool Is_Data_Valide()
         {
             int Number_Of_Erorrs = 0;
@@ -140,6 +149,19 @@ namespace Pro_Salles.PL
             Number_Of_Erorrs += look_branch.IsEditValueValid() ? 0 : 1;
             Number_Of_Erorrs += look_drower.IsEditValueValid() ? 0 : 1;
             Number_Of_Erorrs += look_grid_part_id.IsEditValueValidAndNotZero() ? 0 : 1;
+
+
+            //This is diffrent because if it more than zero, it will return true
+            Number_Of_Erorrs += IsCodeExists() ? 1 : 0;
+
+            ///////////
+            //if (look_grid_part_id.Text != string.Empty)
+            //{
+            //    Number_Of_Erorrs++;
+            //    look_grid_part_id.ErrorText = Error_Text;
+            //}
+            //////////
+
 
             Number_Of_Erorrs += spin_discount_value.IsValueNotLessThanZero() ? 0 : 1;
             Number_Of_Erorrs += spin_expences.IsValueNotLessThanZero() ? 0 : 1;
@@ -232,25 +254,15 @@ namespace Pro_Salles.PL
                 case Master.Invoice_Type.Salles:
                     this.Text = "   فاتوره مبيعات ";
                     this.Name = Screens.Add_Salles_Invoice.Screen_Name;
+                    //this.Text = "   فاتوره مرتجع مشتروات";
+                    //this.Text = "   فاتوره مرتجع مبيعات";
                     break;
                 case Master.Invoice_Type.Purchase_Return:
-                    this.Text = "   فاتوره مرتجع مشتروات";
-                    break;
                 case Master.Invoice_Type.Salles_Return:
-                    this.Text = "   فاتوره مرتجع مبيعات";
-                    break;
                 default:
                     throw new NotImplementedException();
             }
 
-
-
-            //look_branch.Properties.Columns[nameof(store.Cost_Of_Sold_Goods_Account_ID)].Visible = false;
-            //look_branch.Properties.Columns[nameof(store.Discount_Allowed_Account_ID)].Visible = false;
-            //look_branch.Properties.Columns[nameof(store.Discount_Received_Account_ID)].Visible = false;
-            //look_branch.Properties.Columns[nameof(store.Salles_Return_Account_ID)].Visible = false;
-            //look_branch.Properties.Columns[nameof(store.Salles_Account_ID)].Visible = false;
-            //look_branch.Properties.Columns[nameof(store.Inventory_Account_ID)].Visible = false;
 
             look_part_type.LookUp_DataSource(Master.Part_Type_List);
             look_part_type.Properties.PopulateColumns();
@@ -270,12 +282,51 @@ namespace Pro_Salles.PL
             part_idView.OptionsView.ShowAutoFilterRow = true;
             part_idView.PopulateColumns(look_grid_part_id.Properties.DataSource);
 
+            if (look_part_type != null || part_idView != null)
+            {
+                part_idView.Columns[nameof(cust.Is_Customer)].Visible =
+                part_idView.Columns[nameof(cust.account_id)].Visible =
+                part_idView.Columns[nameof(cust.ID)].Visible = false;
+                part_idView.Columns[nameof(cust.name)].Caption = "الأسم";
+                part_idView.Columns[nameof(cust.address)].Caption = "العنوان";
+                part_idView.Columns[nameof(cust.phone)].Caption = "الموبايل";
+                part_idView.Columns[nameof(cust.mobile)].Caption = "الهاتف";
+                part_idView.Columns[nameof(cust.max_Credit)].Caption = "حد الأتمان";
+            }
+            var st = Sessions.Stores.FirstOrDefault();
+            if (look_branch != null)
+            {
+                look_branch.Properties.PopulateColumns();
+                look_branch.Properties.Columns[nameof(st.Cost_Of_Sold_Goods_Account_ID)].Visible = false;
+                look_branch.Properties.Columns[nameof(st.Discount_Allowed_Account_ID)].Visible = false;
+                look_branch.Properties.Columns[nameof(st.Discount_Received_Account_ID)].Visible = false;
+                look_branch.Properties.Columns[nameof(st.Salles_Return_Account_ID)].Visible = false;
+                look_branch.Properties.Columns[nameof(st.Salles_Return_Account_ID)].Visible = false;
+                look_branch.Properties.Columns[nameof(st.Salles_Account_ID)].Visible = false;
+                look_branch.Properties.Columns[nameof(st.Inventory_Account_ID)].Visible = false;
+                look_branch.Properties.Columns[nameof(st.ID)].Caption = "الكود";
+                look_branch.Properties.Columns[nameof(st.name)].Caption = "أسم المخزن";
+            }
+
             ////////////////////There is a commint down////////////////
             look_branch.EditValueChanging += Look_branch_EditValueChanging;
 
             #region RepositoryItem_Properties
             repoUOM.LookUp_DataSource(Sessions.Unit_Names, gridView1.Columns[nameof(v.item_unit_id)], gridControl1);
-            repoStores.LookUp_DataSource(Sessions.Stores, gridView1.Columns[nameof(v.store_id)], gridControl1);
+
+            repoStores = new RepositoryItemLookUpEdit();
+            repoStores.LookUp_DataSource(Sessions.Stores, gridView1.Columns[nameof(v.store_id)], gridControl1, "name", "ID");
+            repoStores.PopulateColumns();
+            repoStores.Columns[nameof(st.Cost_Of_Sold_Goods_Account_ID)].Visible = false;
+            repoStores.Columns[nameof(st.Discount_Allowed_Account_ID)].Visible = false;
+            repoStores.Columns[nameof(st.Discount_Received_Account_ID)].Visible = false;
+            repoStores.Columns[nameof(st.Salles_Return_Account_ID)].Visible = false;
+            repoStores.Columns[nameof(st.Salles_Return_Account_ID)].Visible = false;
+            repoStores.Columns[nameof(st.Salles_Account_ID)].Visible = false;
+            repoStores.Columns[nameof(st.Inventory_Account_ID)].Visible = false;
+            repoStores.Columns[nameof(st.ID)].Caption = "الكود";
+            repoStores.Columns[nameof(st.name)].Caption = "أسم المخزن";
+
 
             repo_items = new RepositoryItemGridLookUpEdit();
             repo_items.LookUp_DataSource(Sessions.Product_View.Where(x => x.Is_Active == true), gridView1.Columns[nameof(v.item_id)], gridControl1, "Name", "ID");
@@ -388,7 +439,7 @@ namespace Pro_Salles.PL
             gridView1.Columns["Code"].VisibleIndex = 1;
             gridView1.Columns[nameof(v.item_id)].VisibleIndex = 2;
             gridView1.Columns[nameof(v.item_unit_id)].VisibleIndex = 3;
-            gridView1.Columns["Balance"].VisibleIndex = 4;
+            gridView1.Columns[nameof(v.store_id)].VisibleIndex = 4;
             gridView1.Columns[nameof(v.item_qty)].VisibleIndex = 5;
             gridView1.Columns[nameof(v.price)].VisibleIndex = 6;
             gridView1.Columns[nameof(v.discount)].VisibleIndex = 7;
@@ -396,7 +447,7 @@ namespace Pro_Salles.PL
             gridView1.Columns[nameof(v.total_price)].VisibleIndex = 9;
             gridView1.Columns[nameof(v.cost_value)].VisibleIndex = 10;
             gridView1.Columns[nameof(v.total_cost_value)].VisibleIndex = 11;
-            gridView1.Columns[nameof(v.store_id)].VisibleIndex = 12;
+            gridView1.Columns["Balance"].VisibleIndex = 12;
 
             gridView1.OptionsView.EnableAppearanceEvenRow = true;
             //gridView1.Appearance.EvenRow.BackColor = Color.WhiteSmoke;
@@ -412,7 +463,7 @@ namespace Pro_Salles.PL
             GridColumn CLM_Delete = new GridColumn()
             {
                 Name = "CLM_Delete",
-                Caption = "",
+                Caption = "حذف",
                 FieldName = "Delete",
                 VisibleIndex = 13,
                 ColumnEdit = ButtonEdit,
@@ -478,8 +529,8 @@ namespace Pro_Salles.PL
             layoutControl1.OptionsCustomizationForm.ShowSaveButton =
             layoutControl1.OptionsCustomizationForm.ShowLoadButton = false;
             //layoutControl1.OptionsCustomizationForm.ShowPropertyGrid = true;
-            foreach (BaseLayoutItem item in layoutControl1.Items)            
-                item.AllowHide = false;           
+            foreach (BaseLayoutItem item in layoutControl1.Items)
+                item.AllowHide = false;
 
             this.FormClosing += FRM_Invoice_FormClosing;
         }
@@ -497,22 +548,22 @@ namespace Pro_Salles.PL
             if (id != 0)
             {
                 CustomersAndVendor account;
-                if (look_part_type.EditValue.Equals((int)Master.Part_Type.Vendor))
+                if (look_part_type.EditValue.Equals((byte)Master.Part_Type.Vendor))
                 {
-                    account = Sessions.Vendors.Single(x => x.ID == id);
+                    account = Sessions.Vendors.SingleOrDefault(x => x.ID == id);
                 }
                 else
                 {
-                    account = Sessions.Customers.Single(x => x.ID == id);
+                    account = Sessions.Customers.SingleOrDefault(x => x.ID == id);
                 }
-                //if (account != null)
-                //{
-                txt_part_address.Text = account.address;
-                spin_part_maxCredit.EditValue = Convert.ToDouble(account.max_Credit);
-                txt_part_phone.Text = account.phone;
-                accountBalance = GetAccountBalance(account.account_id);
-                txt_part_balance.Text = accountBalance.Balance;
-                //}
+                if (account != null)
+                {
+                    txt_part_address.Text = account.address;
+                    spin_part_maxCredit.EditValue = Convert.ToDouble(account.max_Credit);
+                    txt_part_phone.Text = account.phone;
+                    accountBalance = GetAccountBalance(account.account_id);
+                    txt_part_balance.Text = accountBalance.Balance;
+                }
             }
             else
             {
@@ -590,7 +641,9 @@ namespace Pro_Salles.PL
             {
                 var Rows = (gridView1.DataSource as Collection<Invoice_Detail>);
                 var lastRow = Rows.Last();
-                var row = Rows.FirstOrDefault(x => x.item_id == lastRow.item_id && x.item_unit_id == lastRow.item_unit_id && x != lastRow);
+                var row = Rows.FirstOrDefault(x => x.item_id == lastRow.item_id && x.item_unit_id == lastRow.item_unit_id
+                && x.store_id == lastRow.store_id && x.price == lastRow.price  //94
+                && x != lastRow);
                 if (row != null)
                 {
                     row.item_qty += lastRow.item_qty;
@@ -799,36 +852,44 @@ namespace Pro_Salles.PL
                 case nameof(v.item_qty):
                     //TODO should get the price of the cost when change the qty of the item || the item itself
                     row.discount_value = row.discount * (row.item_qty * row.price);
-                    GridView1_CellValueChanged(sender,
-                    new CellValueChangedEventArgs
-                    (e.RowHandle, gridView1.Columns[nameof(v.discount_value)], row.discount_value));
 
-                    break;
+                    goto case nameof(v.discount_value);
+
+
                 case nameof(v.discount_value):
-                    row.total_price = (row.item_qty * row.price) - row.discount_value;
                     if (gridView1.FocusedColumn.FieldName == nameof(v.discount_value))
                         row.discount = row.discount_value / (row.item_qty * row.price);
                     row.total_price = (row.item_qty * row.price) - row.discount_value;
 
+                    
+                    goto case nameof(v.store_id);
+
+
+                    //////////////////94
+                case nameof(v.store_id):
                     switch (Type)
                     {
                         case Master.Invoice_Type.Purchase:
                             row.cost_value = row.total_price / row.item_qty;
                             row.total_cost_value = row.total_price;
                             break;
-                        case Master.Invoice_Type.Salles:
 
+                        case Master.Invoice_Type.Salles:
                             var store = (row.store_id == 0) ? Convert.ToInt32(look_branch.EditValue) : row.store_id;
                             var costPerMainUnit = Master_Inventory.GetCostCalculatingMethod(row.item_id, store, row.item_qty);
                             row.cost_value = costPerMainUnit * unitV.Factor;
                             row.total_cost_value = row.cost_value * row.item_qty;
                             break;
+
                         case Master.Invoice_Type.Purchase_Return:
                         case Master.Invoice_Type.Salles_Return:
                         default:
                             throw new NotImplementedException();
                     }
+                    break;
 
+
+                default:
                     break;
             }
         }
@@ -847,9 +908,10 @@ namespace Pro_Salles.PL
                 var item = Sessions.Product_View.SingleOrDefault(x => x.ID == row.item_id);
                 if (item == null)
                     return;
-                repo.DataSource = item.Units;
-                repo.DisplayMember = "Unit_Name";
-                repo.ValueMember = "Unit_ID";
+                repo.LookUp_DataSource(item.Units, null, null, "Unit_Name", "Unit_ID");
+                repo.Columns.Clear();
+                repo.Columns.Add(new LookUpColumnInfo("Unit_Name"));
+                repo.ShowHeader = false;
             }
             else if (e.Column.FieldName == nameof(v.item_id))
             {   //////39///////
@@ -885,6 +947,13 @@ namespace Pro_Salles.PL
                 view.FocusedColumn = view.VisibleColumns[view.FocusedColumn.VisibleIndex - 1];
                 e.Handled = true;
             }
+            else if (e.KeyCode == Keys.Delete && e.Modifiers == Keys.Control)
+            {
+                if (view.FocusedRowHandle >= 0)
+                    view.DeleteSelectedRows();
+            }
+
+
         }
 
         string EnteredCode;
@@ -1449,6 +1518,13 @@ namespace Pro_Salles.PL
             }
             db.SubmitChanges();
             base.Save();
+
+            var forms = Application.OpenForms.Cast<Form>().Where(x => x.Name == this.Name + "_List");
+            foreach (var frm in forms)
+            {
+                if (frm != null && frm is FRM_Master_List)
+                    ((FRM_Master_List)frm).Refresh_Data();
+            }
         }
         private void Args_Showing(object sender, XtraMessageShowingArgs e)
         {

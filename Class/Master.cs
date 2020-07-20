@@ -197,11 +197,14 @@ namespace Pro_Salles.Class
             repo.DataSource = datasource;
             repo.DisplayMember = displaymember;
             repo.ValueMember = valuemember;
-            repo.NullText = "اختر البيانات";
+            repo.NullText = "";
             repo.BestFitMode = BestFitMode.BestFitResizePopup;
-            cl.ColumnEdit = repo;
+            if (cl != null)
+                cl.ColumnEdit = repo;
             if (grid != null)
                 grid.RepositoryItems.Add(repo);
+            repo.Appearance.TextOptions.HAlignment = HorzAlignment.Center;
+            repo.Appearance.TextOptions.VAlignment = VertAlignment.Center;
         }
 
         /// <summary>

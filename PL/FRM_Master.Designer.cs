@@ -40,6 +40,7 @@
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            this.btn_refresh = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,8 +58,9 @@
             this.btn_new,
             this.btn_delete,
             this.btn_print,
-            this.btn_customize_Layout});
-            this.barManager1.MaxItemId = 9;
+            this.btn_customize_Layout,
+            this.btn_refresh});
+            this.barManager1.MaxItemId = 10;
             // 
             // bar1
             // 
@@ -71,6 +73,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btn_new, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btn_delete, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btn_print, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btn_refresh, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.btn_customize_Layout, true)});
             this.bar1.Text = "Tools";
             // 
@@ -154,6 +157,15 @@
             this.barDockControlRight.Margin = new System.Windows.Forms.Padding(4);
             this.barDockControlRight.Size = new System.Drawing.Size(0, 266);
             // 
+            // btn_refresh
+            // 
+            this.btn_refresh.Caption = "تحديث";
+            this.btn_refresh.Id = 9;
+            this.btn_refresh.ImageOptions.SvgImage = global::Pro_Salles.Properties.Resources.changeview;
+            this.btn_refresh.Name = "btn_refresh";
+            this.btn_refresh.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
+            this.btn_refresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_refresh_ItemClick);
+            // 
             // FRM_Master
             // 
             this.Appearance.Options.UseFont = true;
@@ -190,5 +202,6 @@
         public DevExpress.XtraBars.BarButtonItem btn_print;
         private DevExpress.XtraBars.BarManager barManager1;
         public DevExpress.XtraBars.BarButtonItem btn_customize_Layout;
+        public DevExpress.XtraBars.BarButtonItem btn_refresh;
     }
 }

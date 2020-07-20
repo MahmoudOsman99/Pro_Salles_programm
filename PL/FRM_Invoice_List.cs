@@ -152,11 +152,11 @@ namespace Pro_Salles.PL
             {
                 case Master.Invoice_Type.Purchase:
                     this.Text = "  فواتير المشتريات";
-                    this.Name = Screens.Add_Purchase_Invoice.Screen_Name;
+                    this.Name = Screens.View_Purchase_Invoices.Screen_Name;
                     break;
                 case Master.Invoice_Type.Salles:
                     this.Text = "  فواتير المبيعات";
-                    this.Name = Screens.Add_Salles_Invoice.Screen_Name;
+                    this.Name = Screens.View_Sales_Invoices.Screen_Name;
                     break;
                 case Master.Invoice_Type.Purchase_Return:
                     break;
@@ -172,6 +172,8 @@ namespace Pro_Salles.PL
 
             look_drawer.LookUp_DataSource(Sessions.Drowers, "name", "ID");
             look_branch.LookUp_DataSource(Sessions.Stores, "name", "ID");
+
+            btn_refresh.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
         }
 
         public override void Refresh_Data()
@@ -283,6 +285,7 @@ namespace Pro_Salles.PL
 
             gridView1.Columns["date"].DisplayFormat.FormatString = "dd-MM-yyyy hh:mm tt";
             gridView1.Columns["date"].DisplayFormat.FormatType = FormatType.Custom;
+            
         }
 
         private void btn_apply_Click(object sender, EventArgs e)
@@ -330,6 +333,10 @@ namespace Pro_Salles.PL
         {
             RPT_Grid_Print.Print(gridControl1, "كشف فواتير المبيعات", GetFilters());
             base.Print();
+        }
+        public override void New()
+        {
+            FRM_MAIN.Open_Form(new FRM_Invoice(Type));
         }
     }
 }

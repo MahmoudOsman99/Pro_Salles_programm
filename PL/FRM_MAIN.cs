@@ -56,16 +56,16 @@ namespace Pro_Salles.PL
                 case "FRM_Vendors_List":
                     frm = new FRM_Customers_Vendors_List(false);
                     break;
-                case "FRM_Pruchase_Invoice":
+                case "FRM_Purchase_Invoice":
                     frm = new FRM_Invoice(Master.Invoice_Type.Purchase);
                     break;
-                case "FRM_Salle_Invoice":
+                case "FRM_Sales_Invoice":
                     frm = new FRM_Invoice(Master.Invoice_Type.Salles);
                     break;
-                case "FRM_Purchase_Invoices_List": // Show the salles invoices || all the invoices 
+                case "FRM_Purchase_Invoice_List": // Show the salles invoices || all the invoices 
                     frm = new FRM_Invoice_List(Master.Invoice_Type.Purchase);
                     break;
-                case "FRM_Sales_Invoices_List":  // Show the Purchase invoices || all the invoices 
+                case "FRM_Sales_Invoice_List":  // Show the Purchase invoices || all the invoices 
                     frm = new FRM_Invoice_List(Master.Invoice_Type.Salles);
                     break;
                     
@@ -179,6 +179,11 @@ namespace Pro_Salles.PL
                 };
                 parent.Elements.Add(elm);
             });
+        }
+
+        private void accordionControlElement1_Click(object sender, EventArgs e)
+        {
+            new FRM_Access_Profile().ShowDialog();
         }
     }
 }
