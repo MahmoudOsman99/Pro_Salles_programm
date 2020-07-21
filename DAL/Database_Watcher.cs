@@ -19,16 +19,17 @@ namespace Pro_Salles.DAL
 {
     class Database_Watcher
     {
-        public class Stores : Store { };
-        public class Drowers : Drower { };
-        public class CustomersAndVendors : CustomersAndVendor { };
-        public class Users : User { };
+        public class Stores : Store { }
+        public class Drowers : Drower { }
+        public class CustomersAndVendors : CustomersAndVendor { }
+        public class Users : User { }
+        public class Product_Units : Product_Unit { }
 
         /////////////////////////////////////////////////////////////////////////////////////
         public static SqlTableDependency<Stores> Store;
         public static void Stores_Changed(object sender, RecordChangedEventArgs<Stores> e)
         {
-            Application.OpenForms[0].Invoke(new Action(() =>
+            FRM_MAIN.Instance.Invoke(new Action(() =>
             {
                 switch (e.ChangeType)
                 {
@@ -55,22 +56,22 @@ namespace Pro_Salles.DAL
             {
                 var Balance = Master_Inventory.GetProductBalanceInStore(e.Entity.product_id, e.Entity.store_id);
                 Sessions.Product_Balances.Remove(Sessions.Product_Balances.FirstOrDefault(x => x.Product_ID == e.Entity.product_id && x.Store_ID == e.Entity.store_id));
-                
-                Sessions.Product_Balances.Add(new Sessions.Product_Balance() 
+
+                Sessions.Product_Balances.Add(new Sessions.Product_Balance()
                 {
                     Balance = Balance,
                     Product_ID = e.Entity.product_id,
                     Store_ID = e.Entity.store_id
                 });
-
             }));
         }
+
 
         /////////////////////////////////////////////////////////////////////////////////////
         public static SqlTableDependency<Drowers> drowers;
         public static void Drowers_Changed(object sender, RecordChangedEventArgs<Drowers> e)
         {
-            Application.OpenForms[0].Invoke(new Action(() =>
+            FRM_MAIN.Instance.Invoke(new Action(() =>
             {
                 switch (e.ChangeType)
                 {
@@ -92,7 +93,7 @@ namespace Pro_Salles.DAL
         public static SqlTableDependency<Users> Users_List;
         public static void Users_Changed(object sender, RecordChangedEventArgs<Users> e)
         {
-            Application.OpenForms[0].Invoke(new Action(() =>
+            FRM_MAIN.Instance.Invoke(new Action(() =>
             {
                 switch (e.ChangeType)
                 {
@@ -114,7 +115,7 @@ namespace Pro_Salles.DAL
         public static SqlTableDependency<Product> Products;
         public static void Products_Changed(object sender, RecordChangedEventArgs<Product> e)
         {
-            Application.OpenForms[0].Invoke(new Action(() =>
+            FRM_MAIN.Instance.Invoke(new Action(() =>
             {
                 switch (e.ChangeType)
                 {
@@ -141,11 +142,25 @@ namespace Pro_Salles.DAL
             }));
         }
 
+
+
+        public static SqlTableDependency<Product_Units> Product_Unit;
+        public static void Product_Units_Changed(object sender, RecordChangedEventArgs<Product_Units> e)
+        {
+            FRM_MAIN.Instance.Invoke(new Action(() =>
+            {
+                var viewIndex = Sessions.Product_View.IndexOf(Sessions.Product_View.Single(x => x.ID == e.Entity.product_id));
+                Sessions.Product_View[viewIndex] = Sessions.Product_View_Class.Get_Product(e.Entity.product_id);
+            }));
+        }
+
+
+
         /////////////////////////////////////////////////////////////////////////////////////
         public static SqlTableDependency<CustomersAndVendors> Vendors;
         public static void Vendor_Changed(object sender, RecordChangedEventArgs<CustomersAndVendors> e)
         {
-            Application.OpenForms[0].Invoke(new Action(() =>
+            FRM_MAIN.Instance.Invoke(new Action(() =>
             {
                 switch (e.ChangeType)
                 {
@@ -182,7 +197,7 @@ namespace Pro_Salles.DAL
         public static SqlTableDependency<CustomersAndVendors> Customers;
         public static void Customer_Changed(object sender, RecordChangedEventArgs<CustomersAndVendors> e)
         {
-            Application.OpenForms[0].Invoke(new Action(() =>
+            FRM_MAIN.Instance.Invoke(new Action(() =>
             {
                 switch (e.ChangeType)
                 {

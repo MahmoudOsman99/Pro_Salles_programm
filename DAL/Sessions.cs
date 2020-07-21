@@ -265,12 +265,16 @@ namespace Pro_Salles.DAL
                                                 Buy_price = pu.buy_price,                                // Revision
                                                 Sell_price = pu.sell_price,
                                                 Sell_Discount = pu.sell_discount,
-                                                Barcode = pu.barcode                                     // Revision
-                                            }).ToList()                                                 // Revision
-                                   };                                                                   // Revision
-                        _product_View_Class = new BindingList<Product_View_Class>(data.ToList());       // Revision
-                    };                                                                                  // Revision
-                }                                                                                       // Revision
+                                                Barcode = pu.barcode                                  
+                                            }).ToList()                                               
+                                   };                                                                 
+                        _product_View_Class = new BindingList<Product_View_Class>(data.ToList());     
+                    };
+                    ////95 // It isn't in the video like this, but me who called the method (***Database_Watcher.Product_Units_Changed***) from here to activate this method
+                    Database_Watcher.Product_Unit = new SqlTableDependency<Database_Watcher.Product_Units>(Properties.Settings.Default.Salles_DBConnectionString);
+                    Database_Watcher.Product_Unit.OnChanged += Database_Watcher.Product_Units_Changed;
+                    Database_Watcher.Product_Unit.Start();
+                }                                                                                     
                 return _product_View_Class;
             }
         }
