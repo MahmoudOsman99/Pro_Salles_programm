@@ -37,32 +37,6 @@
       <Column Name="store_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.Invoice_Header" Member="Invoice_Headers">
-    <Type Name="Invoice_Header">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="invoice_type" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="code" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="part_type" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="part_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="deliviry_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="branch" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="post_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="posted_to_store" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="total" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="discount_value" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="discount_ratio" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="tax" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="tax_value" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="expences" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="net" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="paid" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="drower" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="remaing" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="shipping_address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Journals" Member="Journals">
     <Type Name="Journal">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -198,6 +172,45 @@
       <Column Name="phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="Logo" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.User_Log" Member="User_Logs">
+    <Type Name="User_Log">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="User_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Action_Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Screen_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Action_Type" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Part_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Part_Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Invoice_Header" Member="Invoice_Headers">
+    <Type Name="Invoice_Header">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="invoice_type" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="code" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="part_type" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="part_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="deliviry_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="branch" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="post_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="posted_to_store" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="total" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="discount_value" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="discount_ratio" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="tax" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="tax_value" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="expences" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="net" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="paid" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="drower" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="remaing" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="shipping_address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Source_Type" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="SourceID" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

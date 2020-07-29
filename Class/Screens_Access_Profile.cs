@@ -1,12 +1,7 @@
-﻿using DevExpress.Utils.Filtering.Internal;
-using DevExpress.XtraBars.Ribbon.ViewInfo;
-using Pro_Salles.PL;
+﻿using Pro_Salles.PL;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Pro_Salles.Class
 {
@@ -54,7 +49,7 @@ namespace Pro_Salles.Class
 
         public static Screens_Access_Profile Company_Info = new Screens_Access_Profile(nameof(FRM_Company_Info), mainSettings)
         {
-            Actions = new List<Master.Actions>() { Master.Actions.Show, Master.Actions.Edit, Master.Actions.Open },
+            Actions = new List<Master.Actions>() { Master.Actions.Show, Master.Actions.Edit, Master.Actions.Open, Master.Actions.Delete },
             Screen_Caption = "بيانات الشركه" 
         };
 
@@ -163,16 +158,16 @@ namespace Pro_Salles.Class
 
 
 
-        public static Screens_Access_Profile Salles = new Screens_Access_Profile("elm_Sales")
+        public static Screens_Access_Profile Sales = new Screens_Access_Profile("elm_Sales")
         {
             Actions = new List<Master.Actions>() { Master.Actions.Show },
             Screen_Caption = "المبيعات"
         };
-        public static Screens_Access_Profile Add_Salles_Invoice = new Screens_Access_Profile("FRM_Sales_Invoice", Salles)
+        public static Screens_Access_Profile Add_Sales_Invoice = new Screens_Access_Profile("FRM_Sales_Invoice", Sales)
         {         
             Screen_Caption = "اضافه فاتوره مبيعات"
         };
-        public static Screens_Access_Profile View_Sales_Invoices = new Screens_Access_Profile("FRM_Sales_Invoice_List", Salles)
+        public static Screens_Access_Profile View_Sales_Invoices = new Screens_Access_Profile("FRM_Sales_Invoice_List", Sales)
         {
             Screen_Caption = "عرض فواتير المبيعات"
         };
@@ -214,7 +209,22 @@ namespace Pro_Salles.Class
         //{
         //    Screen_Caption = "عرض فواتير المبيعات"
         //};
-
+        public static Screens_Access_Profile Add_Sales_Return_Invoice = new Screens_Access_Profile("FRM_Sales_Return_Invoice", Sales)
+        {
+            Screen_Caption = "اضافه فاتوره مردود مبيعات"
+        };
+        public static Screens_Access_Profile View_Sales_Return_Invoices = new Screens_Access_Profile("FRM_Sales_Return_Invoice_List", Sales)
+        {
+            Screen_Caption = "عرض فواتير مردود المبيعات"
+        };
+        public static Screens_Access_Profile Add_Purchase_Return_Invoice = new Screens_Access_Profile("FRM_Purchase_Return_Invoice", Purchase)
+        {
+            Screen_Caption = "اضافه فاتوره مردود مشتريات"
+        };
+        public static Screens_Access_Profile View_Purchase_Return_Invoices = new Screens_Access_Profile("FRM_Purchase_Return_Invoice_List", Purchase)
+        {
+            Screen_Caption = "عرض فواتير مردود المشتريات"
+        };
 
 
 

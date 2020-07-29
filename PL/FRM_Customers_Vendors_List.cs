@@ -36,13 +36,15 @@ namespace Pro_Salles.PL
             gridView1.Columns[nameof(ins.phone)].Caption = "الهاتف";
             gridView1.Columns[nameof(ins.mobile)].Caption = "الموبايل";
             gridView1.Columns[nameof(ins.address)].Caption = "العنوان";
+            gridView1.Columns[nameof(ins.max_Credit)].Caption = "حد الإئتمان";
             gridView1.OptionsBehavior.Editable = false;
             btn_save.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
             btn_delete.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
             gridView1.DoubleClick += GridView1_DoubleClick;
             if (Is_Customer) Sessions.Customers.ListChanged += Vendors_ListChanged;
             else Sessions.Vendors.ListChanged += Vendors_ListChanged;
-
+            gridView1.Appearance.Row.TextOptions.HAlignment = HorzAlignment.Center;
+            gridView1.Appearance.Row.TextOptions.VAlignment = VertAlignment.Center;
         }
 
         private void Vendors_ListChanged(object sender, ListChangedEventArgs e)

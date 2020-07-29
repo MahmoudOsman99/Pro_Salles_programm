@@ -24,8 +24,11 @@ namespace Pro_Salles.PL
             using (var db = new Pro_SallesDataContext())
             {
                 profile = db.User_Access_Profile_Names.SingleOrDefault(x => x.ID == id);
+                Part_ID = profile.ID;
+                Part_Name = profile.Name;
             }
             txt_name.Text = profile.Name;
+
             Get_Data();
         }
         public override void New()
@@ -133,7 +136,8 @@ namespace Pro_Salles.PL
 
             db.User_Access_Profile_Details.InsertAllOnSubmit(dbdata);
             db.SubmitChanges();
-
+            Part_ID = profile.ID;
+            Part_Name = profile.Name;
             base.Save();
         }
 

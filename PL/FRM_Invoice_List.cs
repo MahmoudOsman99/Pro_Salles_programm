@@ -1,22 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using Pro_Salles.Class;
 using Pro_Salles.DAL;
-using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
-using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.Utils;
-using DevExpress.XtraGrid.Views.Grid.ViewInfo;
-using DevExpress.XtraGrid.Views.Base;
 using Pro_Salles.Reporting;
 
 namespace Pro_Salles.PL
@@ -94,7 +86,7 @@ namespace Pro_Salles.PL
                     caption: "Note", buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Information);
                 return;
             }
-            FRM_Invoice.Print(ids, this.Type);
+            FRM_Invoice.Print(ids, this.Type, this.Name);
         }
 
         private void GridControl1_ViewRegistered(object sender, DevExpress.XtraGrid.ViewOperationEventArgs e)
@@ -130,7 +122,6 @@ namespace Pro_Salles.PL
                 }
 
             }
-
         }
 
         void OpenFilter(object sender, EventArgs e)
@@ -185,8 +176,8 @@ namespace Pro_Salles.PL
             if (date_to.DateTime.Year > 1950) toDate = date_to.DateTime;
 
             using (var db = new Pro_SallesDataContext())
-            {
-                var query = from inv in db.Invoice_Headers.Where(x => x.invoice_type == (byte)Type)
+            {                                                                                       //i did OrderByDescending
+                var query = from inv in db.Invoice_Headers.Where(x => x.invoice_type == (byte)Type).OrderByDescending(x=>x.date)
                             select new
                             {
                                 inv.ID,
@@ -248,7 +239,7 @@ namespace Pro_Salles.PL
                 parts.AddRange(Sessions.Vendors);
 
                 repoBranch.LookUp_DataSource(Sessions.Stores, gridView1.Columns[nameof(ins.branch)], gridControl1);
-                repoBranch.LookUp_DataSource(Sessions.Drowers, gridView1.Columns[nameof(ins.drower)], gridControl1);
+                repoDrawer.LookUp_DataSource(Sessions.Drowers, gridView1.Columns[nameof(ins.drower)], gridControl1);
                 repoPartType.LookUp_DataSource(Master.Part_Type_List, gridView1.Columns[nameof(ins.part_type)], gridControl1, "Name", "ID");
                 repoPart.LookUp_DataSource(parts, gridView1.Columns[nameof(ins.part_id)], gridControl1);
             }
@@ -285,7 +276,6 @@ namespace Pro_Salles.PL
 
             gridView1.Columns["date"].DisplayFormat.FormatString = "dd-MM-yyyy hh:mm tt";
             gridView1.Columns["date"].DisplayFormat.FormatType = FormatType.Custom;
-            
         }
 
         private void btn_apply_Click(object sender, EventArgs e)

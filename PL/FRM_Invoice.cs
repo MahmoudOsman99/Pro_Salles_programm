@@ -1,4 +1,5 @@
-﻿using DevExpress.Utils;
+﻿using System;
+using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
@@ -11,7 +12,6 @@ using Pro_Salles.Class;
 using Pro_Salles.DAL;
 using Pro_Salles.Reporting;
 using Pro_Salles.UserControls;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -44,6 +44,7 @@ namespace Pro_Salles.PL
 
 
             Type = _type;
+            Set_Form_Type();
             //Refresh_Data();
             New();
         }
@@ -55,6 +56,7 @@ namespace Pro_Salles.PL
 
 
             Type = _type;
+            Set_Form_Type();
             //Refresh_Data();
             using (var db = new Pro_SallesDataContext())
             {
@@ -210,8 +212,9 @@ namespace Pro_Salles.PL
                                     case Master.Warning_Levels.Do_Not_Interrupt:
                                         break;
                                     case Master.Warning_Levels.Show_Warning:
-                                        if (XtraMessageBox.Show("لقد تخطي هذا العميل حد الأئتمان..هل تريد المتابعه؟", "تأكيد عمليه البيع",
-                                            buttons: MessageBoxButtons.YesNo, icon: MessageBoxIcon.Question) == DialogResult.No)
+                                        var DR = XtraMessageBox.Show("لقد تخطي هذا العميل حد الأئتمان..هل تريد المتابعه؟", "تأكيد عمليه البيع",
+                                            buttons: MessageBoxButtons.YesNo, icon: MessageBoxIcon.Question);
+                                        if (DR == DialogResult.No)
                                         {
                                             Number_Of_Erorrs++;
                                         }
@@ -236,12 +239,81 @@ namespace Pro_Salles.PL
             //هنا هترجع قيمه ترو فقط لو كان عدد الأخطاء بيساوي صفر اما لو اكتر هيرجع فوولس
             return (Number_Of_Erorrs == 0);
         }
-        private void FRM_Invoice_Load(object sender, EventArgs e)
+        //98
+        public override void Get_History()
         {
-            btn_print.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
+            if (isNew)
+                return;
+            var MainScreenID = Screens.Get_Screens.SingleOrDefault(x => x.Screen_Name == this.Name).Screen_ID;
+            var listScreen = Screens.Get_Screens.SingleOrDefault(x => x.Screen_Name == "FRM_Invoice_List");
+            int listScreenID = MainScreenID;
 
-            Refresh_Data();
+            //هنا انت عاوز اي دي واحد بس.. ف انت بتاخد الاساسي ولكن لو الاي دي بتاع الليست مش نل يبقي هياخد القيمه بتاعت الليست
+            if (listScreen != null)
+                listScreenID = listScreen.Screen_ID;
 
+            using (var db = new Pro_SallesDataContext())
+            {
+                var data = db.User_Logs.Where(x => x.Part_ID == Invoice.ID &&
+                (x.Screen_ID == MainScreenID || x.Screen_ID == listScreenID));
+                gridControl_action_history.DataSource = (from d in data.OrderByDescending(x => x.Action_Date)
+                                                         join u in db.Users on d.User_ID equals u.ID
+                                                         select new
+                                                         {
+                                                             u.Name,
+                                                             d.Action_Date,
+                                                             Action =
+                                                             (d.Action_Type == (byte)Action_Type.Add) ? "اضافه" :
+                                                             (d.Action_Type == (byte)Action_Type.Delete) ? "حذف" :
+                                                             (d.Action_Type == (byte)Action_Type.Edit) ? "تعديل" :
+                                                             (d.Action_Type == (byte)Action_Type.Print) ? "طباعه" : ""
+                                                         }).ToList();
+            }
+            gridView_action_history.Columns["Action_Date"].Caption = "التاريخ";
+            gridView_action_history.Columns["Name"].Caption = "المسنخدم";
+            gridView_action_history.Columns["Action"].Caption = "الحدث";
+            gridView_action_history.Columns["Action_Date"].DisplayFormat.FormatType = FormatType.Custom;
+            gridView_action_history.Columns["Action_Date"].DisplayFormat.FormatString = "yyyy/MM/dd hh:mm tt";
+            gridView_action_history.RowStyle += GridView_action_history_RowStyle;
+        }
+
+        private void GridView_action_history_RowStyle(object sender, RowStyleEventArgs e)
+        {
+            var view = sender as GridView;
+            var action = view.GetRowCellValue(e.RowHandle, "Action");
+
+            if (action == null) return;
+            switch (action.ToString())
+            {
+                case "اضافه":
+                    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Success;
+                    break;
+                case "حذف":
+                    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Danger;
+                    break;
+                case "تعديل":
+                    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Warning;
+                    break;
+                case "طباعه":
+                    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Primary;
+                    break;
+                default:
+                    break;
+            }
+
+            //if (action == null) return;
+            //if (action.ToString() == "اضافه")
+            //    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Success;
+            //else if (action.ToString() == "حذف")
+            //    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Danger;
+            //else if (action.ToString() == "تعديل")
+            //    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Warning;
+            //else if (action.ToString() == "طباعه")
+            //    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Primary;
+        }
+
+        void Set_Form_Type()
+        {
             switch (Type)
             {
                 case Master.Invoice_Type.Purchase:
@@ -250,18 +322,38 @@ namespace Pro_Salles.PL
                     checkbox_posted_to_store.Enabled = false;
                     checkbox_posted_to_store.Checked = true;
                     gridView1.Columns[nameof(v.store_id)].OptionsColumn.AllowFocus = false;
+                    //gridView1.Columns["store_id"].OptionsColumn.AllowFocus = false;
                     break;
                 case Master.Invoice_Type.Salles:
                     this.Text = "   فاتوره مبيعات ";
-                    this.Name = Screens.Add_Salles_Invoice.Screen_Name;
-                    //this.Text = "   فاتوره مرتجع مشتروات";
-                    //this.Text = "   فاتوره مرتجع مبيعات";
+                    this.Name = Screens.Add_Sales_Invoice.Screen_Name;
                     break;
-                case Master.Invoice_Type.Purchase_Return:
-                case Master.Invoice_Type.Salles_Return:
+                case Master.Invoice_Type.Purchase_Return://99
+                    this.Text = "   فاتوره مردود مشتروات";
+                    this.Name = Screens.Add_Purchase_Return_Invoice.Screen_Name;
+                    checkbox_posted_to_store.Enabled = false;
+                    checkbox_posted_to_store.Checked = true;
+                    gridView1.Columns[nameof(v.store_id)].OptionsColumn.AllowFocus = false;
+                    lyc_sourceID.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
+                    break;
+                case Master.Invoice_Type.Salles_Return://99
+                    this.Text = "   فاتوره مردود مبيعات";
+                    this.Name = Screens.Add_Sales_Return_Invoice.Screen_Name;
+                    checkbox_posted_to_store.Enabled = false;
+                    checkbox_posted_to_store.Checked = true;
+                    gridView1.Columns[nameof(v.store_id)].OptionsColumn.AllowFocus = false;
+                    lyc_sourceID.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
+                    break;
                 default:
                     throw new NotImplementedException();
             }
+
+        }
+        private void FRM_Invoice_Load(object sender, EventArgs e)
+        {
+            btn_print.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
+
+            Refresh_Data();
 
 
             look_part_type.LookUp_DataSource(Master.Part_Type_List);
@@ -694,8 +786,9 @@ namespace Pro_Salles.PL
 
                                     break;
                                 case Master.Warning_Levels.Show_Warning:
-                                    if (XtraMessageBox.Show("سعر البيع اقل من سعر التكلفه..هل تريد المتابعه؟", "تأكيد عمليه البيع",
-                                        buttons: MessageBoxButtons.YesNo, icon: MessageBoxIcon.Question) == DialogResult.No)
+                                    var DR = XtraMessageBox.Show("سعر البيع اقل من سعر التكلفه..هل تريد المتابعه؟", "تأكيد عمليه البيع",
+                                        buttons: MessageBoxButtons.YesNo, icon: MessageBoxIcon.Question);
+                                    if (DR == DialogResult.No)
                                     {
                                         e.Valid = false;
                                         gridView1.SetColumnError(gridView1.Columns[nameof(v.price)], "سعر البيع اقل من سعر التكلفه");
@@ -740,11 +833,14 @@ namespace Pro_Salles.PL
                         Sessions.GlobalSettings.Product_Code_Length);
 
                     Item_Code = Convert.ToInt32(Item_Code_String).ToString();
+
                     string Read_Value = e.Value.ToString().Substring(
                         Sessions.GlobalSettings.Scale_Barcode_Prefix.Length +
                         Sessions.GlobalSettings.Product_Code_Length);
+
                     if (Sessions.GlobalSettings.Ignore_Check_Digit)
                         Read_Value = Read_Value.Remove(Read_Value.Length - 1, 1);
+
                     double Value = Convert.ToDouble(Read_Value);
                     Value = Value / (Math.Pow(10, Sessions.GlobalSettings.Devide_Value_By));
                     if (Sessions.GlobalSettings.Read_Mode == Sessions.GlobalSettings.Read_Value_Mode.Weight)
@@ -861,11 +957,11 @@ namespace Pro_Salles.PL
                         row.discount = row.discount_value / (row.item_qty * row.price);
                     row.total_price = (row.item_qty * row.price) - row.discount_value;
 
-                    
+
                     goto case nameof(v.store_id);
 
 
-                    //////////////////94
+                //////////////////94
                 case nameof(v.store_id):
                     switch (Type)
                     {
@@ -975,6 +1071,7 @@ namespace Pro_Salles.PL
             else if (e.Column.FieldName == "Balance")
             {
                 var row = e.Row as Invoice_Detail;
+                var rowIndex = e.ListSourceRowIndex;
                 if (row == null || row.item_id == 0 || row.store_id == 0 || row.item_unit_id == 0)
                 {
                     e.Value = null;
@@ -990,10 +1087,23 @@ namespace Pro_Salles.PL
                 var balance = proBalance.Balance;
                 var product = Sessions.Product_View.Single(x => x.ID == row.item_id);
                 var factor = product.Units.Single(x => x.Unit_ID == row.item_unit_id).Factor;/////////////////////// double?  ???
-                //if (factor != null)
-                e.Value = balance / factor;
-                //e.Value = Master_Inventory.GetProductBalanceInStore(row.item_id, row.store_id);
-                //Debug.Print()
+
+                //هنا انت بتختار عدد السطور اللي انت عايزه سواء اول خمسه او غيره ...هنا لو واقف عند روو 2 يبقي هياخد اول سطرين
+                var Rows = (gridView1.DataSource as Collection<Invoice_Detail>).Take(rowIndex).Where
+                    (x => x.item_id == row.item_id && x.store_id == row.store_id);
+
+                //To calculate the balance after any process 
+                double otherBalance = 0;
+
+                foreach (var item in Rows)
+                {
+                    //understand
+                    var otherFactor = product.Units.Single(x => x.Unit_ID == item.item_unit_id).Factor;
+                    otherBalance += item.item_qty * otherFactor;
+                }
+
+                e.Value = (balance - otherBalance) / factor;
+
             }
         }
 
@@ -1168,6 +1278,9 @@ namespace Pro_Salles.PL
 
             generaldb = new Pro_SallesDataContext();
             gridControl1.DataSource = generaldb.Invoice_Details.Where(x => x.invoice_id == Invoice.ID);
+
+            Part_ID = Invoice.ID;
+            Part_Name = Invoice.code + " - " + look_grid_part_id.Text;
 
             base.Get_Data();
         }
@@ -1494,8 +1607,10 @@ namespace Pro_Salles.PL
             foreach (var row in items)
                 row.invoice_id = Invoice.ID;
 
+            //100
+            DeleteInvoiceStoreLogDetailes(Invoice.ID, (byte)Type);
+
             generaldb.SubmitChanges();
-            db.Store_Logs.DeleteAllOnSubmit(db.Store_Logs.Where(x => x.source_type == (byte)Type && x.source_id == Invoice.ID));
             db.SubmitChanges();
             if (Invoice.posted_to_store)
             {
@@ -1517,6 +1632,10 @@ namespace Pro_Salles.PL
                 }
             }
             db.SubmitChanges();
+
+            Part_ID = Invoice.ID;
+            Part_Name = Invoice.code + " - " + look_grid_part_id.Text;
+
             base.Save();
 
             var forms = Application.OpenForms.Cast<Form>().Where(x => x.Name == this.Name + "_List");
@@ -1524,6 +1643,17 @@ namespace Pro_Salles.PL
             {
                 if (frm != null && frm is FRM_Master_List)
                     ((FRM_Master_List)frm).Refresh_Data();
+            }
+        }
+        public static void DeleteInvoiceStoreLogDetailes(int invoiceID, byte type)
+        {
+            using (var db = new Pro_SallesDataContext())
+            {
+                //100
+                db.Store_Logs.DeleteAllOnSubmit
+                    (db.Store_Logs.Where(x => x.source_type == type &&
+                db.Invoice_Details.Where(i => i.invoice_id == invoiceID).Select(d => d.ID).Contains(x.source_id)));
+                db.SubmitChanges();
             }
         }
         private void Args_Showing(object sender, XtraMessageShowingArgs e)
@@ -1535,18 +1665,18 @@ namespace Pro_Salles.PL
         }
         public override void Print()
         {
-            Print(Invoice.ID, this.Type);
-            base.Print();
+            Print(Invoice.ID, this.Type, this.Name);
+            //base.Print();// Here you disabled the base.print because when you press print button in the invoice it record the event twice
         }
-        public static void Print(int id, Master.Invoice_Type Type)
+        public static void Print(int id, Master.Invoice_Type Type, string CallerScreenName)
         {
-            Print(new List<int> { id }, Type);
+            Print(new List<int> { id }, Type, CallerScreenName);
         }
-        public static void Print(Invoice_Header invoice, Master.Invoice_Type Type)
+        public static void Print(Invoice_Header invoice, Master.Invoice_Type Type, string CallerScreenName)
         {
-            Print(invoice.ID, Type);
+            Print(invoice.ID, Type, CallerScreenName);
         }
-        public static void Print(List<int> ids, Master.Invoice_Type Type)
+        public static void Print(List<int> ids, Master.Invoice_Type Type, string CallerScreenName)
         {
             var name = "";
             switch (Type)
@@ -1555,7 +1685,7 @@ namespace Pro_Salles.PL
                     name = Screens.Add_Purchase_Invoice.Screen_Name;
                     break;
                 case Master.Invoice_Type.Salles:
-                    name = Screens.Add_Salles_Invoice.Screen_Name;
+                    name = Screens.Add_Sales_Invoice.Screen_Name;
                     break;
                 case Master.Invoice_Type.Purchase_Return:
                 case Master.Invoice_Type.Salles_Return:
@@ -1614,6 +1744,11 @@ namespace Pro_Salles.PL
                                              de.total_price,
                                          }).ToList()
                                      }).ToList();
+                //97
+                Order_Invoice.ForEach(x =>
+                {
+                    FRM_Master.Insert_User_Action(Action_Type.Print, x.ID, x.code + " - " + x.PartName, CallerScreenName);
+                });
                 RPT_Invoice.Print(Order_Invoice);
             }
         }

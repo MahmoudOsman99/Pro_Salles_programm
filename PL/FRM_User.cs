@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
 using Pro_Salles.DAL;
 using Pro_Salles.Class;
 using Liphsoft.Crypto.Argon2;
@@ -59,7 +52,8 @@ namespace Pro_Salles.PL
             look_screen_profile_ID.EditValue = user.Screen_Profile_ID;
             look_settings_profile_ID.EditValue = user.Settings_Profile_ID;
             look_user_type.EditValue = user.User_Type;
-
+            Part_ID = user.ID;
+            Part_Name = user.Name;
             base.Get_Data();
         }
         public override void Set_Data()
@@ -121,6 +115,9 @@ namespace Pro_Salles.PL
                 Set_Data();
                 db.SubmitChanges();
             }
+
+            Part_ID = user.ID;
+            Part_Name = user.Name;
 
             base.Save();
         }

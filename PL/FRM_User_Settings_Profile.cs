@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using Pro_Salles.Class;
 using DevExpress.XtraBars.Navigation;
-using DevExpress.Utils.Extensions;
 using DevExpress.XtraLayout;
 using Pro_Salles.DAL;
-using DevExpress.Data.Mask;
 using DevExpress.Utils.Animation;
 
 namespace Pro_Salles.PL
@@ -102,6 +97,9 @@ namespace Pro_Salles.PL
                 lc.Dock = DockStyle.Fill;
                 page.Controls.Add(lc);
             }
+
+            Part_ID = profile.ID;
+            Part_Name = profile.Name;
         }
         public override bool Is_Data_Valide()
         {
@@ -145,6 +143,9 @@ namespace Pro_Salles.PL
                 });
             });
             db.SubmitChanges();
+
+            Part_ID = profile.ID;
+            Part_Name = profile.Name;
 
             base.Save();
         }

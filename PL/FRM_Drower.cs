@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
+﻿using System.Linq;
 using Pro_Salles.DAL;
 
 namespace Pro_Salles.PL
@@ -38,6 +29,8 @@ namespace Pro_Salles.PL
         public override void Get_Data()
         {
             txt_drower_name.Text = drower.name;
+            Part_ID = drower.ID;
+            Part_Name = drower.name;
             base.Get_Data();
         }
         public override void Set_Data()
@@ -70,6 +63,9 @@ namespace Pro_Salles.PL
             db.SubmitChanges();
             drower.account_id = account.ID;
             db.SubmitChanges();
+
+            Part_ID = drower.ID;
+            Part_Name = drower.name;
 
             base.Save();
         }

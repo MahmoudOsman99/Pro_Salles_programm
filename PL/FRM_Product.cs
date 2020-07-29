@@ -6,9 +6,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using Pro_Salles.DAL;
 using Pro_Salles.Class;
@@ -82,6 +79,10 @@ namespace Pro_Salles.PL
             }
             sdb.SubmitChanges();
             this.Text = string.Format("   بيانات صنف: {0}", prod.name);
+
+            Part_ID = prod.ID;
+            Part_Name = prod.name;
+            
             base.Save();
         }
         public override void Get_Data()
@@ -101,6 +102,10 @@ namespace Pro_Salles.PL
             else prod_pic.Image = null;
 
             gridControl1.DataSource = sdb.Product_Units.Where(x => x.product_id == prod.ID);
+
+            Part_ID = prod.ID;
+            Part_Name = prod.name;
+
             base.Get_Data();
         }
         public override void Set_Data()

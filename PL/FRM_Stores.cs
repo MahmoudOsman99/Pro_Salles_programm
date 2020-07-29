@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+﻿using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using Pro_Salles.DAL;
@@ -75,6 +69,9 @@ namespace Pro_Salles.PL
 
             db.SubmitChanges();
             XtraMessageBox.Show("تم الحفظ بنجاح", "تم");
+            Part_ID = store.ID;
+            Part_Name = store.name;
+            base.Save();
         }
         public override void New()
         {
@@ -114,6 +111,9 @@ namespace Pro_Salles.PL
         public override void Get_Data()
         {
             txt_store_name.Text = store.name;
+            Part_ID = store.ID;
+            Part_Name = store.name;
+            base.Get_Data();
         }
         public override void Set_Data()
         {

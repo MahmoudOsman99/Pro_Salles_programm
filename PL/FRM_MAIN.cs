@@ -1,18 +1,13 @@
-﻿using DevExpress.LookAndFeel;
-using DevExpress.XtraBars;
+﻿using System;
+using DevExpress.LookAndFeel;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraEditors;
 using Pro_Salles.Class;
 using Pro_Salles.DAL;
 using Pro_Salles.Properties;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Pro_Salles.PL
@@ -67,6 +62,18 @@ namespace Pro_Salles.PL
                     break;
                 case "FRM_Sales_Invoice_List":  // Show the Purchase invoices || all the invoices 
                     frm = new FRM_Invoice_List(Master.Invoice_Type.Salles);
+                    break;
+                case "FRM_Purchase_Return_Invoice":
+                    frm = new FRM_Invoice(Master.Invoice_Type.Purchase_Return);
+                    break;
+                case "FRM_Sales_Return_Invoice":
+                    frm = new FRM_Invoice(Master.Invoice_Type.Salles_Return);
+                    break;
+                case "FRM_Purchase_Return_Invoice_List":
+                    frm = new FRM_Invoice_List(Master.Invoice_Type.Purchase_Return);
+                    break;
+                case "FRM_Sales_Return_Invoice_List":
+                    frm = new FRM_Invoice_List(Master.Invoice_Type.Salles_Return);
                     break;
                     
                 default:

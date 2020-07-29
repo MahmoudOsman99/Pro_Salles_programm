@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using Pro_Salles.Class;
@@ -16,6 +10,8 @@ namespace Pro_Salles.PL
     public partial class FRM_Master : XtraForm
     {
         public bool isNew = false;
+        public string Part_Name;
+        public int Part_ID;
         public FRM_Master()
         {
             InitializeComponent();
@@ -31,34 +27,78 @@ namespace Pro_Salles.PL
         {
             XtraMessageBox.Show("تم الحفظ بنجاح", "تم");
             Refresh_Data();
+            Insert_User_Action((isNew) ? Action_Type.Add : Action_Type.Edit);
             isNew = false;
             btn_delete.Enabled = true;
+            Get_History();
         }
+
+        public enum Action_Type
+        {
+            Add,
+            Edit,
+            Delete,
+            Print
+        }
+
+        public void Insert_User_Action(Action_Type action_Type)
+        {
+            Insert_User_Action(action_Type, this.Part_ID, this.Part_Name, this.Name);
+        }       
+        public static void Insert_User_Action(Action_Type action_Type, int partID, string partName, string screenName)
+        {
+
+            //96
+            int screenID = 0;
+            var screen = Screens.Get_Screens.SingleOrDefault(x => x.Screen_Name == screenName);
+            if (screen != null)
+                screenID = screen.Screen_ID;
+            using (var db = new Pro_SallesDataContext())
+            {
+                db.User_Logs.InsertOnSubmit(new User_Log
+                {
+                    User_ID = Sessions.CurrentUser.ID,
+                    Part_ID = partID,
+                    Part_Name = partName,
+                    Action_Type = (byte)action_Type,
+                    Action_Date = DateTime.Now,
+                    Screen_ID = screenID
+                });
+                db.SubmitChanges();
+            }
+        }
+
         public virtual void Delete()
         {
             XtraMessageBox.Show("تم الحذف بنجاح", "تم", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Insert_User_Action(Action_Type.Delete);
         }
         public virtual void New()
         {
+            isNew = true;
             Get_Data();
             isNew = true;
             btn_delete.Enabled = false;
         }
         public virtual void Get_Data()
         {
-
+            Get_History();
         }
         public virtual void Set_Data()
         {
 
         }
-        public virtual void Refresh_Data()
+        public virtual void Get_History()
         {
 
         }
+        public virtual void Refresh_Data()
+        {
+            Get_History();
+        }
         public virtual void Print()
         {
-
+            Insert_User_Action(Action_Type.Print);
         }
         public virtual bool Is_Data_Valide()
         {
@@ -76,9 +116,7 @@ namespace Pro_Salles.PL
 
         private void btn_new_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
             New();
-
         }
 
         public static bool CheckActionAuthorization(string formName, Master.Actions actions, User user = null)

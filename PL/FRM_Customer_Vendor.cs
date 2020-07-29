@@ -115,7 +115,8 @@ namespace Pro_Salles.PL
             db.SubmitChanges();//هنا عملت حفظ عشان الاسم بتسجل و الرقم بتاع الحساب يزيد و بالتالى رقم الحساب بتاع العميل هيكون من الحساب اللي رقمه زاد لوحده بعد الحفظ
             Cust_Vend.account_id = acc.ID;//هنا بعد ما الرقم زاد و عايز العميل ياخد رقم الحساب بتاعه يبقي ياخده عادي لانه زاد و اتحفظ
             db.SubmitChanges();//هنا انت حفظت البيانات تاني بعد ما العميل اخد رقم حسابه
-
+            Part_ID = Cust_Vend.ID;
+            Part_Name = Cust_Vend.name;
             base.Save();
 
             if (CloseAfterSave == true)

@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using Pro_Salles.DAL;
 using Pro_Salles.Class;
@@ -42,7 +35,7 @@ namespace Pro_Salles.PL
         }
         void Get_Data()
         {
-            var db = new DAL.Pro_SallesDataContext();
+            var db = new Pro_SallesDataContext();
             var info = db.Company_Infos.FirstOrDefault();
             if (info == null) 
                 return;
@@ -55,7 +48,7 @@ namespace Pro_Salles.PL
         }
         void Save()
         {
-            var db = new DAL.Pro_SallesDataContext();
+            var db = new Pro_SallesDataContext();
             Company_Info info = db.Company_Infos.FirstOrDefault();
             if (info == null)
             {

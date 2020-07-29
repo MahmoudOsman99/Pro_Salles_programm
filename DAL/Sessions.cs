@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.ComponentModel;
-using TableDependency.SqlClient.Base.Enums;
 using TableDependency.SqlClient;
-using TableDependency.SqlClient.EventArgs;
-using TableDependency.SqlClient.Enumerations;
 using static Pro_Salles.Class.Master;
 using Pro_Salles.Class;
 
