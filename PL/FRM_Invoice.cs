@@ -321,8 +321,6 @@ namespace Pro_Salles.PL
                     this.Name = Screens.Add_Purchase_Invoice.Screen_Name;
                     checkbox_posted_to_store.Enabled = false;
                     checkbox_posted_to_store.Checked = true;
-                    gridView1.Columns[nameof(v.store_id)].OptionsColumn.AllowFocus = false;
-                    //gridView1.Columns["store_id"].OptionsColumn.AllowFocus = false;
                     break;
                 case Master.Invoice_Type.Salles:
                     this.Text = "   فاتوره مبيعات ";
@@ -333,7 +331,6 @@ namespace Pro_Salles.PL
                     this.Name = Screens.Add_Purchase_Return_Invoice.Screen_Name;
                     checkbox_posted_to_store.Enabled = false;
                     checkbox_posted_to_store.Checked = true;
-                    gridView1.Columns[nameof(v.store_id)].OptionsColumn.AllowFocus = false;
                     lyc_sourceID.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
                     break;
                 case Master.Invoice_Type.Salles_Return://99
@@ -341,7 +338,6 @@ namespace Pro_Salles.PL
                     this.Name = Screens.Add_Sales_Return_Invoice.Screen_Name;
                     checkbox_posted_to_store.Enabled = false;
                     checkbox_posted_to_store.Checked = true;
-                    gridView1.Columns[nameof(v.store_id)].OptionsColumn.AllowFocus = false;
                     lyc_sourceID.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
                     break;
                 default:
@@ -349,8 +345,61 @@ namespace Pro_Salles.PL
             }
 
         }
+        /// <summary>
+        /// 101 Here you repited the code or you put the code that need data from gridview but the gridview didn't take its value
+        /// </summary>
+        void SetUpGridViewByInvoiceType()
+        {
+            switch (Type)
+            {
+                case Master.Invoice_Type.Purchase:
+                    gridView1.Columns[nameof(v.store_id)].OptionsColumn.AllowFocus = false;
+                    break;
+                case Master.Invoice_Type.Purchase_Return://99
+                    gridView1.Columns[nameof(v.store_id)].OptionsColumn.AllowFocus = false;
+                    gridView1.OptionsView.NewItemRowPosition = NewItemRowPosition.None;
+
+                    AddReturnColumns();
+
+                    break;
+                case Master.Invoice_Type.Salles_Return://99                    
+                    gridView1.Columns[nameof(v.store_id)].OptionsColumn.AllowFocus = false;
+                    gridView1.OptionsView.NewItemRowPosition = NewItemRowPosition.None;
+
+                    AddReturnColumns();
+
+                    break;
+                default:
+                    break;
+            }
+        }
+        void AddReturnColumns()
+        {
+            //101,102
+            gridView1.Columns.Add(new GridColumn()
+            {
+                Name = "CLM_Source_Qty",
+                FieldName = "Source_Qty",
+                Caption = "الكميه الأساسيه",
+                UnboundType = DevExpress.Data.UnboundColumnType.Decimal,
+                VisibleIndex = gridView1.Columns[nameof(v.item_qty)].VisibleIndex - 1,
+            });
+            gridView1.Columns.Add(new GridColumn()
+            {
+                Name = "CLM_Other_Qty",
+                FieldName = "Other_Qty",
+                Caption = "كميات اخري",
+                UnboundType = DevExpress.Data.UnboundColumnType.Decimal,
+                VisibleIndex = gridView1.Columns[nameof(v.item_qty)].VisibleIndex - 1,
+            });
+
+            gridView1.Columns["Other_Qty"].OptionsColumn.AllowEdit =
+            gridView1.Columns["Source_Qty"].OptionsColumn.AllowEdit = false;
+        }
         private void FRM_Invoice_Load(object sender, EventArgs e)
         {
+            SetUpGridViewByInvoiceType();
+
             btn_print.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
 
             Refresh_Data();
@@ -806,6 +855,7 @@ namespace Pro_Salles.PL
                     }
                     break;
                 case Master.Invoice_Type.Purchase_Return:
+                    //validate that qty isn't more than the qty in the source
                     break;
                 case Master.Invoice_Type.Salles_Return:
                     break;
@@ -1105,8 +1155,43 @@ namespace Pro_Salles.PL
                 e.Value = (balance - otherBalance) / factor;
 
             }
+
+            else if (e.Column.FieldName == "Source_Qty")
+            {
+                var returnRow = e.Row as Invoice_Return_Detail;
+                if (returnRow == null) return;
+
+
+
+                if (e.IsGetData)
+                {
+                    var sourceRow = ReturnSourceDetails.SingleOrDefault(x => x.ID == returnRow.SourceRowID);
+                    if (sourceRow != null)
+                        e.Value = sourceRow.item_qty;
+                    else
+                        e.Value = 0;
+
+
+                }
+            }
+            //103
+            else if (e.Column.FieldName == "Other_Qty")
+            {
+                var returnRow = e.Row as Invoice_Return_Detail;
+                if (returnRow == null) return;
+
+
+                if (e.IsGetData)
+                {
+                    var db = new Pro_SallesDataContext();
+                    var otherReturnRows = db.Invoice_Return_Details.Where(x => x.SourceRowID == returnRow.SourceRowID).Sum(x => (double?)x.item_qty) ?? 0;
+                    e.Value = otherReturnRows;
+
+                }
+            }
         }
 
+        List<Invoice_Detail> ReturnSourceDetails = new List<Invoice_Detail>();
         private void ButtonEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
             GridView view = ((GridControl)((ButtonEdit)sender).Parent).MainView as GridView;
@@ -1277,7 +1362,12 @@ namespace Pro_Salles.PL
             spin_expences.EditValue = Invoice.expences;
 
             generaldb = new Pro_SallesDataContext();
-            gridControl1.DataSource = generaldb.Invoice_Details.Where(x => x.invoice_id == Invoice.ID);
+
+            if (Type == Master.Invoice_Type.Purchase_Return || Type == Master.Invoice_Type.Salles_Return)
+                gridControl1.DataSource = generaldb.Invoice_Return_Details.Where(x => x.invoice_id == Invoice.ID);
+
+            else
+                gridControl1.DataSource = generaldb.Invoice_Details.Where(x => x.invoice_id == Invoice.ID);
 
             Part_ID = Invoice.ID;
             Part_Name = Invoice.code + " - " + look_grid_part_id.Text;
@@ -1645,6 +1735,11 @@ namespace Pro_Salles.PL
                     ((FRM_Master_List)frm).Refresh_Data();
             }
         }
+        /// <summary>
+        /// It deletes the details for spicified store
+        /// </summary>
+        /// <param name="invoiceID"></param>
+        /// <param name="type"></param>
         public static void DeleteInvoiceStoreLogDetailes(int invoiceID, byte type)
         {
             using (var db = new Pro_SallesDataContext())

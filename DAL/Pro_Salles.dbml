@@ -213,4 +213,21 @@
       <Column Name="SourceID" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Invoice_Return_Details" Member="Invoice_Return_Details">
+    <Type Name="Invoice_Return_Detail">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="invoice_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="item_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="item_unit_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="item_qty" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="total_price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="cost_value" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="total_cost_value" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="discount" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="discount_value" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="store_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SourceRowID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
 </Database>

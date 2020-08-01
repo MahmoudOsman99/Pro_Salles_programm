@@ -87,6 +87,7 @@ namespace Pro_Salles.DAL
     partial void InsertInvoice_Header(Invoice_Header instance);
     partial void UpdateInvoice_Header(Invoice_Header instance);
     partial void DeleteInvoice_Header(Invoice_Header instance);
+
     #endregion
 		
 		public Pro_SallesDataContext() : 
@@ -270,6 +271,7 @@ namespace Pro_Salles.DAL
 				return this.GetTable<Invoice_Header>();
 			}
 		}
+		
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Accounts")]
@@ -4281,5 +4283,6 @@ namespace Pro_Salles.DAL
 			}
 		}
 	}
+	
 }
 #pragma warning restore 1591

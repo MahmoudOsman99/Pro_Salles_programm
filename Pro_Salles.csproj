@@ -123,6 +123,9 @@
     <Compile Include="Class\User_Settings_Template.cs" />
     <Compile Include="Class\Utils.cs" />
     <Compile Include="DAL\Database_Watcher.cs" />
+    <Compile Include="DAL\Pro_Salles.cs">
+      <DependentUpon>Pro_Salles.dbml</DependentUpon>
+    </Compile>
     <Compile Include="DAL\Pro_Salles.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

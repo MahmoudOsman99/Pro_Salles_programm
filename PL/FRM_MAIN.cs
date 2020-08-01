@@ -113,7 +113,7 @@ namespace Pro_Salles.PL
                 else
                     frm.Show();
                 frm.BringToFront();
-                return;
+                return;                
             }
 
             var screen = Sessions.Screens_Access.SingleOrDefault(x => x.Screen_Name == frm.Name);
