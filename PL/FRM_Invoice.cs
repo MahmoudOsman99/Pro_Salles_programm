@@ -19,6 +19,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using static Pro_Salles.Class.Master_Finance;
+using System.Diagnostics;
 
 namespace Pro_Salles.PL
 {
@@ -100,18 +101,26 @@ namespace Pro_Salles.PL
             };
             switch (Type)
             {
-                case Master.Invoice_Type.Purchase_Return:
                 case Master.Invoice_Type.Purchase:
                     Invoice.part_type = (int)Master.Part_Type.Vendor;
                     Invoice.part_id = Sessions.Defaults.Vendor;
                     Invoice.branch = Sessions.Defaults.Raw_Store;
                     break;
-                case Master.Invoice_Type.Salles_Return:
                 case Master.Invoice_Type.Salles:
                     Invoice.part_type = (int)Master.Part_Type.Customer;
                     Invoice.part_id = Sessions.Defaults.Customer;
                     Invoice.branch = Sessions.Defaults.Store;
                     break;
+
+                case Master.Invoice_Type.Salles_Return:
+                    Invoice.branch = Sessions.Defaults.Store;
+                    Invoice.part_id = Sessions.Defaults.Customer;
+                    break;
+
+                case Master.Invoice_Type.Purchase_Return:
+                    Invoice.branch = Sessions.Defaults.Store;
+                    break;
+
                 default:
                     break;
             }
@@ -185,7 +194,8 @@ namespace Pro_Salles.PL
                 case Master.Invoice_Type.Purchase:
                     break;
                 case Master.Invoice_Type.Salles:
-                    if (Invoice.discount_ratio != Convert.ToDouble(spin_discount_ratio.EditValue) && Sessions.UserSettings.Salles.Max_Discount_In_Invoice < Convert.ToDecimal(spin_discount_ratio.EditValue))
+                    if (Invoice.discount_ratio != Convert.ToDouble(spin_discount_ratio.EditValue) &&
+                        Sessions.UserSettings.Salles.Max_Discount_In_Invoice < Convert.ToDecimal(spin_discount_ratio.EditValue))
                     {
                         Number_Of_Erorrs++;
                         spin_discount_ratio.ErrorText = "هذا الخصم غير مسموح به";
@@ -232,6 +242,7 @@ namespace Pro_Salles.PL
                     break;
                 case Master.Invoice_Type.Purchase_Return:
                 case Master.Invoice_Type.Salles_Return:
+                    break;
                 default:
                     throw new NotImplementedException();
 
@@ -398,6 +409,8 @@ namespace Pro_Salles.PL
         }
         private void FRM_Invoice_Load(object sender, EventArgs e)
         {
+            gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
+
             SetUpGridViewByInvoiceType();
 
             btn_print.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
@@ -513,7 +526,6 @@ namespace Pro_Salles.PL
 
             #region GridView_Properties
 
-            gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
             gridView1.Columns[nameof(v.ID)].Visible = false;
             gridView1.Columns[nameof(v.invoice_id)].Visible = false;
 
@@ -659,8 +671,11 @@ namespace Pro_Salles.PL
             #endregion
 
             ReadUserSettings();
-            gridView1.RestoreLayOut(this.Name);
-            layoutControl1.RestoreLayOut(this.Name);
+            if (Debugger.IsAttached == false)
+            {
+                gridView1.RestoreLayOut(this.Name);
+                layoutControl1.RestoreLayOut(this.Name);
+            }
 
             //90
             btn_customize_Layout.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
@@ -941,7 +956,8 @@ namespace Pro_Salles.PL
             }
 
             //////////////////////
-            if (row.item_id == 0) return;
+            if (row.item_id == 0)
+                return;
 
             itemV = Sessions.Product_View.Single(x => x.ID == row.item_id);
             if (row.item_unit_id == 0)
@@ -980,7 +996,15 @@ namespace Pro_Salles.PL
                             row.price = unitV.Sell_price;
                             break;
                         case Master.Invoice_Type.Salles_Return:
-                        case Master.Invoice_Type.Purchase_Return:
+                        case Master.Invoice_Type.Purchase_Return://103
+
+                            var returnSourceRow = ReturnSourceDetails.Where(x => x.ID == row.SourceRowID).SingleOrDefault();
+                            if (returnSourceRow != null)
+                            {
+                                row.price = returnSourceRow.price;
+                            }
+
+                            break;
                         default:
                             throw new NotImplementedException();
                     }
@@ -1029,6 +1053,15 @@ namespace Pro_Salles.PL
 
                         case Master.Invoice_Type.Purchase_Return:
                         case Master.Invoice_Type.Salles_Return:
+
+                            var returnSourceRow = ReturnSourceDetails.Where(x => x.ID == row.SourceRowID).SingleOrDefault();
+                            if (returnSourceRow != null)
+                            {
+                                row.cost_value = returnSourceRow.cost_value;
+                                row.total_cost_value = row.cost_value * row.item_qty;
+                            }
+
+                            break;
                         default:
                             throw new NotImplementedException();
                     }
@@ -1158,35 +1191,29 @@ namespace Pro_Salles.PL
 
             else if (e.Column.FieldName == "Source_Qty")
             {
-                var returnRow = e.Row as Invoice_Return_Detail;
-                if (returnRow == null) return;
-
-
+                var row = e.Row as Invoice_Detail;
+                if (row == null) return;
 
                 if (e.IsGetData)
                 {
-                    var sourceRow = ReturnSourceDetails.SingleOrDefault(x => x.ID == returnRow.SourceRowID);
+                    var sourceRow = ReturnSourceDetails.SingleOrDefault(x => x.ID == row.SourceRowID);
                     if (sourceRow != null)
                         e.Value = sourceRow.item_qty;
                     else
                         e.Value = 0;
-
-
                 }
             }
             //103
             else if (e.Column.FieldName == "Other_Qty")
             {
-                var returnRow = e.Row as Invoice_Return_Detail;
-                if (returnRow == null) return;
-
+                var row = e.Row as Invoice_Detail;
+                if (row == null) return;
 
                 if (e.IsGetData)
                 {
                     var db = new Pro_SallesDataContext();
-                    var otherReturnRows = db.Invoice_Return_Details.Where(x => x.SourceRowID == returnRow.SourceRowID).Sum(x => (double?)x.item_qty) ?? 0;
+                    var otherReturnRows = db.Invoice_Details.Where(x => x.SourceRowID == row.SourceRowID).Sum(x => (double?)x.item_qty) ?? 0;
                     e.Value = otherReturnRows;
-
                 }
             }
         }
@@ -1363,11 +1390,7 @@ namespace Pro_Salles.PL
 
             generaldb = new Pro_SallesDataContext();
 
-            if (Type == Master.Invoice_Type.Purchase_Return || Type == Master.Invoice_Type.Salles_Return)
-                gridControl1.DataSource = generaldb.Invoice_Return_Details.Where(x => x.invoice_id == Invoice.ID);
-
-            else
-                gridControl1.DataSource = generaldb.Invoice_Details.Where(x => x.invoice_id == Invoice.ID);
+            gridControl1.DataSource = generaldb.Invoice_Details.Where(x => x.invoice_id == Invoice.ID);
 
             Part_ID = Invoice.ID;
             Part_Name = Invoice.code + " - " + look_grid_part_id.Text;
@@ -1892,6 +1915,7 @@ namespace Pro_Salles.PL
                     break;
                 case Master.Invoice_Type.Purchase_Return:
                 case Master.Invoice_Type.Salles_Return:
+                    break;
                 default:
                     throw new NotImplementedException();
             }
