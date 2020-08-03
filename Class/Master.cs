@@ -243,11 +243,11 @@ namespace Pro_Salles.Class
 
 
 
-        public static void GridLookUp_Style(this GridLookUpEdit look, object datasource)
+        public static void InitializeData(this GridLookUpEdit look, object datasource)
         {
-            GridLookUp_Style(look, datasource, "name", "ID");
+            InitializeData(look, datasource, "name", "ID");
         }
-        public static void GridLookUp_Style(this GridLookUpEdit look, object datasource, string displaymember, string valuemember)
+        public static void InitializeData(this GridLookUpEdit look, object datasource, string displaymember, string valuemember)
         {
             look.Properties.DataSource = datasource;
             look.Properties.DisplayMember = displaymember;

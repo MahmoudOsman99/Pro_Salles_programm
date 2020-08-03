@@ -154,6 +154,19 @@ namespace Pro_Salles.PL
                 XtraMessageBox.Show("برجاء ادخال صنف واحد على الأقل", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+            for (int i = 0; i < gridView1.RowCount; i++)
+            {
+                gridView1.FocusedRowHandle = i;
+                GridView1_ValidateRow(gridView1, new ValidateRowEventArgs(i, gridView1.GetRow(i)));/////////////////////
+                if (gridView1.HasColumnErrors)
+                {
+                    Number_Of_Erorrs++;
+                    XtraMessageBox.Show("برجاء التحقق من الأخطاء في الجدول", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    GridView1_ValidateRow(gridView1, new ValidateRowEventArgs(i, gridView1.GetRow(i)));/////////////////////
+                    return false;
+                }
+            }
+
             Number_Of_Erorrs += txt_code.IsStringValid() ? 0 : 1;
             //لو هي انتجر يبقي ترو و فيها قيما يبقي مش هعد الأخطاء اما لو فوولس يبقي هنضيف ايرور يعني مفيش  داتا او بيانات فيها
             Number_Of_Erorrs += look_part_type.IsEditValueValid() ? 0 : 1;
@@ -161,24 +174,13 @@ namespace Pro_Salles.PL
             Number_Of_Erorrs += look_drower.IsEditValueValid() ? 0 : 1;
             Number_Of_Erorrs += look_grid_part_id.IsEditValueValidAndNotZero() ? 0 : 1;
 
-
             //This is diffrent because if it more than zero, it will return true
             Number_Of_Erorrs += IsCodeExists() ? 1 : 0;
-
-            ///////////
-            //if (look_grid_part_id.Text != string.Empty)
-            //{
-            //    Number_Of_Erorrs++;
-            //    look_grid_part_id.ErrorText = Error_Text;
-            //}
-            //////////
-
 
             Number_Of_Erorrs += spin_discount_value.IsValueNotLessThanZero() ? 0 : 1;
             Number_Of_Erorrs += spin_expences.IsValueNotLessThanZero() ? 0 : 1;
             Number_Of_Erorrs += spin_paid.IsValueNotLessThanZero() ? 0 : 1;
             Number_Of_Erorrs += spin_tax_value.IsValueNotLessThanZero() ? 0 : 1;
-            //Number_Of_Erorrs += spin_discount_value.IsValueBiggerThanZero() ? 0 : 1;
 
             Number_Of_Erorrs += date_date.IsDateTimeValid() ? 0 : 1;
 
@@ -285,6 +287,14 @@ namespace Pro_Salles.PL
             gridView_action_history.Columns["Action"].Caption = "الحدث";
             gridView_action_history.Columns["Action_Date"].DisplayFormat.FormatType = FormatType.Custom;
             gridView_action_history.Columns["Action_Date"].DisplayFormat.FormatString = "yyyy/MM/dd hh:mm tt";
+
+            //gridView_action_history.Columns["Action_Date"].OptionsColumn.AllowFocus = false;
+            //gridView_action_history.Columns["Name"].OptionsColumn.AllowFocus = false;
+            //gridView_action_history.Columns["Action"].OptionsColumn.AllowFocus = false;
+            //gridView_action_history.Columns["Action_Date"].OptionsColumn.AllowEdit = false;
+            //gridView_action_history.Columns["Name"].OptionsColumn.AllowEdit = false;
+            //gridView_action_history.Columns["Action"].OptionsColumn.AllowEdit = false;            
+
             gridView_action_history.RowStyle += GridView_action_history_RowStyle;
         }
 
@@ -294,33 +304,34 @@ namespace Pro_Salles.PL
             var action = view.GetRowCellValue(e.RowHandle, "Action");
 
             if (action == null) return;
-            switch (action.ToString())
-            {
-                case "اضافه":
-                    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Success;
-                    break;
-                case "حذف":
-                    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Danger;
-                    break;
-                case "تعديل":
-                    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Warning;
-                    break;
-                case "طباعه":
-                    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Primary;
-                    break;
-                default:
-                    break;
-            }
 
-            //if (action == null) return;
-            //if (action.ToString() == "اضافه")
-            //    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Success;
-            //else if (action.ToString() == "حذف")
-            //    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Danger;
-            //else if (action.ToString() == "تعديل")
-            //    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Warning;
-            //else if (action.ToString() == "طباعه")
-            //    e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Primary;
+            //switch (action.ToString())
+            //{
+            //    case "اضافه":
+            //        e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Success;
+            //        break;
+            //    case "حذف":
+            //        e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Danger;
+            //        break;
+            //    case "تعديل":
+            //        e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Warning;
+            //        break;
+            //    case "طباعه":
+            //        e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Primary;
+            //        break;
+            //    default:
+            //        break;
+            //}
+
+            if (action == null) return;
+            if (action.ToString() == "اضافه")
+                e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Success;
+            else if (action.ToString() == "حذف")
+                e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Danger;
+            else if (action.ToString() == "تعديل")
+                e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Warning;
+            else if (action.ToString() == "طباعه")
+                e.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Primary;
         }
 
         void Set_Form_Type()
@@ -343,6 +354,7 @@ namespace Pro_Salles.PL
                     checkbox_posted_to_store.Enabled = false;
                     checkbox_posted_to_store.Checked = true;
                     lyc_sourceID.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
+                    lyc_SelectItemsFromSource.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
                     break;
                 case Master.Invoice_Type.Salles_Return://99
                     this.Text = "   فاتوره مردود مبيعات";
@@ -350,6 +362,7 @@ namespace Pro_Salles.PL
                     checkbox_posted_to_store.Enabled = false;
                     checkbox_posted_to_store.Checked = true;
                     lyc_sourceID.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
+                    lyc_SelectItemsFromSource.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -423,6 +436,7 @@ namespace Pro_Salles.PL
             look_part_type.Properties.Columns["ID"].Visible = false;
             ///////////////////28   
             look_grid_part_id.ButtonClick += Look_part_id_ButtonClick;
+            look_grid_source.EditValueChanged += Look_grid_source_EditValueChanged;
 
             look_grid_part_id.Properties.ValidateOnEnterKey = true;
             look_grid_part_id.Properties.AllowNullInput = DefaultBoolean.False;//to don't let the user put null values
@@ -691,6 +705,21 @@ namespace Pro_Salles.PL
             this.FormClosing += FRM_Invoice_FormClosing;
         }
 
+        private void Look_grid_source_EditValueChanged(object sender, EventArgs e)
+        {
+            if (look_grid_source.EditValue is int sourceID && sourceID > 0)
+            {
+                using (var db = new Pro_SallesDataContext())
+                {
+                    ReturnSourceDetails = db.Invoice_Details.Where(x => x.invoice_id == sourceID).ToList();
+                    Invoice_Header sourceInvoice = db.Invoice_Headers.Single(x => x.ID == sourceID);
+                    spin_discount_ratio.EditValue = sourceInvoice.discount_ratio;
+                    spin_tax_ratio.EditValue = sourceInvoice.tax;
+                    btn_selectSourceItems.PerformClick();
+                }
+            }
+        }
+
         private void FRM_Invoice_FormClosing(object sender, FormClosingEventArgs e)
         {
             gridView1.SaveLayOut(this.Name);
@@ -701,33 +730,51 @@ namespace Pro_Salles.PL
         private void Look_grid_part_id_EditValueChanged(object sender, EventArgs e)
         {
             var id = Convert.ToInt32(look_grid_part_id.EditValue);
+
             if (id != 0)
             {
-                CustomersAndVendor account;
-                if (look_part_type.EditValue.Equals((byte)Master.Part_Type.Vendor))
+                CustomersAndVendor custAcc;
+                if (Convert.ToByte(look_part_type.EditValue) == (byte)Master.Part_Type.Vendor)
                 {
-                    account = Sessions.Vendors.SingleOrDefault(x => x.ID == id);
+                    custAcc = Sessions.Vendors.SingleOrDefault(x => x.ID == id);
                 }
                 else
                 {
-                    account = Sessions.Customers.SingleOrDefault(x => x.ID == id);
+                    custAcc = Sessions.Customers.SingleOrDefault(x => x.ID == id);
                 }
-                if (account != null)
+
+                if (custAcc == null)
+                    goto IfEmpty;
+
+                txt_part_address.Text = custAcc.address;
+                spin_part_maxCredit.EditValue = Convert.ToDouble(custAcc.max_Credit);
+                txt_part_phone.Text = custAcc.phone;
+                accountBalance = GetAccountBalance(custAcc.account_id);
+                txt_part_balance.Text = accountBalance.Balance;
+
+                //104
+                if (Type == Master.Invoice_Type.Salles_Return || Type == Master.Invoice_Type.Purchase_Return)
                 {
-                    txt_part_address.Text = account.address;
-                    spin_part_maxCredit.EditValue = Convert.ToDouble(account.max_Credit);
-                    txt_part_phone.Text = account.phone;
-                    accountBalance = GetAccountBalance(account.account_id);
-                    txt_part_balance.Text = accountBalance.Balance;
+                    using (var db = new Pro_SallesDataContext())
+                    {
+                        var sourceInvoices = db.Invoice_Headers.Where(x =>
+                        x.invoice_type == ((Type == Master.Invoice_Type.Salles_Return) ? (byte)Master.Invoice_Type.Salles
+                        : (byte)Master.Invoice_Type.Purchase)
+                        && x.part_id == id
+                        && x.part_type == Convert.ToByte(look_part_type.EditValue)).Select(x => new { x.ID, x.code }).ToList();
+                        look_grid_source.InitializeData(sourceInvoices, "code", "ID");
+                    }
                 }
+                return;//To don't go to the goto marker after executing the codes
             }
             else
-            {
-                txt_part_address.Text = "";
-                spin_part_maxCredit.EditValue = 0;
-                txt_part_phone.Text = "";
-                txt_part_balance.Text = "";
-            }
+                goto IfEmpty;
+
+            IfEmpty:
+            txt_part_address.Text = "";
+            spin_part_maxCredit.EditValue = 0;
+            txt_part_phone.Text = "";
+            txt_part_balance.Text = "";
         }
 
         private void GridView1_CellValueChanging(object sender, CellValueChangedEventArgs e)
@@ -809,6 +856,7 @@ namespace Pro_Salles.PL
                     Rows.Remove(lastRow);
                 }
             }
+
             CurrentRowsCount = gridView1.RowCount;
             GridView1_RowUpdated(sender, null);
         }
@@ -869,10 +917,17 @@ namespace Pro_Salles.PL
                         gridView1.SetColumnError(gridView1.Columns[nameof(v.discount_value)], "نسبه الخصم غير مسموح بها");
                     }
                     break;
+                case Master.Invoice_Type.Salles_Return:
                 case Master.Invoice_Type.Purchase_Return:
                     //validate that qty isn't more than the qty in the source
-                    break;
-                case Master.Invoice_Type.Salles_Return:
+                    double? Other_Qty = gridView1.GetRowCellValue(e.RowHandle, "Other_Qty") as double?;
+                    double? Source_Qty = gridView1.GetRowCellValue(e.RowHandle, "Source_Qty") as double?;
+                    //لو الكميه اللي تم ارجعها من فواتير تانيه مطروحه من الكميه الأساسيه لو ناتج الطرح ده اصغر من الكميه المدخله يبقي تعمل الاتي
+                    if (row.item_qty > Convert.ToDouble(((Source_Qty ?? 0) - (Other_Qty ?? 0))))
+                    {
+                        e.Valid = false;
+                        gridView1.SetColumnError(gridView1.Columns[nameof(v.item_qty)], "لا يمكن للكميه المرتجعه ان تكون اكبر من الكميه المتاحه من المصدر");
+                    }
                     break;
                 default:
                     break;
@@ -1240,6 +1295,10 @@ namespace Pro_Salles.PL
         private void Spin_EditValueChanged(object sender, EventArgs e)
         {
             var total = Convert.ToDouble(spin_total.EditValue);
+
+            Spin_tax_value_EditValueChanged(sender, e);
+            Spin_discount_value_EditValueChanged(sender, e);
+
             var discount = Convert.ToDouble(spin_discount_value.EditValue);
             var tax = Convert.ToDouble(spin_tax_value.EditValue);
             var expences = Convert.ToDouble(spin_expences.EditValue);
@@ -1347,9 +1406,9 @@ namespace Pro_Salles.PL
                 //////////////////////Don't forget to understand this part
                 var parttype = Convert.ToInt32(look_part_type.EditValue);
                 if (parttype == (int)Master.Part_Type.Customer)
-                    look_grid_part_id.GridLookUp_Style(Sessions.Customers);
+                    look_grid_part_id.InitializeData(Sessions.Customers);
                 else if (parttype == (int)Master.Part_Type.Vendor)
-                    look_grid_part_id.GridLookUp_Style(Sessions.Vendors);
+                    look_grid_part_id.InitializeData(Sessions.Vendors);
             }
         }
 
@@ -1494,6 +1553,7 @@ namespace Pro_Salles.PL
                     break;
                 case Master.Invoice_Type.Purchase_Return:
                 case Master.Invoice_Type.Salles_Return:
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -1541,7 +1601,23 @@ namespace Pro_Salles.PL
                     msg = string.Format("فاتوره مبيعات رقم {0} : {1}", Invoice.ID, look_grid_part_id.Text);
                     break;
                 case Master.Invoice_Type.Purchase_Return:
+                    StoreAccount = store_journal.Inventory_Account_ID;
+                    TaxAccount = Sessions.Defaults.Purchase_Tax;
+                    DiscountAccount = Sessions.Defaults.Discount_Received_Account;
+                    IsPartCredit = true;
+                    Is_In = false;
+                    InsertCostOsSoldGoodsJournal = false;
+                    msg = string.Format("فاتوره مردود مشتروات رقم {0} : {1}", Invoice.ID, look_grid_part_id.Text);
+                    break;
                 case Master.Invoice_Type.Salles_Return:
+                    StoreAccount = store_journal.Salles_Return_Account_ID;
+                    TaxAccount = Sessions.Defaults.Salles_Tax;
+                    DiscountAccount = Sessions.Defaults.Discount_Allowed_Account;
+                    IsPartCredit = true;
+                    Is_In = true;
+                    InsertCostOsSoldGoodsJournal = true;
+                    msg = string.Format("فاتوره مردود مبيعات رقم {0} : {1}", Invoice.ID, look_grid_part_id.Text);
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -1925,6 +2001,119 @@ namespace Pro_Salles.PL
         {
             lyc_post_date.Visibility = checkbox_posted_to_store.Checked ?
                 DevExpress.XtraLayout.Utils.LayoutVisibility.Never : DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
+        }
+
+        private void btn_selectSourceItems_Click(object sender, EventArgs e)
+        {
+            //106
+            XtraForm frm = new XtraForm
+            {
+                Size = new Size(this.Width - 130, this.Height - 130),
+                StartPosition = FormStartPosition.CenterScreen,
+                Name = "selectSourceItems",
+                Text = "  أختيار أصناف الإرجاع",
+                RightToLeft = RightToLeft.Yes,
+                RightToLeftLayout = true
+            };
+
+            frm.IconOptions.ShowIcon = false;
+            frm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            frm.MaximizeBox = false;
+
+            GridControl gridControl = new GridControl();
+            gridControl.Dock = DockStyle.Fill;
+
+            GridView View = new GridView();
+            gridControl.MainView = View;
+            //View.OptionsBehavior.Editable = false;
+            View.OptionsView.ShowGroupPanel = false;
+            View.OptionsCustomization.AllowColumnMoving = false;
+            View.OptionsCustomization.AllowQuickHideColumns = false;
+            View.OptionsSelection.MultiSelect = true;
+            View.OptionsSelection.MultiSelectMode = GridMultiSelectMode.CheckBoxRowSelect;
+            View.Appearance.Row.TextOptions.HAlignment = HorzAlignment.Center;
+            View.Appearance.Row.TextOptions.VAlignment = VertAlignment.Center;
+            View.OptionsBehavior.AutoPopulateColumns = false;
+            View.OptionsView.ShowIndicator = false;
+            View.OptionsCustomization.AllowSort = false;
+
+            var source = gridView1.DataSource as Collection<Invoice_Detail>;
+            //107 What will happen after i select or check any row or item  from the customized form
+            View.SelectionChanged += (viewSender, changeEvent) =>
+            {
+                //
+                var selectedRow = ReturnSourceDetails[changeEvent.ControllerRow];
+                if (source == null)
+                    return;
+
+                if (changeEvent.Action == System.ComponentModel.CollectionChangeAction.Add)
+                {
+                    if (source.Where(x => x.SourceRowID == selectedRow.ID).Count() == 0)
+                    {
+                        //Here you can't provide the complite row to the source directllay, you should select what you want and provide the selected items to the 
+                        //source or InvoiceDetails by add Method
+                        source.Add(new Invoice_Detail()
+                        {
+                            SourceRowID = selectedRow.ID,
+                            cost_value = selectedRow.cost_value,
+                            item_id = selectedRow.item_id,
+                            item_unit_id = selectedRow.item_unit_id,
+                            item_qty = selectedRow.item_qty,
+                            discount_value = selectedRow.discount_value,
+                            price = selectedRow.price,
+                            discount = selectedRow.discount,
+                            store_id = (look_branch.EditValue is int storeID) ? storeID : selectedRow.store_id,
+                            total_cost_value = selectedRow.total_cost_value,
+                            total_price = selectedRow.total_price
+                        });
+                    }
+                }
+                else if (changeEvent.Action == System.ComponentModel.CollectionChangeAction.Remove)
+                {
+                    if (source.Where(x => x.SourceRowID == selectedRow.ID).Count() > 0)
+                    {
+                        source.Remove(source.Single(x => x.SourceRowID == selectedRow.ID));
+                    }
+                }
+            };
+
+
+            Invoice_Detail ins;
+            View.Columns.AddField(nameof(ins.ID));
+
+            gridControl.RepositoryItems.AddRange(new RepositoryItem[] { repoUOM, repoAll });
+
+            var productColumn = View.Columns.AddField(nameof(ins.item_id));
+            productColumn.Visible = true;
+            productColumn.Caption = "الصنف";
+
+            var unitColumn = View.Columns.AddField(nameof(ins.item_unit_id));
+            unitColumn.Visible = true;
+            unitColumn.Caption = "الوحده";
+
+            var itemQtyColumn = View.Columns.AddField(nameof(ins.item_qty));
+            itemQtyColumn.Caption = "الكميه";
+            itemQtyColumn.Visible = true;
+
+            var repoMyItems = new RepositoryItemLookUpEdit();
+            var repoMyUMO = new RepositoryItemLookUpEdit();
+            repoMyItems.LookUp_DataSource(Sessions.Product_View, productColumn, gridControl, "Name", "ID");
+            repoMyUMO.LookUp_DataSource(Sessions.Unit_Names, unitColumn, gridControl);
+
+            gridControl.DataSource = ReturnSourceDetails;
+            frm.Controls.Add(gridControl);
+
+            //To force the gridcontrol finish its initialization to take its (propeties || (something else) )
+            gridControl.ForceInitialize();
+            if (source != null)
+            {
+                for (int i = 0; i < ReturnSourceDetails.Count(); i++)
+                {
+                    if (source.Where(x => x.SourceRowID == ReturnSourceDetails[i].ID).Count() > 0)
+                        View.SelectRow(i);
+                }
+            }
+            frm.ShowDialog();
         }
     }
 }

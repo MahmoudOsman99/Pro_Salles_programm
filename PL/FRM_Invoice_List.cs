@@ -112,12 +112,12 @@ namespace Pro_Salles.PL
                 int part_type = Convert.ToInt32(look_part_type.EditValue);
                 if (part_type == (int)Master.Part_Type.Customer)
                 {
-                    look_grid_part_id.GridLookUp_Style(Sessions.Customers);
+                    look_grid_part_id.InitializeData(Sessions.Customers);
                     lyc_part.Text = "العميل";
                 }
                 else if (part_type == (int)Master.Part_Type.Vendor)
                 {
-                    look_grid_part_id.GridLookUp_Style(Sessions.Vendors);
+                    look_grid_part_id.InitializeData(Sessions.Vendors);
                     lyc_part.Text = "المورد";
                 }
 
