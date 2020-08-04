@@ -20,6 +20,7 @@ using System.Linq;
 using System.Windows.Forms;
 using static Pro_Salles.Class.Master_Finance;
 using System.Diagnostics;
+using Pro_Salles.UI;
 
 namespace Pro_Salles.PL
 {
@@ -113,12 +114,15 @@ namespace Pro_Salles.PL
                     break;
 
                 case Master.Invoice_Type.Salles_Return:
+                    Invoice.part_type = (int)Master.Part_Type.Customer;
                     Invoice.branch = Sessions.Defaults.Store;
                     Invoice.part_id = Sessions.Defaults.Customer;
                     break;
 
                 case Master.Invoice_Type.Purchase_Return:
+                    Invoice.part_type = (int)Master.Part_Type.Vendor;
                     Invoice.branch = Sessions.Defaults.Store;
+                    Invoice.part_id = Sessions.Defaults.Vendor;
                     break;
 
                 default:
@@ -679,6 +683,10 @@ namespace Pro_Salles.PL
             gridView1.ValidateRow += GridView1_ValidateRow;
             gridView1.InvalidRowException += GridView1_InvalidRowException;
             gridView1.CellValueChanging += GridView1_CellValueChanging;
+
+            gridView_return_Invoices.RowCountChanged += GridView_return_Invoices_RowCountChanged;
+            GridView_return_Invoices_RowCountChanged(gridView_return_Invoices, new EventArgs());
+
             this.Activated += FRM_Invoice_Activated;
             this.KeyPreview = true;
             this.KeyDown += FRM_Invoice_KeyDown;
@@ -705,8 +713,22 @@ namespace Pro_Salles.PL
             this.FormClosing += FRM_Invoice_FormClosing;
         }
 
+        private void GridView_return_Invoices_RowCountChanged(object sender, EventArgs e)
+        {
+            //112
+            group_Return_Invoices.Visibility = lyc_gridView_return_Invoices.Visibility =
+                (gridView_return_Invoices.RowCount > 0) ?
+                DevExpress.XtraLayout.Utils.LayoutVisibility.Always : DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+        }
+
         private void Look_grid_source_EditValueChanged(object sender, EventArgs e)
         {
+            gridView1.OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
+            gridView1.OptionsSelection.MultiSelect = true;
+            gridView1.SelectAll();
+            gridView1.DeleteSelectedRows();
+            gridView1.OptionsSelection.MultiSelect = false;
+
             if (look_grid_source.EditValue is int sourceID && sourceID > 0)
             {
                 using (var db = new Pro_SallesDataContext())
@@ -763,6 +785,7 @@ namespace Pro_Salles.PL
                         && x.part_id == id
                         && x.part_type == Convert.ToByte(look_part_type.EditValue)).Select(x => new { x.ID, x.code }).ToList();
                         look_grid_source.InitializeData(sourceInvoices, "code", "ID");
+                        look_grid_source.EditValue = null;
                     }
                 }
                 return;//To don't go to the goto marker after executing the codes
@@ -1267,7 +1290,7 @@ namespace Pro_Salles.PL
                 if (e.IsGetData)
                 {
                     var db = new Pro_SallesDataContext();
-                    var otherReturnRows = db.Invoice_Details.Where(x => x.SourceRowID == row.SourceRowID).Sum(x => (double?)x.item_qty) ?? 0;
+                    var otherReturnRows = db.Invoice_Details.Where(x => x.SourceRowID == row.SourceRowID && x.ID != row.ID).Sum(x => (double?)x.item_qty) ?? 0;
                     e.Value = otherReturnRows;
                 }
             }
@@ -1406,9 +1429,15 @@ namespace Pro_Salles.PL
                 //////////////////////Don't forget to understand this part
                 var parttype = Convert.ToInt32(look_part_type.EditValue);
                 if (parttype == (int)Master.Part_Type.Customer)
+                {
                     look_grid_part_id.InitializeData(Sessions.Customers);
+                    //look_grid_part_id.EditValue = Sessions.Defaults.Customer;
+                }
                 else if (parttype == (int)Master.Part_Type.Vendor)
+                {
                     look_grid_part_id.InitializeData(Sessions.Vendors);
+                    look_grid_part_id.EditValue = Sessions.Defaults.Vendor;
+                }
             }
         }
 
@@ -1425,6 +1454,8 @@ namespace Pro_Salles.PL
             look_drower.EditValue = Invoice.drower;
             look_part_type.EditValue = Invoice.part_type;
             look_grid_part_id.EditValue = Invoice.part_id;
+            look_grid_source.EditValue = Invoice.SourceID;
+            Look_grid_source_EditValueChanged(null, null);
 
             txt_code.Text = Invoice.code;
 
@@ -1450,6 +1481,12 @@ namespace Pro_Salles.PL
             generaldb = new Pro_SallesDataContext();
 
             gridControl1.DataSource = generaldb.Invoice_Details.Where(x => x.invoice_id == Invoice.ID);
+            gridcontrol_return_Invoices.DataSource = generaldb.Invoice_Headers.Where(x => x.SourceID == Invoice.ID).Select(x => new
+            {
+                x.ID,
+                x.code,
+                x.date
+            }).ToList();
 
             Part_ID = Invoice.ID;
             Part_Name = Invoice.code + " - " + look_grid_part_id.Text;
@@ -1486,7 +1523,7 @@ namespace Pro_Salles.PL
 
             Invoice.invoice_type = (byte)Type;
 
-
+            Invoice.SourceID = Convert.ToInt32(look_grid_source.EditValue);
 
             base.Set_Data();
         }
@@ -1882,7 +1919,11 @@ namespace Pro_Salles.PL
                     name = Screens.Add_Sales_Invoice.Screen_Name;
                     break;
                 case Master.Invoice_Type.Purchase_Return:
+                    name = Screens.Add_Purchase_Return_Invoice.Screen_Name;
+                    break;
                 case Master.Invoice_Type.Salles_Return:
+                    name = Screens.Add_Sales_Return_Invoice.Screen_Name;
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -1946,26 +1987,90 @@ namespace Pro_Salles.PL
                 RPT_Invoice.Print(Order_Invoice);
             }
         }
+
+        public static void Delete(List<int> ids, Master.Invoice_Type Type, string CallerScreenName)
+        {
+            var name = "";
+            switch (Type)
+            {
+                case Master.Invoice_Type.Purchase:
+                    name = Screens.Add_Purchase_Invoice.Screen_Name;
+                    break;
+                case Master.Invoice_Type.Salles:
+                    name = Screens.Add_Sales_Invoice.Screen_Name;
+                    break;
+                case Master.Invoice_Type.Purchase_Return:
+                    name = Screens.Add_Purchase_Return_Invoice.Screen_Name;
+                    break;
+                case Master.Invoice_Type.Salles_Return:
+                    name = Screens.Add_Sales_Return_Invoice.Screen_Name;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            if (CheckActionAuthorization(name, Master.Actions.Delete) == false)
+                return;
+
+
+            if (AskForDeletion())
+            {
+                //112
+                string total_msg = "";
+                foreach (var id in ids)
+                {
+                    string msg;
+                    if (Delete(id, out msg))
+                        FRM_Master.Insert_User_Action(Action_Type.Delete, id, "", CallerScreenName);
+
+                    total_msg += msg + Environment.NewLine;
+                }
+                ViewActionReport.View_MSG(total_msg);
+            }
+
+        }
+        public static bool Delete(int id, out string msg)
+        {
+            using (var db = new Pro_SallesDataContext())
+            {
+                var Invoice = db.Invoice_Headers.Where(x => x.ID == id).SingleOrDefault();
+
+                if (db.Invoice_Headers.Where(x => x.SourceID == id).Count() > 0)
+                {
+                    msg = $"لا يمكن حذف الفاتوره رقم {id} حيث يوجد سندات اخري مرتبطه بها";
+                    return false;
+                }
+
+
+                db.Store_Logs.DeleteAllOnSubmit
+                    (db.Store_Logs.Where(x => x.source_type == Invoice.invoice_type &&
+                    db.Invoice_Details.Where(d => d.invoice_id == id).Select(d => d.ID).Contains(x.source_id)));
+                db.SubmitChanges();
+
+                db.Invoice_Details.DeleteAllOnSubmit(db.Invoice_Details.Where(x => x.invoice_id == id));
+                db.SubmitChanges();
+
+                db.Invoice_Headers.DeleteOnSubmit(Invoice);
+                db.SubmitChanges();
+                msg = $"تم حذف الفاتوره رقم {id} بنجاح";
+                return true;
+            }
+        }
         public override void Delete()
         {
             if (AskForDeletion())
             {
-                using (var db = new Pro_SallesDataContext())
+                string msg;
+                if (Delete(Invoice.ID, out msg) == true)
                 {
-                    db.Store_Logs.DeleteAllOnSubmit
-                        (db.Store_Logs.Where(x => x.source_type == (byte)Type &&
-                        db.Invoice_Details.Where(d => d.invoice_id == Invoice.ID).Select(d => d.ID).Contains(x.source_id)));
-                    db.SubmitChanges();
-
-                    db.Invoice_Details.DeleteAllOnSubmit(db.Invoice_Details.Where(x => x.invoice_id == Invoice.ID));
-                    db.SubmitChanges();
-
-                    db.Invoice_Headers.Attach(Invoice);
-                    db.Invoice_Headers.DeleteOnSubmit(Invoice);
-                    db.SubmitChanges();
                     btn_new.PerformClick();
+                    base.Delete();
                 }
-                base.Delete();
+                else
+                {
+                    XtraMessageBox.Show($"لا يمكن حذف الفاتوره رقم {Invoice.ID} حيث يوجد سندات اخري مرتبطه بها", "فشل الحذف", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
         }
         void ReadUserSettings()

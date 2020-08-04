@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 15, 14.375" name="Pro_Salles">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 15, 15.75" name="Pro_Salles">
   <DataContextMoniker Name="/Pro_SallesDataContext" />
   <nestedChildShapes>
     <classShape Id="b27cd9e6-e2c9-4796-8d5e-6ad95fe73314" absoluteBounds="0.75, 0.75, 2, 1.1939925130208335">
@@ -114,6 +114,18 @@
       <DataClassMoniker Name="/Pro_SallesDataContext/Invoice_Detail" />
       <nestedChildShapes>
         <elementListCompartment Id="2577d92d-0277-4e5e-bc11-1f00daa57113" absoluteBounds="0.89000000000000012, 7.0850000000000009, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d24880f1-f268-4f83-95cb-f8f68b756b6d" absoluteBounds="0.75, 12.75, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Cash_Note" />
+      <nestedChildShapes>
+        <elementListCompartment Id="badb00b3-3945-4cd3-ad03-05adda5aec68" absoluteBounds="0.765, 13.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4ee3048b-24bb-42b8-91a5-7b955b9ee30e" absoluteBounds="3.75, 12.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/Pro_SallesDataContext/Cash_Notes_Link" />
+      <nestedChildShapes>
+        <elementListCompartment Id="168030f3-9c5c-4e2d-9703-48bcdbc7476c" absoluteBounds="3.765, 13.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

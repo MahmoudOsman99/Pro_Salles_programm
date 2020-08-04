@@ -284,6 +284,7 @@
     <Compile Include="Reporting\RPT_Invoice.Designer.cs">
       <DependentUpon>RPT_Invoice.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ViewReportMSG.cs" />
     <Compile Include="UserControls\Cost_Distribution_Option.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -499,6 +500,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\manual.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\actions_trash.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Liphsoft.Crypto.Argon2.1.0.5\build\Liphsoft.Crypto.Argon2.targets" Condition="Exists('packages\Liphsoft.Crypto.Argon2.1.0.5\build\Liphsoft.Crypto.Argon2.targets')" />

@@ -69,10 +69,28 @@ namespace Pro_Salles.PL
                 DXButtonPrint.ImageOptions.SvgImage = Properties.Resources.print;
                 DXButtonPrint.Click += DXButtonPrint_Click;
                 e.Menu.Items.Add(DXButtonPrint);
+
+                var DXButtonDelete = new DevExpress.Utils.Menu.DXMenuItem() { Caption = "حذف" };
+                DXButtonDelete.ImageOptions.SvgImage = Properties.Resources.actions_trash;
+                DXButtonDelete.Click += DXButtonDelete_Click;
+                e.Menu.Items.Add(DXButtonDelete);
             }
         }
 
+        private void DXButtonDelete_Click(object sender, EventArgs e)
+        {
+            List<int> ids = GetSelectedInvoicesIDs();
+            if (ids != null)
+                FRM_Invoice.Delete(ids, this.Type, this.Name);
+        }
+
         private void DXButtonPrint_Click(object sender, EventArgs e)
+        {
+            List<int> ids = GetSelectedInvoicesIDs();
+            if (ids != null)
+                FRM_Invoice.Print(ids, this.Type, this.Name);
+        }
+        List<int> GetSelectedInvoicesIDs()
         {
             var Handles = gridView1.GetSelectedRows();
             List<int> ids = new List<int>();
@@ -84,15 +102,20 @@ namespace Pro_Salles.PL
             {
                 XtraMessageBox.Show("برجاء اختيار فاتوره واحده علي الأقل",
                     caption: "Note", buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Information);
-                return;
+                return null;
             }
-            FRM_Invoice.Print(ids, this.Type, this.Name);
+            return ids;
+        }
+        public override void Delete()
+        {
+            DXButtonDelete_Click(null, null);
         }
 
         private void GridControl1_ViewRegistered(object sender, DevExpress.XtraGrid.ViewOperationEventArgs e)
         {
             var View = e.View as GridView;
-            if (View != null & View.LevelName == "Products")
+
+            if (View != null && View.LevelName == "Products")
             {
                 View.OptionsView.ShowViewCaption = true;
                 View.ViewCaption = "الأصناف";
@@ -150,8 +173,12 @@ namespace Pro_Salles.PL
                     this.Name = Screens.View_Sales_Invoices.Screen_Name;
                     break;
                 case Master.Invoice_Type.Purchase_Return:
+                    this.Text = "  فواتير مردود المشتريات";
+                    this.Name = Screens.View_Purchase_Return_Invoices.Screen_Name;
                     break;
                 case Master.Invoice_Type.Salles_Return:
+                    this.Text = "  فواتير مردود المبيعات";
+                    this.Name = Screens.View_Sales_Return_Invoices.Screen_Name;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -177,7 +204,7 @@ namespace Pro_Salles.PL
 
             using (var db = new Pro_SallesDataContext())
             {                                                                                       //i did OrderByDescending
-                var query = from inv in db.Invoice_Headers.Where(x => x.invoice_type == (byte)Type).OrderByDescending(x=>x.date)
+                var query = from inv in db.Invoice_Headers.Where(x => x.invoice_type == (byte)Type).OrderByDescending(x => x.date)
                             select new
                             {
                                 inv.ID,
