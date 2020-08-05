@@ -50,26 +50,26 @@ namespace Pro_Salles.Class
         public static Screens_Access_Profile Company_Info = new Screens_Access_Profile(nameof(FRM_Company_Info), mainSettings)
         {
             Actions = new List<Master.Actions>() { Master.Actions.Show, Master.Actions.Edit, Master.Actions.Open, Master.Actions.Delete },
-            Screen_Caption = "بيانات الشركه" 
+            Screen_Caption = "بيانات الشركه"
         };
 
 
         public static Screens_Access_Profile Customers = new Screens_Access_Profile("elm_Customers")
         {
             Actions = new List<Master.Actions>() { Master.Actions.Show },
-            Screen_Caption = "العملاء" 
+            Screen_Caption = "العملاء"
         };
-        public static Screens_Access_Profile Add_Customer = new Screens_Access_Profile("FRM_Customer",Customers)
+        public static Screens_Access_Profile Add_Customer = new Screens_Access_Profile("FRM_Customer", Customers)
         {
-            Screen_Caption = "اضافه عميل" 
+            Screen_Caption = "اضافه عميل"
         };
         public static Screens_Access_Profile View_Customers = new Screens_Access_Profile("FRM_Customers_List", Customers)
-        {        
+        {
             Screen_Caption = "عرض العملاء"
         };
 
 
-        
+
         public static Screens_Access_Profile Vendors = new Screens_Access_Profile("elm_Vendors")
         {
             Actions = new List<Master.Actions>() { Master.Actions.Show },
@@ -77,12 +77,12 @@ namespace Pro_Salles.Class
         };
 
         public static Screens_Access_Profile Add_Vendor = new Screens_Access_Profile("FRM_Vendor", Vendors)
-        {         
+        {
             Screen_Caption = "اضافه مورد"
         };
 
         public static Screens_Access_Profile View_Vendors = new Screens_Access_Profile("FRM_Vendors_List", Vendors)
-        {         
+        {
             Screen_Caption = "عرض الموردين"
         };
 
@@ -112,7 +112,7 @@ namespace Pro_Salles.Class
             Actions = new List<Master.Actions>() { Master.Actions.Show },
             Screen_Caption = "الأصناف"
         };
-        public static Screens_Access_Profile Add_Item = new Screens_Access_Profile(nameof(FRM_Product),Items)
+        public static Screens_Access_Profile Add_Item = new Screens_Access_Profile(nameof(FRM_Product), Items)
         {
             Screen_Caption = "اضافه صنف"
         };
@@ -164,7 +164,7 @@ namespace Pro_Salles.Class
             Screen_Caption = "المبيعات"
         };
         public static Screens_Access_Profile Add_Sales_Invoice = new Screens_Access_Profile("FRM_Sales_Invoice", Sales)
-        {         
+        {
             Screen_Caption = "اضافه فاتوره مبيعات"
         };
         public static Screens_Access_Profile View_Sales_Invoices = new Screens_Access_Profile("FRM_Sales_Invoice_List", Sales)
@@ -228,10 +228,29 @@ namespace Pro_Salles.Class
 
 
 
+        //113
+        public static Screens_Access_Profile Finance = new Screens_Access_Profile("elm_Finance")
+        {
+            Actions = new List<Master.Actions>() { Master.Actions.Show },
+            Screen_Caption = "الماليه"
+        };
+
+        public static Screens_Access_Profile Add_Cash_In = new Screens_Access_Profile(nameof(FRM_Cash_Note_In), Finance)
+        {
+            Screen_Caption = "اضافه سند قبض نقدي"
+        };
+        public static Screens_Access_Profile Add_Cash_Out = new Screens_Access_Profile(nameof(FRM_Cash_Note_Out), Finance)
+        {
+            Screen_Caption = "اضافه سند دفع نقدي"
+        };
 
 
-        public static List<Screens_Access_Profile> Get_Screens 
-        { get
+
+
+
+        public static List<Screens_Access_Profile> Get_Screens
+        {
+            get
             {
                 Type t = typeof(Screens);
                 //It returns every field that is only public (and || or) static

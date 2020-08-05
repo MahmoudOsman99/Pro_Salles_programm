@@ -87,12 +87,12 @@ namespace Pro_Salles.DAL
     partial void InsertInvoice_Detail(Invoice_Detail instance);
     partial void UpdateInvoice_Detail(Invoice_Detail instance);
     partial void DeleteInvoice_Detail(Invoice_Detail instance);
-    partial void InsertCash_Note(Cash_Note instance);
-    partial void UpdateCash_Note(Cash_Note instance);
-    partial void DeleteCash_Note(Cash_Note instance);
     partial void InsertCash_Notes_Link(Cash_Notes_Link instance);
     partial void UpdateCash_Notes_Link(Cash_Notes_Link instance);
     partial void DeleteCash_Notes_Link(Cash_Notes_Link instance);
+    partial void InsertCash_Note(Cash_Note instance);
+    partial void UpdateCash_Note(Cash_Note instance);
+    partial void DeleteCash_Note(Cash_Note instance);
     #endregion
 		
 		public Pro_SallesDataContext() : 
@@ -277,19 +277,19 @@ namespace Pro_Salles.DAL
 			}
 		}
 		
-		public System.Data.Linq.Table<Cash_Note> Cash_Notes
-		{
-			get
-			{
-				return this.GetTable<Cash_Note>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Cash_Notes_Link> Cash_Notes_Links
 		{
 			get
 			{
 				return this.GetTable<Cash_Notes_Link>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Cash_Note> Cash_Notes
+		{
+			get
+			{
+				return this.GetTable<Cash_Note>();
 			}
 		}
 	}
@@ -4328,6 +4328,140 @@ namespace Pro_Salles.DAL
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cash_Notes_Links")]
+	public partial class Cash_Notes_Link : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private int _Cash_Note_ID;
+		
+		private byte _Invoice_Type;
+		
+		private int _Invoice_ID;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnCash_Note_IDChanging(int value);
+    partial void OnCash_Note_IDChanged();
+    partial void OnInvoice_TypeChanging(byte value);
+    partial void OnInvoice_TypeChanged();
+    partial void OnInvoice_IDChanging(int value);
+    partial void OnInvoice_IDChanged();
+    #endregion
+		
+		public Cash_Notes_Link()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cash_Note_ID", DbType="Int NOT NULL")]
+		public int Cash_Note_ID
+		{
+			get
+			{
+				return this._Cash_Note_ID;
+			}
+			set
+			{
+				if ((this._Cash_Note_ID != value))
+				{
+					this.OnCash_Note_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Cash_Note_ID = value;
+					this.SendPropertyChanged("Cash_Note_ID");
+					this.OnCash_Note_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Invoice_Type", DbType="TinyInt NOT NULL")]
+		public byte Invoice_Type
+		{
+			get
+			{
+				return this._Invoice_Type;
+			}
+			set
+			{
+				if ((this._Invoice_Type != value))
+				{
+					this.OnInvoice_TypeChanging(value);
+					this.SendPropertyChanging();
+					this._Invoice_Type = value;
+					this.SendPropertyChanged("Invoice_Type");
+					this.OnInvoice_TypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Invoice_ID", DbType="Int NOT NULL")]
+		public int Invoice_ID
+		{
+			get
+			{
+				return this._Invoice_ID;
+			}
+			set
+			{
+				if ((this._Invoice_ID != value))
+				{
+					this.OnInvoice_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Invoice_ID = value;
+					this.SendPropertyChanged("Invoice_ID");
+					this.OnInvoice_IDChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cash_Notes")]
 	public partial class Cash_Note : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -4345,6 +4479,8 @@ namespace Pro_Salles.DAL
 		private byte _Part_Type;
 		
 		private int _Part_ID;
+		
+		private int _Drower_ID;
 		
 		private double _Amount;
 		
@@ -4370,6 +4506,8 @@ namespace Pro_Salles.DAL
     partial void OnPart_TypeChanged();
     partial void OnPart_IDChanging(int value);
     partial void OnPart_IDChanged();
+    partial void OnDrower_IDChanging(int value);
+    partial void OnDrower_IDChanged();
     partial void OnAmountChanging(double value);
     partial void OnAmountChanged();
     partial void OnDiscount_ValueChanging(double value);
@@ -4505,6 +4643,26 @@ namespace Pro_Salles.DAL
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Drower_ID", DbType="Int NOT NULL")]
+		public int Drower_ID
+		{
+			get
+			{
+				return this._Drower_ID;
+			}
+			set
+			{
+				if ((this._Drower_ID != value))
+				{
+					this.OnDrower_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Drower_ID = value;
+					this.SendPropertyChanged("Drower_ID");
+					this.OnDrower_IDChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Float NOT NULL")]
 		public double Amount
 		{
@@ -4581,140 +4739,6 @@ namespace Pro_Salles.DAL
 					this._Notes = value;
 					this.SendPropertyChanged("Notes");
 					this.OnNotesChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cash_Notes_Links")]
-	public partial class Cash_Notes_Link : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private int _Cash_Note_ID;
-		
-		private byte _Invoice_Type;
-		
-		private int _Invoice_ID;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnCash_Note_IDChanging(int value);
-    partial void OnCash_Note_IDChanged();
-    partial void OnInvoice_TypeChanging(byte value);
-    partial void OnInvoice_TypeChanged();
-    partial void OnInvoice_IDChanging(int value);
-    partial void OnInvoice_IDChanged();
-    #endregion
-		
-		public Cash_Notes_Link()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cash_Note_ID", DbType="Int NOT NULL")]
-		public int Cash_Note_ID
-		{
-			get
-			{
-				return this._Cash_Note_ID;
-			}
-			set
-			{
-				if ((this._Cash_Note_ID != value))
-				{
-					this.OnCash_Note_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Cash_Note_ID = value;
-					this.SendPropertyChanged("Cash_Note_ID");
-					this.OnCash_Note_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Invoice_Type", DbType="TinyInt NOT NULL")]
-		public byte Invoice_Type
-		{
-			get
-			{
-				return this._Invoice_Type;
-			}
-			set
-			{
-				if ((this._Invoice_Type != value))
-				{
-					this.OnInvoice_TypeChanging(value);
-					this.SendPropertyChanging();
-					this._Invoice_Type = value;
-					this.SendPropertyChanged("Invoice_Type");
-					this.OnInvoice_TypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Invoice_ID", DbType="Int NOT NULL")]
-		public int Invoice_ID
-		{
-			get
-			{
-				return this._Invoice_ID;
-			}
-			set
-			{
-				if ((this._Invoice_ID != value))
-				{
-					this.OnInvoice_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Invoice_ID = value;
-					this.SendPropertyChanged("Invoice_ID");
-					this.OnInvoice_IDChanged();
 				}
 			}
 		}

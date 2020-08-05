@@ -214,6 +214,14 @@
       <Column Name="SourceRowID" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Cash_Notes_Links" Member="Cash_Notes_Links">
+    <Type Name="Cash_Notes_Link">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Cash_Note_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Invoice_Type" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="Invoice_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
   <Table Name="dbo.Cash_Notes" Member="Cash_Notes">
     <Type Name="Cash_Note">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -222,18 +230,11 @@
       <Column Name="Store_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Part_Type" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
       <Column Name="Part_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Drower_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Amount" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="Discount_Value" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="Notes" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Cash_Notes_Links" Member="Cash_Notes_Links">
-    <Type Name="Cash_Notes_Link">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Cash_Note_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Invoice_Type" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="Invoice_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>
