@@ -131,7 +131,7 @@ namespace Pro_Salles.PL
 
                 repolook.DataSource = db.Units_names.ToList();
             }
-            look_CostCalculatingMethod.LookUp_DataSource(Master_Inventory.CostCalculatingMethod_List);
+            look_CostCalculatingMethod.Initialize_Data(Master_Inventory.CostCalculatingMethod_List);
             base.Refresh_Data();
         }
                                                                               
@@ -184,7 +184,7 @@ namespace Pro_Salles.PL
             look_cat.ProcessNewValue += Look_cat_ProcessNewValue;
 
             look_type.Properties.DataSource = Product_Types_List;
-            look_type.LookUp_DataSource(Product_Types_List, "Name", "ID");
+            look_type.Initialize_Data(Product_Types_List, "Name", "ID");
 
             look_cat.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
 

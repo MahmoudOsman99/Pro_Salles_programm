@@ -37,15 +37,23 @@ namespace Pro_Salles.Class
             Inventory,
             Service
         }
-        public static List<Value_And_ID> Part_Type_List = new List<Value_And_ID>()
+
+        public static List<Value_And_ID> Invoices_Part_Type_List = new List<Value_And_ID>()
         {
             new Value_And_ID { ID = (int)Part_Type.Vendor, Name = "مورد" },
             new Value_And_ID { ID = (int)Part_Type.Customer, Name = "عميل" }
         };
+        public static List<Value_And_ID> Part_Type_List = new List<Value_And_ID>()
+        {
+            new Value_And_ID { ID = (int)Part_Type.Vendor, Name = "مورد" },
+            new Value_And_ID { ID = (int)Part_Type.Customer, Name = "عميل" },
+            new Value_And_ID { ID = (int)Part_Type.Account, Name = "حساب" }
+        };
         public enum Part_Type
         {
             Vendor,
-            Customer
+            Customer,
+            Account
         }
 
 
@@ -185,11 +193,11 @@ namespace Pro_Salles.Class
         }
 
 
-        public static void LookUp_DataSource(this RepositoryItemLookUpEditBase repo, object datasource, GridColumn cl, GridControl grid)
+        public static void Initialize_Data(this RepositoryItemLookUpEditBase repo, object datasource, GridColumn cl, GridControl grid)
         {
-            LookUp_DataSource(repo, datasource, cl, grid, "name", "ID");
+            Initialize_Data(repo, datasource, cl, grid, "name", "ID");
         }
-        public static void LookUp_DataSource(this RepositoryItemLookUpEditBase repo, object datasource, GridColumn cl, GridControl grid, string displaymember, string valuemember)
+        public static void Initialize_Data(this RepositoryItemLookUpEditBase repo, object datasource, GridColumn cl, GridControl grid, string displaymember, string valuemember)
         {
             if (repo == null)
                 repo = new RepositoryItemLookUpEdit();
@@ -212,9 +220,9 @@ namespace Pro_Salles.Class
         /// </summary>
         /// <param name="datasource"></param>
         /// <param name="sender"></param>
-        public static void LookUp_DataSource(this LookUpEdit look, object datasource)
+        public static void Initialize_Data(this LookUpEdit look, object datasource)
         {
-            LookUp_DataSource(look, datasource, "Name", "ID");
+            Initialize_Data(look, datasource, "Name", "ID");
         }
         /// <summary>
         /// The style of the lookupedit and it takes data source and display member and the value member
@@ -223,7 +231,7 @@ namespace Pro_Salles.Class
         /// <param name="datasource"></param>
         /// <param name="displaymember"></param>
         /// <param name="valuemember"></param>
-        public static void LookUp_DataSource(this LookUpEdit look, object datasource, string displaymember, string valuemember)
+        public static void Initialize_Data(this LookUpEdit look, object datasource, string displaymember, string valuemember)
         {
             look.Properties.DataSource = datasource;
             look.Properties.DisplayMember = displaymember;

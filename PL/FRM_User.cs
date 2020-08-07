@@ -36,9 +36,9 @@ namespace Pro_Salles.PL
         {
             using (var db = new Pro_SallesDataContext())
             {
-                look_screen_profile_ID.LookUp_DataSource(db.User_Access_Profile_Names.Select(x => new { x.ID, x.Name }).ToList());
-                look_settings_profile_ID.LookUp_DataSource(db.UserSettingsProfiles.Select(x => new { x.ID, x.Name }).ToList());
-                look_user_type.LookUp_DataSource(Master.User_Type_List);                
+                look_screen_profile_ID.Initialize_Data(db.User_Access_Profile_Names.Select(x => new { x.ID, x.Name }).ToList());
+                look_settings_profile_ID.Initialize_Data(db.UserSettingsProfiles.Select(x => new { x.ID, x.Name }).ToList());
+                look_user_type.Initialize_Data(Master.User_Type_List);                
             }
             base.Refresh_Data();
         }

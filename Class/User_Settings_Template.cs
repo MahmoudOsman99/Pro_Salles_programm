@@ -115,27 +115,27 @@ namespace Pro_Salles.Class
                 case nameof(ins.General.Default_Store):
                 case nameof(ins.General.Default_Row_Store):
                     edit = new LookUpEdit();
-                    ((LookUpEdit)edit).LookUp_DataSource(Sessions.Stores,"name","ID");
+                    ((LookUpEdit)edit).Initialize_Data(Sessions.Stores,"name","ID");
                     break;
 
                 case nameof(ins.General.Default_Drower):
                     edit = new LookUpEdit();
-                    ((LookUpEdit)edit).LookUp_DataSource(Sessions.Drowers, "name", "ID");
+                    ((LookUpEdit)edit).Initialize_Data(Sessions.Drowers, "name", "ID");
                     break;
 
                 case nameof(ins.General.Default_Customer):
                     edit = new LookUpEdit();
-                    ((LookUpEdit)edit).LookUp_DataSource(Sessions.Customers, "name", "ID");
+                    ((LookUpEdit)edit).Initialize_Data(Sessions.Customers, "name", "ID");
                     break;
 
                 case nameof(ins.General.Default_Vendor):
                     edit = new LookUpEdit();
-                    ((LookUpEdit)edit).LookUp_DataSource(Sessions.Vendors, "name", "ID");
+                    ((LookUpEdit)edit).Initialize_Data(Sessions.Vendors, "name", "ID");
                     break;
 
                 case nameof(ins.Salles.Default_Pay_Method_In_Salles):
                     edit = new LookUpEdit();
-                    ((LookUpEdit)edit).LookUp_DataSource(Master.Pay_Methods_List);
+                    ((LookUpEdit)edit).Initialize_Data(Master.Pay_Methods_List);
                     break;
 
                 case nameof(ins.Salles.Max_Discount_In_Invoice):
@@ -149,7 +149,7 @@ namespace Pro_Salles.Class
                 case nameof(ins.Salles.When_Selling_To_Customer_Exceded_Max_Credit):
                 case nameof(ins.Salles.When_Selling_Item_With_Price_Lower_Than_Cost_Price):
                     edit = new LookUpEdit();
-                    ((LookUpEdit)edit).LookUp_DataSource(Master.Warning_Levels_List);
+                    ((LookUpEdit)edit).Initialize_Data(Master.Warning_Levels_List);
                     break;
 
                 default:

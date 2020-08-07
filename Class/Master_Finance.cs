@@ -1,9 +1,6 @@
-﻿using Pro_Salles.DAL;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System;
 using System.Linq;
-using System.Text;
+using Pro_Salles.DAL;
 
 namespace Pro_Salles.Class
 {

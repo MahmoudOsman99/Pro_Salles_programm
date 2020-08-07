@@ -184,12 +184,12 @@ namespace Pro_Salles.PL
                     throw new NotImplementedException();
             }
 
-            look_part_type.LookUp_DataSource(Master.Part_Type_List, "Name", "ID");
+            look_part_type.Initialize_Data(Master.Invoices_Part_Type_List, "Name", "ID");
             look_part_type.Properties.PopulateColumns();
             //look_part_type.Properties.Columns["ID"].Visible = false;
 
-            look_drawer.LookUp_DataSource(Sessions.Drowers, "name", "ID");
-            look_branch.LookUp_DataSource(Sessions.Stores, "name", "ID");
+            look_drawer.Initialize_Data(Sessions.Drowers, "name", "ID");
+            look_branch.Initialize_Data(Sessions.Stores, "name", "ID");
 
             btn_refresh.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
         }
@@ -265,10 +265,10 @@ namespace Pro_Salles.PL
                 parts.AddRange(Sessions.Customers);
                 parts.AddRange(Sessions.Vendors);
 
-                repoBranch.LookUp_DataSource(Sessions.Stores, gridView1.Columns[nameof(ins.branch)], gridControl1);
-                repoDrawer.LookUp_DataSource(Sessions.Drowers, gridView1.Columns[nameof(ins.drower)], gridControl1);
-                repoPartType.LookUp_DataSource(Master.Part_Type_List, gridView1.Columns[nameof(ins.part_type)], gridControl1, "Name", "ID");
-                repoPart.LookUp_DataSource(parts, gridView1.Columns[nameof(ins.part_id)], gridControl1);
+                repoBranch.Initialize_Data(Sessions.Stores, gridView1.Columns[nameof(ins.branch)], gridControl1);
+                repoDrawer.Initialize_Data(Sessions.Drowers, gridView1.Columns[nameof(ins.drower)], gridControl1);
+                repoPartType.Initialize_Data(Master.Invoices_Part_Type_List, gridView1.Columns[nameof(ins.part_type)], gridControl1, "Name", "ID");
+                repoPart.Initialize_Data(parts, gridView1.Columns[nameof(ins.part_id)], gridControl1);
             }
             base.Refresh_Data();
         }

@@ -23,6 +23,7 @@ namespace Pro_Salles.DAL
         public class Drowers : Drower { }
         public class CustomersAndVendors : CustomersAndVendor { }
         public class Users : User { }
+        public class Accounts : Account { }
         public class Product_Units : Product_Unit { }
 
         /////////////////////////////////////////////////////////////////////////////////////
@@ -85,6 +86,28 @@ namespace Pro_Salles.DAL
                         break;
                     case ChangeType.Delete:
                         Sessions.Drowers.Remove(Sessions.Drowers.Single(x => x.ID == e.Entity.ID));
+                        break;
+                }
+            }));
+        }
+        /////////////////////////////////////////////////////////////////////////////////////
+        public static SqlTableDependency<Accounts> Accounts_List;
+        public static void Accounts_Changed(object sender, RecordChangedEventArgs<Accounts> e)
+        {
+            FRM_MAIN.Instance.Invoke(new Action(() =>
+            {
+                switch (e.ChangeType)
+                {
+                    case ChangeType.Insert:
+                        Sessions.Accounts.Add(e.Entity);
+                        break;
+                    case ChangeType.Update:
+                        var index = Sessions.Accounts.IndexOf(Sessions.Accounts.Single(x => x.ID == e.Entity.ID));
+                        Sessions.Accounts.Remove(Sessions.Accounts.Single(x => x.ID == e.Entity.ID));
+                        Sessions.Accounts.Insert(index, e.Entity);
+                        break;
+                    case ChangeType.Delete:
+                        Sessions.Accounts.Remove(Sessions.Accounts.Single(x => x.ID == e.Entity.ID));
                         break;
                 }
             }));

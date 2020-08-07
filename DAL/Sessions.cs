@@ -423,6 +423,28 @@ namespace Pro_Salles.DAL
             }
         }
 
+        
+        private static BindingList<Account> _account;
+        public static BindingList<Account> Accounts
+        {
+            get
+            {
+                if (_account == null)
+                {
+                    using (var db = new Pro_SallesDataContext())
+                    {
+                        _account = new BindingList<Account>(db.Accounts.ToList());
+                    }
+                    Database_Watcher.Accounts_List = new SqlTableDependency<Database_Watcher.Accounts>(Properties.Settings.Default.Salles_DBConnectionString);
+                    Database_Watcher.Accounts_List.OnChanged += Database_Watcher.Accounts_Changed;
+                    Database_Watcher.Accounts_List.Start();
+                }
+                return _account;
+            }
+        }
+
+
+
         private static User _currentuser;
         public static User CurrentUser { get => _currentuser; }
         public static void Set_User(User user)

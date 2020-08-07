@@ -435,7 +435,7 @@ namespace Pro_Salles.PL
             Refresh_Data();
 
 
-            look_part_type.LookUp_DataSource(Master.Part_Type_List);
+            look_part_type.Initialize_Data(Master.Invoices_Part_Type_List);
             look_part_type.Properties.PopulateColumns();
             look_part_type.Properties.Columns["ID"].Visible = false;
             ///////////////////28   
@@ -484,10 +484,10 @@ namespace Pro_Salles.PL
             look_branch.EditValueChanging += Look_branch_EditValueChanging;
 
             #region RepositoryItem_Properties
-            repoUOM.LookUp_DataSource(Sessions.Unit_Names, gridView1.Columns[nameof(v.item_unit_id)], gridControl1);
+            repoUOM.Initialize_Data(Sessions.Unit_Names, gridView1.Columns[nameof(v.item_unit_id)], gridControl1);
 
             repoStores = new RepositoryItemLookUpEdit();
-            repoStores.LookUp_DataSource(Sessions.Stores, gridView1.Columns[nameof(v.store_id)], gridControl1, "name", "ID");
+            repoStores.Initialize_Data(Sessions.Stores, gridView1.Columns[nameof(v.store_id)], gridControl1, "name", "ID");
             repoStores.PopulateColumns();
             repoStores.Columns[nameof(st.Cost_Of_Sold_Goods_Account_ID)].Visible = false;
             repoStores.Columns[nameof(st.Discount_Allowed_Account_ID)].Visible = false;
@@ -501,7 +501,7 @@ namespace Pro_Salles.PL
 
 
             repo_items = new RepositoryItemGridLookUpEdit();
-            repo_items.LookUp_DataSource(Sessions.Product_View.Where(x => x.Is_Active == true), gridView1.Columns[nameof(v.item_id)], gridControl1, "Name", "ID");
+            repo_items.Initialize_Data(Sessions.Product_View.Where(x => x.Is_Active == true), gridView1.Columns[nameof(v.item_id)], gridControl1, "Name", "ID");
             repo_items.ValidateOnEnterKey = true;
             repo_items.AllowNullInput = DefaultBoolean.False;//to don't let the user put null values
             repo_items.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;//To make the size fit to the fields
@@ -527,7 +527,7 @@ namespace Pro_Salles.PL
                 repoview.Columns[nameof(pr.Code)].Caption = "الكود";
             }
 
-            repoAll.LookUp_DataSource(Sessions.Product_View, gridView1.Columns[nameof(v.item_id)], gridControl1, "Name", "ID");
+            repoAll.Initialize_Data(Sessions.Product_View, gridView1.Columns[nameof(v.item_id)], gridControl1, "Name", "ID");
 
             RepositoryItemSpinEdit spinedit = new RepositoryItemSpinEdit();
             gridView1.Columns[nameof(v.price)].ColumnEdit = spinedit;
@@ -1165,7 +1165,7 @@ namespace Pro_Salles.PL
                 var item = Sessions.Product_View.SingleOrDefault(x => x.ID == row.item_id);
                 if (item == null)
                     return;
-                repo.LookUp_DataSource(item.Units, null, null, "Unit_Name", "Unit_ID");
+                repo.Initialize_Data(item.Units, null, null, "Unit_Name", "Unit_ID");
                 repo.Columns.Clear();
                 repo.Columns.Add(new LookUpColumnInfo("Unit_Name"));
                 repo.ShowHeader = false;
@@ -1443,8 +1443,8 @@ namespace Pro_Salles.PL
 
         public override void Refresh_Data()
         {
-            look_branch.LookUp_DataSource(Sessions.Stores, nameof(store.name), nameof(store.ID));
-            look_drower.LookUp_DataSource(Sessions.Drowers, nameof(drower.name), nameof(drower.ID));
+            look_branch.Initialize_Data(Sessions.Stores, nameof(store.name), nameof(store.ID));
+            look_drower.Initialize_Data(Sessions.Drowers, nameof(drower.name), nameof(drower.ID));
             //look_drower.Properties.Columns[nameof(drower.account_id)].Visible = false;////////////////////////////////////////////////
             base.Refresh_Data();
         }
@@ -2202,8 +2202,8 @@ namespace Pro_Salles.PL
 
             var repoMyItems = new RepositoryItemLookUpEdit();
             var repoMyUMO = new RepositoryItemLookUpEdit();
-            repoMyItems.LookUp_DataSource(Sessions.Product_View, productColumn, gridControl, "Name", "ID");
-            repoMyUMO.LookUp_DataSource(Sessions.Unit_Names, unitColumn, gridControl);
+            repoMyItems.Initialize_Data(Sessions.Product_View, productColumn, gridControl, "Name", "ID");
+            repoMyUMO.Initialize_Data(Sessions.Unit_Names, unitColumn, gridControl);
 
             gridControl.DataSource = ReturnSourceDetails;
             frm.Controls.Add(gridControl);
