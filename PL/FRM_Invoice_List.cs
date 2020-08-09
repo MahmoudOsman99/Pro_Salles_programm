@@ -143,7 +143,6 @@ namespace Pro_Salles.PL
                     look_grid_part_id.InitializeData(Sessions.Vendors);
                     lyc_part.Text = "المورد";
                 }
-
             }
         }
 
@@ -299,7 +298,7 @@ namespace Pro_Salles.PL
             gridView1.Columns["paid"].Caption = "المدفوع";
             gridView1.Columns["drower"].Caption = "الخزنه";
             gridView1.Columns["remaing"].Caption = "المتبقي";
-            gridView1.Columns["PayStatus"].Caption = "حاله السداد";
+            gridView1.Columns["PayStatus"].Caption = "الحاله";
 
             gridView1.Columns["date"].DisplayFormat.FormatString = "dd-MM-yyyy hh:mm tt";
             gridView1.Columns["date"].DisplayFormat.FormatType = FormatType.Custom;
@@ -344,11 +343,10 @@ namespace Pro_Salles.PL
           look_branch.EditValue =
        look_part_type.EditValue =
     look_grid_part_id.EditValue = null;
-            //btn_apply.PerformClick();
         }
         public override void Print()
         {
-            RPT_Grid_Print.Print(gridControl1, "كشف فواتير المبيعات", GetFilters());
+            RPT_Grid_Print.Print(gridControl1, "كشف حساب" + this.Text, GetFilters());
             base.Print();
         }
         public override void New()

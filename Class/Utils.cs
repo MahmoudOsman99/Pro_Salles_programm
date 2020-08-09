@@ -194,7 +194,7 @@ namespace Pro_Salles.Class
 
                 SvgBitmap bitmap = SvgBitmap.Create(svgImage);
                 r = new Rectangle(
-                    e.Bounds.X + e.Bounds.Width - (svgSize * 3),
+                    e.Bounds.X + 30,
                     e.Bounds.Y + ((e.Bounds.Height - svgSize) / 2),
                     svgSize, svgSize
                     );
