@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            this.cb_active = new DevExpress.XtraEditors.ToggleSwitch();
             this.look_CostCalculatingMethod = new DevExpress.XtraEditors.LookUpEdit();
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.memoEdit1 = new DevExpress.XtraEditors.MemoEdit();
             this.prod_pic = new DevExpress.XtraEditors.PictureEdit();
-            this.cb_active = new System.Windows.Forms.CheckBox();
             this.look_cat = new DevExpress.XtraEditors.LookUpEdit();
             this.look_type = new DevExpress.XtraEditors.LookUpEdit();
             this.txt_name = new DevExpress.XtraEditors.TextEdit();
@@ -44,15 +44,16 @@
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cb_active.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.look_CostCalculatingMethod.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -67,22 +68,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
             this.SuspendLayout();
             // 
             // layoutControl1
             // 
+            this.layoutControl1.Controls.Add(this.cb_active);
             this.layoutControl1.Controls.Add(this.look_CostCalculatingMethod);
             this.layoutControl1.Controls.Add(this.gridControl1);
             this.layoutControl1.Controls.Add(this.memoEdit1);
             this.layoutControl1.Controls.Add(this.prod_pic);
-            this.layoutControl1.Controls.Add(this.cb_active);
             this.layoutControl1.Controls.Add(this.look_cat);
             this.layoutControl1.Controls.Add(this.look_type);
             this.layoutControl1.Controls.Add(this.txt_name);
@@ -95,6 +96,17 @@
             this.layoutControl1.Size = new System.Drawing.Size(913, 515);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
+            // 
+            // cb_active
+            // 
+            this.cb_active.EditValue = true;
+            this.cb_active.Location = new System.Drawing.Point(256, 2);
+            this.cb_active.Name = "cb_active";
+            this.cb_active.Properties.OffText = "غير نشط";
+            this.cb_active.Properties.OnText = "نشط";
+            this.cb_active.Size = new System.Drawing.Size(110, 18);
+            this.cb_active.StyleController = this.layoutControl1;
+            this.cb_active.TabIndex = 11;
             // 
             // look_CostCalculatingMethod
             // 
@@ -144,15 +156,6 @@
             this.prod_pic.StyleController = this.layoutControl1;
             this.prod_pic.TabIndex = 7;
             // 
-            // cb_active
-            // 
-            this.cb_active.Location = new System.Drawing.Point(256, 2);
-            this.cb_active.Name = "cb_active";
-            this.cb_active.Size = new System.Drawing.Size(188, 20);
-            this.cb_active.TabIndex = 6;
-            this.cb_active.Text = "نشط";
-            this.cb_active.UseVisualStyleBackColor = true;
-            // 
             // look_cat
             // 
             this.look_cat.Location = new System.Drawing.Point(256, 74);
@@ -194,12 +197,12 @@
             // 
             // txt_code
             // 
-            this.txt_code.Location = new System.Drawing.Point(448, 2);
+            this.txt_code.Location = new System.Drawing.Point(370, 2);
             this.txt_code.Name = "txt_code";
             this.txt_code.Properties.Appearance.Options.UseTextOptions = true;
             this.txt_code.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.txt_code.Properties.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            this.txt_code.Size = new System.Drawing.Size(339, 20);
+            this.txt_code.Size = new System.Drawing.Size(417, 20);
             this.txt_code.StyleController = this.layoutControl1;
             this.txt_code.TabIndex = 4;
             // 
@@ -212,11 +215,11 @@
             this.layoutControlItem2,
             this.layoutControlItem3,
             this.layoutControlItem4,
-            this.layoutControlItem5,
             this.layoutControlItem7,
             this.layoutControlGroup1,
             this.layoutControlGroup2,
-            this.layoutControlItem9});
+            this.layoutControlItem9,
+            this.layoutControlItem10});
             this.Root.Name = "Root";
             this.Root.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
             this.Root.Size = new System.Drawing.Size(913, 515);
@@ -225,9 +228,9 @@
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.txt_code;
-            this.layoutControlItem1.Location = new System.Drawing.Point(446, 0);
+            this.layoutControlItem1.Location = new System.Drawing.Point(368, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(467, 24);
+            this.layoutControlItem1.Size = new System.Drawing.Size(545, 24);
             this.layoutControlItem1.Text = "الكود";
             this.layoutControlItem1.TextSize = new System.Drawing.Size(121, 13);
             // 
@@ -257,15 +260,6 @@
             this.layoutControlItem4.Size = new System.Drawing.Size(659, 24);
             this.layoutControlItem4.Text = "الفئه";
             this.layoutControlItem4.TextSize = new System.Drawing.Size(121, 13);
-            // 
-            // layoutControlItem5
-            // 
-            this.layoutControlItem5.Control = this.cb_active;
-            this.layoutControlItem5.Location = new System.Drawing.Point(254, 0);
-            this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(192, 24);
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem5.TextVisible = false;
             // 
             // layoutControlItem7
             // 
@@ -324,6 +318,15 @@
             this.layoutControlItem9.Text = "طريقه حساب تكلفه الصنف";
             this.layoutControlItem9.TextSize = new System.Drawing.Size(121, 13);
             // 
+            // layoutControlItem10
+            // 
+            this.layoutControlItem10.Control = this.cb_active;
+            this.layoutControlItem10.Location = new System.Drawing.Point(254, 0);
+            this.layoutControlItem10.Name = "layoutControlItem10";
+            this.layoutControlItem10.Size = new System.Drawing.Size(114, 24);
+            this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem10.TextVisible = false;
+            // 
             // FRM_Product
             // 
             this.Appearance.Options.UseFont = true;
@@ -339,6 +342,7 @@
             this.Controls.SetChildIndex(this.layoutControl1, 0);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cb_active.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.look_CostCalculatingMethod.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
@@ -353,13 +357,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -378,8 +382,6 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
         private DevExpress.XtraEditors.PictureEdit prod_pic;
-        private System.Windows.Forms.CheckBox cb_active;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
         private DevExpress.XtraEditors.MemoEdit memoEdit1;
@@ -390,5 +392,7 @@
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
         private DevExpress.XtraEditors.LookUpEdit look_CostCalculatingMethod;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
+        private DevExpress.XtraEditors.ToggleSwitch cb_active;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
     }
 }

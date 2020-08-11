@@ -92,7 +92,7 @@ namespace Pro_Salles.PL
             look_cat.EditValue = prod.Category_ID;
             look_type.EditValue = prod.type;
             look_CostCalculatingMethod.EditValue = prod.CostCalculatingMethod;
-            cb_active.Checked = prod.is_active;
+            cb_active.EditValue = prod.is_active;
             memoEdit1.Text = prod.discription;
 
             if (prod.image != null)
@@ -115,7 +115,7 @@ namespace Pro_Salles.PL
             prod.Category_ID = Convert.ToInt32(look_cat.EditValue);
             prod.type = Convert.ToByte(look_type.EditValue);
             prod.CostCalculatingMethod = Convert.ToByte(look_CostCalculatingMethod.EditValue);
-            prod.is_active = cb_active.Checked;
+            prod.is_active = Convert.ToBoolean(cb_active.EditValue);
             prod.discription = memoEdit1.Text;
             prod.image = Get_Byte_From_Image(prod_pic.Image);
             base.Set_Data();
